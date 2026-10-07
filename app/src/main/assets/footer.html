@@ -1,69 +1,45 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-
 <meta charset="UTF-8">
 
 <meta name="viewport"
       content="width=device-width,
-               initial-scale=1.0,
-               maximum-scale=1.0,
-               user-scalable=no,
-               viewport-fit=cover">
+      initial-scale=1.0,
+      maximum-scale=1.0,
+      user-scalable=no,
+      viewport-fit=cover">
 
-<title>Sanatani Ð₲ — Navigation</title>
+<title>Sanatani Ð₲ Navigation</title>
 
 <style>
 
 /* =========================================================
    SANATANI Ð₲
-   FLAGSHIP DIAMOND NAVIGATION SYSTEM
-   Version: 2.0
-   ========================================================= */
-
-
-/* =========================================================
-   DESIGN TOKENS
+   ROYAL JEWEL NAVIGATION
+   ORIGINAL FLAGSHIP FOOTER
    ========================================================= */
 
 :root {
 
-    --nav-h: 78px;
+    --royal-1: #7D1220;
+    --royal-2: #650C18;
+    --royal-3: #4A0710;
+    --royal-4: #32050B;
 
-    --obsidian: #09070a;
-    --obsidian-2: #110b10;
-    --wine: #250b13;
+    --bhagwa: #F26A05;
+    --bhagwa-soft: #FF8A19;
 
-    --maroon: #5b0d19;
-    --crimson: #8d1627;
+    --gold: #C79A32;
+    --gold-light: #F2D477;
+    --gold-bright: #FFE9A6;
 
-    --diamond: #f8fbff;
-    --platinum: #dce5ef;
-    --silver: #aeb9c7;
+    --cream: #FFF4D4;
+    --cream-soft: rgba(255,244,212,.68);
 
-    --champagne: #f4dfaa;
-    --gold: #cda95a;
+    --shadow: rgba(35,2,7,.60);
 
-    --bhagwa: #f26b19;
-
-    --text: #f8f4eb;
-    --muted: rgba(238,235,229,.56);
-
-    --glass-border:
-        rgba(255,255,255,.105);
-
-    --glass-highlight:
-        rgba(255,255,255,.075);
-
-    --shadow:
-        rgba(0,0,0,.58);
-
-    --diamond-glow:
-        rgba(238,246,255,.34);
-
-    --gold-glow:
-        rgba(221,184,94,.28);
-
+    --footer-height: 88px;
 }
 
 
@@ -86,146 +62,144 @@ body {
 
 body {
 
-    background: #fffaf3;
-
     font-family:
         Inter,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
-        Roboto,
         Arial,
         sans-serif;
 
+    background: #FFF9EF;
+
     padding-bottom:
         calc(
-            var(--nav-h)
+            var(--footer-height)
             + env(safe-area-inset-bottom)
-            + 24px
+            + 18px
         );
 }
 
 
 /* =========================================================
-   PAGE CONTENT
+   PAGE
    ========================================================= */
 
 #app-content {
-    width: 100%;
     min-height: 100vh;
 }
 
 
 /* =========================================================
-   NAVIGATION STAGE
+   FOOTER STAGE
    ========================================================= */
 
-.sanatani-navigation-stage {
+.sanatani-footer-stage {
 
     position: fixed;
 
     left: 0;
     right: 0;
-
     bottom: 0;
 
     z-index: 99999;
 
-    display: flex;
+    height:
+        calc(
+            var(--footer-height)
+            + env(safe-area-inset-bottom)
+        );
 
-    justify-content: center;
+    padding:
+        0
+        8px
+        env(safe-area-inset-bottom)
+        8px;
+
+    display: flex;
 
     align-items: flex-end;
 
+    justify-content: center;
+
     pointer-events: none;
-
-    padding:
-
-        0
-
-        10px
-
-        calc(
-            10px +
-            env(safe-area-inset-bottom)
-        )
-
-        10px;
 }
 
 
 /* =========================================================
-   MAIN FLOATING RAIL
+   ROYAL FOOTER BODY
    ========================================================= */
 
 .sanatani-bottom-nav {
 
     position: relative;
 
-    width: min(
-        680px,
-        calc(100vw - 20px)
-    );
+    width: 100%;
+    max-width: 760px;
 
-    height: var(--nav-h);
+    height: var(--footer-height);
 
     display: grid;
 
     grid-template-columns:
         1fr
         1fr
-        1.18fr
+        1.22fr
         1fr
         1fr;
 
-    align-items: center;
+    align-items: end;
 
     padding:
-        7px 8px 6px;
-
-    border-radius: 25px;
+        10px
+        5px
+        7px;
 
     pointer-events: auto;
 
     background:
 
+        radial-gradient(
+            ellipse 80% 100% at 50% 0%,
+            rgba(242,106,5,.15),
+            transparent 62%
+        ),
+
         linear-gradient(
             180deg,
-            rgba(29,22,28,.96),
-            rgba(7,6,9,.985)
+            var(--royal-1) 0%,
+            var(--royal-2) 35%,
+            var(--royal-3) 76%,
+            var(--royal-4) 100%
         );
+
+    border-radius:
+        27px
+        27px
+        0
+        0;
 
     border:
         1px solid
-        var(--glass-border);
+        rgba(242,212,119,.42);
+
+    border-bottom: 0;
 
     box-shadow:
 
-        0 18px 48px
-        rgba(0,0,0,.50),
+        0 -8px 35px
+        rgba(75,7,15,.25),
 
-        0 4px 14px
-        rgba(0,0,0,.30),
+        0 -1px 0
+        rgba(255,240,184,.18),
 
         inset 0 1px 0
-        rgba(255,255,255,.09),
-
-        inset 0 -1px 0
-        rgba(255,255,255,.025);
-
-    backdrop-filter:
-        blur(24px)
-        saturate(145%);
-
-    -webkit-backdrop-filter:
-        blur(24px)
-        saturate(145%);
-
+        rgba(255,255,255,.10);
 }
 
 
 /* =========================================================
-   TOP CRYSTAL HAIRLINE
+   ORNAMENTAL TOP ARCH
    ========================================================= */
 
 .sanatani-bottom-nav::before {
@@ -234,31 +208,31 @@ body {
 
     position: absolute;
 
-    left: 7%;
-    right: 7%;
+    left: 8%;
+    right: 8%;
 
-    top: 0;
+    top: -1px;
 
-    height: 1px;
+    height: 18px;
 
-    background:
+    border-top:
+        1px solid
+        rgba(242,212,119,.72);
 
-        linear-gradient(
-            90deg,
-            transparent,
-            rgba(216,226,238,.18),
-            rgba(244,223,170,.42),
-            rgba(216,226,238,.18),
-            transparent
-        );
+    border-radius:
+        50% 50% 0 0;
 
-    opacity: .9;
+    box-shadow:
 
+        0 -2px 8px
+        rgba(242,212,119,.16);
+
+    pointer-events: none;
 }
 
 
 /* =========================================================
-   BOTTOM INNER LIGHT
+   CENTRAL ARCH CUT / EMBLEM AREA
    ========================================================= */
 
 .sanatani-bottom-nav::after {
@@ -267,23 +241,31 @@ body {
 
     position: absolute;
 
-    left: 18%;
-    right: 18%;
+    width: 118px;
+    height: 42px;
 
-    bottom: 0;
+    left: 50%;
+    top: -18px;
 
-    height: 18px;
+    transform:
+        translateX(-50%);
 
     background:
+        #4A0710;
 
-        radial-gradient(
-            ellipse,
-            rgba(255,255,255,.045),
-            transparent 72%
-        );
+    border-radius:
+        60px
+        60px
+        0
+        0;
+
+    border-top:
+        1px solid
+        rgba(242,212,119,.45);
 
     pointer-events: none;
 
+    z-index: 0;
 }
 
 
@@ -295,9 +277,8 @@ body {
 
     position: relative;
 
+    width: 100%;
     height: 66px;
-
-    min-width: 0;
 
     display: flex;
 
@@ -305,32 +286,28 @@ body {
 
     align-items: center;
 
-    justify-content: center;
+    justify-content: flex-end;
 
     gap: 4px;
 
-    padding: 4px 2px;
-
-    border: 0;
-
-    outline: none;
-
-    background: transparent;
+    color:
+        var(--cream-soft);
 
     text-decoration: none;
 
-    color: var(--muted);
+    border: 0;
 
-    cursor: pointer;
+    background: transparent;
 
     font-family: inherit;
 
+    cursor: pointer;
+
+    padding: 0 2px;
+
     transition:
-
-        transform .22s cubic-bezier(.2,.8,.2,1),
-
+        transform .22s ease,
         color .22s ease;
-
 }
 
 
@@ -338,20 +315,19 @@ body {
 
     transform:
         scale(.91);
-
 }
 
 
 /* =========================================================
-   NORMAL ICON HOLDER
+   ICON FRAME
    ========================================================= */
 
 .nav-icon-box {
 
     position: relative;
 
-    width: 38px;
-    height: 38px;
+    width: 43px;
+    height: 39px;
 
     display: flex;
 
@@ -361,11 +337,9 @@ body {
     border-radius: 13px;
 
     transition:
-
+        transform .25s ease,
         background .25s ease,
-        box-shadow .25s ease,
-        transform .25s ease;
-
+        box-shadow .25s ease;
 }
 
 
@@ -378,29 +352,27 @@ body {
     width: 31px;
     height: 31px;
 
-    display: block;
-
     object-fit: contain;
 
-    opacity: .70;
+    display: block;
+
+    opacity: .82;
 
     filter:
-
         drop-shadow(
-            0 2px 4px
-            rgba(0,0,0,.45)
+            0 2px 3px
+            rgba(0,0,0,.35)
         );
 
     transition:
-
-        opacity .25s ease,
         transform .25s ease,
+        opacity .25s ease,
         filter .25s ease;
 }
 
 
 /* =========================================================
-   NORMAL LABEL
+   LABEL
    ========================================================= */
 
 .nav-label {
@@ -409,23 +381,19 @@ body {
 
     overflow: hidden;
 
-    text-overflow: ellipsis;
-
     white-space: nowrap;
+
+    text-overflow: ellipsis;
 
     font-size: 9.5px;
 
-    line-height: 1;
+    line-height: 1.1;
 
     font-weight: 600;
 
-    letter-spacing: .02em;
+    letter-spacing: .05px;
 
     color: inherit;
-
-    transition:
-        color .25s ease,
-        opacity .25s ease;
 }
 
 
@@ -436,8 +404,7 @@ body {
 .nav-item.active:not(.nav-center) {
 
     color:
-        var(--diamond);
-
+        var(--gold-bright);
 }
 
 
@@ -446,17 +413,19 @@ body {
 
     background:
 
-        radial-gradient(
-            circle,
-            rgba(255,255,255,.075),
-            transparent 72%
+        linear-gradient(
+            145deg,
+            rgba(255,230,158,.12),
+            rgba(255,159,30,.035)
         );
 
     box-shadow:
 
-        0 0 22px
-        rgba(215,226,239,.055);
+        inset 0 1px 0
+        rgba(255,235,170,.13),
 
+        0 0 20px
+        rgba(242,197,91,.08);
 }
 
 
@@ -466,20 +435,20 @@ body {
     opacity: 1;
 
     transform:
-        translateY(-1px)
-        scale(1.07);
+        translateY(-2px)
+        scale(1.08);
 
     filter:
 
         drop-shadow(
             0 0 7px
-            rgba(230,239,248,.30)
+            rgba(255,224,133,.52)
         );
 }
 
 
 /* =========================================================
-   ACTIVE CRYSTAL INDICATOR
+   ACTIVE JEWEL
    ========================================================= */
 
 .nav-item.active:not(.nav-center)::after {
@@ -488,31 +457,24 @@ body {
 
     position: absolute;
 
-    bottom: 2px;
+    bottom: 0;
 
-    left: 50%;
-
-    width: 18px;
-    height: 2px;
+    width: 7px;
+    height: 7px;
 
     transform:
-        translateX(-50%);
-
-    border-radius: 20px;
+        rotate(45deg);
 
     background:
-
-        linear-gradient(
-            90deg,
-            transparent,
-            var(--diamond),
-            transparent
-        );
+        var(--gold-light);
 
     box-shadow:
 
-        0 0 9px
-        rgba(226,237,249,.62);
+        0 0 4px
+        rgba(255,228,137,.9),
+
+        0 0 11px
+        rgba(255,196,67,.55);
 }
 
 
@@ -522,81 +484,80 @@ body {
 
 .nav-center {
 
-    height: 82px;
+    height: 88px;
 
-    margin-top: -22px;
-
-    z-index: 30;
+    z-index: 10;
 
     justify-content: flex-end;
 
+    padding-bottom: 0;
 }
 
 
 /* =========================================================
-   DIAMOND CORE
+   CENTER ROYAL MEDALLION
    ========================================================= */
 
 .center-icon-wrap {
 
     position: relative;
 
-    width: 67px;
-    height: 67px;
+    width: 70px;
+    height: 70px;
+
+    margin-top: -37px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    transform:
-        rotate(45deg);
-
-    border-radius: 19px;
+    border-radius: 50%;
 
     background:
 
-        linear-gradient(
-            145deg,
-            #3a1720 0%,
-            #160b10 44%,
-            #08070a 100%
+        radial-gradient(
+            circle at 50% 27%,
+            #9B2031 0%,
+            #76101E 37%,
+            #520914 72%,
+            #35050B 100%
         );
 
     border:
-
         1px solid
-        rgba(225,232,240,.40);
+        var(--gold-light);
 
     box-shadow:
 
-        0 16px 30px
-        rgba(0,0,0,.55),
+        0 0 0 3px
+        #4A0710,
 
-        0 0 0 1px
-        rgba(205,169,90,.18),
+        0 0 0 4px
+        rgba(242,212,119,.48),
+
+        0 0 0 7px
+        rgba(74,7,16,.78),
 
         0 0 28px
-        rgba(222,232,242,.13),
+        rgba(242,212,119,.27),
 
-        inset 0 1px 0
-        rgba(255,255,255,.16),
+        0 11px 23px
+        rgba(30,2,5,.50),
 
-        inset 0 -8px 20px
-        rgba(0,0,0,.30);
+        inset 0 2px 0
+        rgba(255,242,187,.22);
+
+    overflow: hidden;
 
     transition:
-
-        transform .28s
-        cubic-bezier(.2,.8,.2,1),
-
-        box-shadow .28s ease;
-
+        transform .3s ease,
+        box-shadow .3s ease;
 }
 
 
 /* =========================================================
-   DIAMOND INNER FRAME
+   MEDALLION INNER ORNAMENT
    ========================================================= */
 
 .center-icon-wrap::before {
@@ -607,25 +568,21 @@ body {
 
     inset: 7px;
 
-    border-radius: 13px;
+    border-radius: 50%;
 
     border:
         1px solid
-        rgba(244,223,170,.30);
+        rgba(242,212,119,.30);
 
     box-shadow:
 
-        inset 0 0 14px
-        rgba(255,255,255,.035),
-
-        0 0 10px
-        rgba(220,230,240,.08);
-
+        inset 0 0 12px
+        rgba(255,211,91,.08);
 }
 
 
 /* =========================================================
-   DIAMOND LIGHT
+   MEDALLION LIGHT
    ========================================================= */
 
 .center-icon-wrap::after {
@@ -634,25 +591,23 @@ body {
 
     position: absolute;
 
-    width: 42px;
-    height: 42px;
+    width: 80%;
+    height: 55%;
 
-    top: 4px;
-    left: 4px;
+    left: 10%;
+    top: 0;
 
     border-radius: 50%;
 
     background:
 
         radial-gradient(
-            circle,
-            rgba(255,244,205,.17),
-            rgba(221,187,103,.07) 32%,
-            transparent 70%
+            ellipse,
+            rgba(255,225,137,.22),
+            transparent 68%
         );
 
-    filter: blur(2px);
-
+    pointer-events: none;
 }
 
 
@@ -666,28 +621,60 @@ body {
 
     z-index: 5;
 
-    width: 49px;
-    height: 49px;
+    width: 51px;
+    height: 51px;
 
     object-fit: contain;
-
-    display: block;
-
-    transform:
-        rotate(-45deg);
 
     filter:
 
         drop-shadow(
-            0 0 7px
-            rgba(245,223,164,.34)
-        )
-
-        drop-shadow(
-            0 4px 8px
-            rgba(0,0,0,.50)
+            0 0 8px
+            rgba(255,222,133,.52)
         );
 
+    transition:
+        transform .25s ease;
+}
+
+
+/* =========================================================
+   CENTER ACTIVE
+   ========================================================= */
+
+.nav-center.active
+.center-icon-wrap {
+
+    transform:
+        translateY(-3px)
+        scale(1.035);
+
+    box-shadow:
+
+        0 0 0 3px
+        #4A0710,
+
+        0 0 0 4px
+        var(--gold-light),
+
+        0 0 0 7px
+        rgba(74,7,16,.85),
+
+        0 0 34px
+        rgba(242,212,119,.43),
+
+        0 13px 26px
+        rgba(30,2,5,.55),
+
+        inset 0 2px 0
+        rgba(255,248,202,.28);
+}
+
+
+.nav-center.active .center-icon {
+
+    transform:
+        scale(1.06);
 }
 
 
@@ -697,64 +684,20 @@ body {
 
 .center-label {
 
-    margin-top: 7px;
+    color:
+        var(--gold-bright);
 
     font-size: 9.5px;
 
-    line-height: 1;
-
     font-weight: 700;
 
-    letter-spacing: .015em;
+    line-height: 1;
 
     white-space: nowrap;
 
-    color:
-        var(--champagne);
-
     text-shadow:
-
-        0 1px 5px
+        0 1px 4px
         rgba(0,0,0,.55);
-
-}
-
-
-/* =========================================================
-   CENTER HOVER / ACTIVE
-   ========================================================= */
-
-.nav-center.active
-.center-icon-wrap {
-
-    transform:
-        rotate(45deg)
-        translateY(-2px)
-        scale(1.035);
-
-    border-color:
-        rgba(244,223,170,.72);
-
-    box-shadow:
-
-        0 18px 34px
-        rgba(0,0,0,.58),
-
-        0 0 0 1px
-        rgba(244,223,170,.18),
-
-        0 0 32px
-        rgba(228,236,245,.19),
-
-        0 0 42px
-        rgba(213,171,82,.12),
-
-        inset 0 1px 0
-        rgba(255,255,255,.22),
-
-        inset 0 -8px 20px
-        rgba(0,0,0,.30);
-
 }
 
 
@@ -764,75 +707,62 @@ body {
 
 .samiti-icon {
 
-    width: 31px;
-    height: 31px;
+    width: 32px;
+    height: 32px;
 
     border-radius: 50%;
 
     object-fit: cover;
 
-    display: block;
-
     border:
         1px solid
-        rgba(220,228,237,.30);
+        rgba(242,212,119,.70);
 
     box-shadow:
 
-        0 3px 8px
-        rgba(0,0,0,.40);
-
-    opacity: .76;
+        0 2px 7px
+        rgba(0,0,0,.35);
 
     transition:
-
         transform .25s ease,
-        opacity .25s ease,
         box-shadow .25s ease;
 }
 
 
 .nav-item.active .samiti-icon {
 
-    opacity: 1;
-
     transform:
-        scale(1.07);
-
-    border-color:
-        rgba(244,223,170,.62);
+        scale(1.08);
 
     box-shadow:
 
-        0 0 12px
-        rgba(229,217,184,.22);
+        0 0 11px
+        rgba(242,212,119,.42);
 }
 
 
 /* =========================================================
-   DASHBOARD ICON
+   DASHBOARD
    ========================================================= */
 
 .dashboard-icon {
 
-    width: 31px;
-    height: 31px;
+    width: 32px;
+    height: 32px;
 
     object-fit: contain;
 
     display: block;
 
-    opacity: .72;
+    opacity: .83;
 
     filter:
-
         drop-shadow(
-            0 2px 5px
-            rgba(0,0,0,.45)
+            0 2px 4px
+            rgba(0,0,0,.35)
         );
 
     transition:
-
         transform .25s ease,
         opacity .25s ease,
         filter .25s ease;
@@ -847,131 +777,93 @@ body {
         scale(1.07);
 
     filter:
-
         drop-shadow(
-            0 0 7px
-            rgba(232,239,247,.30)
+            0 0 8px
+            rgba(255,222,133,.50)
         );
 }
 
 
 /* =========================================================
-   MICRO CRYSTAL DOT
+   SIDE ORNAMENTAL POINTS
    ========================================================= */
 
-.nav-item:not(.nav-center)::before {
+.nav-item:first-child::before,
+.nav-item:nth-child(2)::before,
+.nav-item:nth-child(4)::before,
+.nav-item:last-child::before {
 
     content: "";
 
     position: absolute;
 
-    top: 7px;
+    top: 3px;
 
-    width: 2px;
-    height: 2px;
+    width: 3px;
+    height: 3px;
 
     border-radius: 50%;
 
     background:
-        rgba(255,255,255,.20);
-
-    opacity: .5;
-
+        rgba(242,212,119,.30);
 }
 
 
 /* =========================================================
-   CENTER SEPARATOR LIGHTS
-   ========================================================= */
-
-.nav-center + .nav-item::before {
-
-    box-shadow:
-        -1px 0 0
-        rgba(244,223,170,.03);
-
-}
-
-
-/* =========================================================
-   PRESS FEEDBACK
-   ========================================================= */
-
-.nav-item:active
-.nav-icon-box {
-
-    transform:
-        scale(.92);
-}
-
-
-/* =========================================================
-   RESPONSIVE — SMALL PHONES
+   SMALL PHONES
    ========================================================= */
 
 @media (max-width: 380px) {
 
     :root {
-        --nav-h: 73px;
+        --footer-height: 84px;
     }
 
     .sanatani-bottom-nav {
 
-        border-radius: 22px;
+        padding-left: 3px;
+        padding-right: 3px;
 
-        padding-left: 5px;
-        padding-right: 5px;
+        border-radius:
+            23px
+            23px
+            0
+            0;
     }
 
     .nav-item {
-
         height: 62px;
-
-    }
-
-    .nav-icon-box {
-
-        width: 34px;
-        height: 34px;
     }
 
     .nav-icon {
-
-        width: 27px;
-        height: 27px;
+        width: 28px;
+        height: 28px;
     }
 
     .samiti-icon,
     .dashboard-icon {
-
-        width: 27px;
-        height: 27px;
+        width: 28px;
+        height: 28px;
     }
 
     .nav-label {
-
-        font-size: 8.5px;
+        font-size: 8.4px;
     }
 
     .center-icon-wrap {
-
-        width: 61px;
-        height: 61px;
-
-        border-radius: 17px;
+        width: 62px;
+        height: 62px;
+        margin-top: -31px;
     }
 
     .center-icon {
-
-        width: 44px;
-        height: 44px;
+        width: 45px;
+        height: 45px;
     }
 
     .center-label {
-
-        font-size: 8.5px;
+        font-size: 8.4px;
     }
-
 }
 
 
@@ -981,59 +873,37 @@ body {
 
 @media (max-width: 330px) {
 
-    .sanatani-bottom-nav {
-
-        width:
-            calc(100vw - 12px);
-
-        padding-left: 3px;
-        padding-right: 3px;
-    }
-
     .nav-label {
-
-        font-size: 8px;
+        font-size: 7.8px;
     }
 
     .center-label {
-
-        font-size: 8px;
+        font-size: 7.8px;
     }
 
+    .center-icon-wrap {
+        width: 58px;
+        height: 58px;
+    }
+
+    .center-icon {
+        width: 42px;
+        height: 42px;
+    }
 }
 
 
 /* =========================================================
-   TABLET / LARGE DISPLAY
+   SAFE AREA
    ========================================================= */
 
-@media (min-width: 700px) {
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
 
-    :root {
-        --nav-h: 82px;
+    .sanatani-footer-stage {
+
+        padding-bottom:
+            env(safe-area-inset-bottom);
     }
-
-    .sanatani-bottom-nav {
-
-        border-radius: 28px;
-
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-
-    .nav-icon {
-
-        width: 33px;
-        height: 33px;
-    }
-
-    .samiti-icon,
-    .dashboard-icon {
-
-        width: 33px;
-        height: 33px;
-    }
-
 }
 
 
@@ -1047,77 +917,11 @@ body {
     *::before,
     *::after {
 
-        transition: none !important;
-
         animation: none !important;
-    }
 
+        transition: none !important;
+    }
 }
-
-
-/* =========================================================
-   ANDROID WEBVIEW SAFE AREA
-   ========================================================= */
-
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-
-    .sanatani-navigation-stage {
-
-        padding-bottom:
-            calc(
-                10px +
-                env(safe-area-inset-bottom)
-            );
-    }
-
-}
-
-
-/* =========================================================
-   LANDSCAPE PHONE
-   ========================================================= */
-
-@media
-    (orientation: landscape)
-    and (max-height: 500px) {
-
-    :root {
-        --nav-h: 68px;
-    }
-
-    .sanatani-bottom-nav {
-
-        width: min(
-            620px,
-            calc(100vw - 30px)
-        );
-
-        border-radius: 22px;
-    }
-
-    .nav-item {
-
-        height: 58px;
-    }
-
-    .center-icon-wrap {
-
-        width: 56px;
-        height: 56px;
-    }
-
-    .center-icon {
-
-        width: 40px;
-        height: 40px;
-    }
-
-}
-
-
-/* =========================================================
-   END OF DESIGN
-   ========================================================= */
 
 </style>
 </head>
@@ -1126,26 +930,15 @@ body {
 <body>
 
 
-<!-- =======================================================
-     PAGE CONTENT
-     ======================================================= -->
-
-<main id="app-content">
-
-    <!--
-        Your actual page content goes here.
-    -->
-
-</main>
-
+<main id="app-content"></main>
 
 
 <!-- =======================================================
      SANATANI Ð₲
-     FLAGSHIP FLOATING NAVIGATION
+     ROYAL JEWEL FOOTER
      ======================================================= -->
 
-<div class="sanatani-navigation-stage">
+<div class="sanatani-footer-stage">
 
 <nav
     class="sanatani-bottom-nav"
@@ -1155,7 +948,7 @@ body {
 
 
     <!-- ===================================================
-         1. HOME
+         HOME
          =================================================== -->
 
     <a
@@ -1171,7 +964,6 @@ body {
                 src="branding/footer/home.png"
                 class="nav-icon"
                 alt="Home"
-                loading="eager"
             >
 
         </span>
@@ -1185,7 +977,7 @@ body {
 
 
     <!-- ===================================================
-         2. FEED
+         FEED
          =================================================== -->
 
     <a
@@ -1201,7 +993,6 @@ body {
                 src="branding/footer/feed.png"
                 class="nav-icon"
                 alt="Feed"
-                loading="eager"
             >
 
         </span>
@@ -1215,8 +1006,7 @@ body {
 
 
     <!-- ===================================================
-         3. SANATANI Ð₲
-         CENTRAL FLAGSHIP BUTTON
+         SANATANI Ð₲
          =================================================== -->
 
     <a
@@ -1232,7 +1022,6 @@ body {
                 src="branding/footer/Ð₲.png"
                 class="center-icon"
                 alt="Sanatani Ð₲"
-                loading="eager"
             >
 
         </span>
@@ -1246,7 +1035,7 @@ body {
 
 
     <!-- ===================================================
-         4. SANATAN SEVA SAMITI
+         SANATAN SEVA SAMITI
          =================================================== -->
 
     <a
@@ -1262,7 +1051,6 @@ body {
                 src="branding/footer/PRO1781011172_dp.jpg"
                 class="samiti-icon"
                 alt="Sanatan Seva Samiti"
-                loading="eager"
             >
 
         </span>
@@ -1276,7 +1064,7 @@ body {
 
 
     <!-- ===================================================
-         5. DASHBOARD
+         DASHBOARD
          =================================================== -->
 
     <a
@@ -1292,7 +1080,6 @@ body {
                 src="branding/footer/accounts.png"
                 class="dashboard-icon"
                 alt="Dashboard"
-                loading="eager"
             >
 
         </span>
@@ -1313,8 +1100,7 @@ body {
 <script>
 
 /* =========================================================
-   SANATANI Ð₲
-   NAVIGATION ENGINE
+   SANATANI Ð₲ NAVIGATION ENGINE
    ========================================================= */
 
 (function () {
@@ -1340,7 +1126,7 @@ body {
 
 
     /* =====================================================
-       CURRENT PAGE DETECTION
+       PAGE DETECTION
        ===================================================== */
 
     const currentPath =
@@ -1403,7 +1189,7 @@ body {
 
 
     /* =====================================================
-       APPLY ACTIVE STATE
+       ACTIVE ITEM
        ===================================================== */
 
     items.forEach(function (item) {
@@ -1436,7 +1222,7 @@ body {
 
 
     /* =====================================================
-       ANDROID WEBVIEW BRIDGE
+       ANDROID BRIDGE
        ===================================================== */
 
     items.forEach(function (item) {
@@ -1471,7 +1257,7 @@ body {
                     catch (error) {
 
                         console.log(
-                            "Android navigation bridge error:",
+                            "Android navigation error:",
                             error
                         );
 
@@ -1483,41 +1269,6 @@ body {
         );
 
     });
-
-
-    /* =====================================================
-       PREVENT DOUBLE-TAP ZOOM BEHAVIOUR
-       ===================================================== */
-
-    let lastTouchEnd = 0;
-
-
-    document.addEventListener(
-        "touchend",
-        function (event) {
-
-            const now =
-                Date.now();
-
-
-            if (
-                now - lastTouchEnd <= 280
-            ) {
-
-                event.preventDefault();
-
-            }
-
-
-            lastTouchEnd =
-                now;
-
-        },
-        {
-            passive: false
-        }
-    );
-
 
 })();
 
