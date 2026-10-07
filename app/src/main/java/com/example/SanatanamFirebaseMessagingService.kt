@@ -8,6 +8,8 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.media.AudioAttributes
+import android.net.Uri
 import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
@@ -26,6 +28,8 @@ class SanatanamFirebaseMessagingService : FirebaseMessagingService() {
         private const val TAG = "SanatanamFCM"
         const val CHANNEL_ID = "sanatanam_updates_channel"
         const val CHANNEL_NAME = "Sanatan Seva Samiti Announcements"
+        const val WALLET_CHANNEL_ID = "sanatanam_wallet_channel"
+        const val WALLET_CHANNEL_NAME = "Wallet Transactions"
     }
 
     override fun onNewToken(token: String) {
@@ -52,7 +56,7 @@ class SanatanamFirebaseMessagingService : FirebaseMessagingService() {
         val extraData = data["extra"] ?: ""
 
         CoroutineScope(Dispatchers.IO).launch {
-            showNotification(rawTitle, rawBody, imageUrl, targetScreen, extraData)
+            showNotification(rawTitle, rawBody, imageUrl, targetScreen, extraData, data)
         }
     }
 
@@ -61,23 +65,48 @@ class SanatanamFirebaseMessagingService : FirebaseMessagingService() {
         bodyHtml: String,
         imageUrl: String?,
         targetScreen: String,
-        extraData: String
+        extraData: String,
+        data: Map<String, String> = emptyMap()
     ) {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
+        val isWallet = data["channel_id"] == WALLET_CHANNEL_ID ||
+                data["type"] == "wallet" ||
+                targetScreen.contains("wallet", ignoreCase = true)
+
+        val activeChannelId = if (isWallet) WALLET_CHANNEL_ID else CHANNEL_ID
+        val ringtoneUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.sanatanam_ringtone)
+
         // Create Notification Channel for Android 8.0+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                CHANNEL_ID,
-                CHANNEL_NAME,
-                NotificationManager.IMPORTANCE_HIGH
-            ).apply {
-                description = "Official announcements, darshan updates, and seva alerts"
-                enableLights(true)
-                lightColor = Color.parseColor("#D93F01")
-                enableVibration(true)
+            if (isWallet) {
+                val audioAttributes = AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build()
+                val walletChannel = NotificationChannel(
+                    WALLET_CHANNEL_ID,
+                    WALLET_CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = "Notifications for wallet credits and debits"
+                    setSound(ringtoneUri, audioAttributes)
+                    enableVibration(true)
+                }
+                notificationManager.createNotificationChannel(walletChannel)
+            } else {
+                val channel = NotificationChannel(
+                    CHANNEL_ID,
+                    CHANNEL_NAME,
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = "Official announcements, darshan updates, and seva alerts"
+                    enableLights(true)
+                    lightColor = Color.parseColor("#D93F01")
+                    enableVibration(true)
+                }
+                notificationManager.createNotificationChannel(channel)
             }
-            notificationManager.createNotificationChannel(channel)
         }
 
         // Support HTML / Rich text formatting
@@ -107,7 +136,7 @@ class SanatanamFirebaseMessagingService : FirebaseMessagingService() {
             bannerBitmap = downloadBitmap(imageUrl)
         }
 
-        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+        val notificationBuilder = NotificationCompat.Builder(this, activeChannelId)
             .setSmallIcon(R.drawable.app_logo)
             .setColor(Color.parseColor("#D93F01"))
             .setContentTitle(formattedTitle)
@@ -115,6 +144,10 @@ class SanatanamFirebaseMessagingService : FirebaseMessagingService() {
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setContentIntent(pendingIntent)
+
+        if (isWallet) {
+            notificationBuilder.setSound(ringtoneUri)
+        }
 
         if (bannerBitmap != null) {
             val bigPictureStyle = NotificationCompat.BigPictureStyle()

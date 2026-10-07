@@ -1,10 +1,14 @@
 package com.example
 
 import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.AudioAttributes
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -324,8 +328,23 @@ class MainActivity : ComponentActivity() {
                     "profile" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=profile")
                     "enginedetails", "engine_details" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=engine_details")
                     "admin" -> webViewProvider()?.loadUrl("file:///android_asset/admin/notifications.html")
+                    "wallet", "app_wallet" -> webViewProvider()?.loadUrl("file:///android_asset/app_wallet.html")
                     else -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=$screenName")
                 }
+            }
+        }
+
+        @JavascriptInterface
+        fun syncUserFcmTopic(uniqueId: String) {
+            if (uniqueId.isNotBlank()) {
+                val cleanTopic = "user_" + uniqueId.replace("[^a-zA-Z0-9_]".toRegex(), "_")
+                FirebaseMessaging.getInstance().subscribeToTopic(cleanTopic)
+                    .addOnSuccessListener {
+                        Log.d("WALLET_FCM", "Subscribed to personal topic: $cleanTopic")
+                    }
+                    .addOnFailureListener { e ->
+                        Log.w("WALLET_FCM", "Failed to subscribe to personal topic $cleanTopic: ${e.message}")
+                    }
             }
         }
     }
@@ -375,7 +394,31 @@ class MainActivity : ComponentActivity() {
             Log.i("FCM", "FirebaseMessaging init notice: ${e.message}")
         }
 
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            try {
+                val soundUri = Uri.parse("android.resource://" + packageName + "/" + R.raw.sanatanam_ringtone)
+                val audioAttributes = AudioAttributes.Builder()
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                    .build()
+                val channel = NotificationChannel(
+                    "sanatanam_wallet_channel",
+                    "Wallet Transactions",
+                    NotificationManager.IMPORTANCE_HIGH
+                ).apply {
+                    description = "Notifications for wallet credits and debits"
+                    setSound(soundUri, audioAttributes)
+                    enableVibration(true)
+                }
+                val manager = getSystemService(NotificationManager::class.java)
+                manager?.createNotificationChannel(channel)
+                Log.d("WALLET_FCM", "sanatanam_wallet_channel created with custom ringtone")
+            } catch (e: Exception) {
+                Log.e("WALLET_FCM", "Error creating wallet notification channel: ${e.message}")
+            }
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
             }
