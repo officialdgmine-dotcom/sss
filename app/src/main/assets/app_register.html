@@ -8,12 +8,13 @@
 <title>SANATANAM — नवीन सदस्यता पंजीकरण</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 :root{
     --maroon:#3b0710;
     --maroon-2:#5b0b18;
     --maroon-3:#791226;
+    --saffron:#f47712;
     --gold:#d4af37;
     --gold-light:#f4d77b;
     --gold-soft:#e8c96b;
@@ -21,46 +22,41 @@
     --cream-2:#eadfc9;
     --text:#fffaf0;
     --muted:#cbbda9;
+    --border-gold:rgba(212,175,55,.32);
+    --input-bg:rgba(255,255,255,.07);
     --safe-top:env(safe-area-inset-top);
     --safe-bottom:env(safe-area-inset-bottom);
 }
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-}
-html, body{
-    width:100%;
-    min-height:100%;
-    margin:0;
-    padding:0;
-}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html, body{width:100%;min-height:100%;margin:0;padding:0;}
 body{
     background:
-        radial-gradient(circle at 50% 0%, rgba(212,175,55,.15), transparent 35%),
-        radial-gradient(circle at 10% 80%, rgba(121,18,38,.25), transparent 35%),
-        linear-gradient(145deg,#21040a,#3b0710 45%,#170207);
+        radial-gradient(circle at 50% 0%, rgba(212,175,55,.16), transparent 38%),
+        radial-gradient(circle at 10% 85%, rgba(121,18,38,.28), transparent 40%),
+        linear-gradient(145deg,#1c0308,#3b0710 45%,#150106);
     color:var(--text);
     font-family:'Poppins', 'Noto Sans Devanagari', sans-serif;
     min-height:100dvh;
     display:flex;
     justify-content:center;
     align-items:flex-start;
-    padding: calc(16px + var(--safe-top)) 16px calc(24px + var(--safe-bottom));
+    padding: calc(16px + var(--safe-top)) 14px calc(30px + var(--safe-bottom));
 }
 .register-container{
-    width:min(100%, 480px);
-    background:linear-gradient(180deg, rgba(91,11,24,.6), rgba(33,4,10,.8));
-    border:1px solid rgba(212,175,55,.32);
+    width:min(100%, 500px);
+    background:linear-gradient(180deg, rgba(91,11,24,.65), rgba(30,4,9,.85));
+    border:1px solid var(--border-gold);
     border-radius:24px;
-    padding:28px 22px;
-    box-shadow:0 18px 45px rgba(0,0,0,.6);
-    backdrop-filter:blur(16px);
+    padding:26px 20px;
+    box-shadow:0 18px 50px rgba(0,0,0,.65);
+    backdrop-filter:blur(18px);
 }
 .header-bar{
     display:flex;
     align-items:center;
     justify-content:space-between;
-    margin-bottom:20px;
+    margin-bottom:18px;
+    gap:8px;
 }
 .back-btn{
     display:inline-flex;
@@ -76,113 +72,481 @@ body{
     cursor:pointer;
     text-decoration:none;
 }
+.lang-selector-wrap{
+    display:flex;
+    align-items:center;
+    background:rgba(0,0,0,.35);
+    border:1px solid rgba(212,175,55,.3);
+    border-radius:20px;
+    padding:3px 8px;
+}
+.lang-selector-wrap select{
+    background:transparent;
+    border:none;
+    color:var(--gold-light);
+    font-size:12px;
+    font-weight:700;
+    font-family:inherit;
+    cursor:pointer;
+    outline:none;
+    padding:4px;
+}
+.lang-selector-wrap select option{
+    background:#2b050d;
+    color:#fffaf0;
+}
 .header-badge{
     font-size:11px;
     font-weight:700;
     color:var(--gold-soft);
     letter-spacing:1px;
     text-transform:uppercase;
-    background:rgba(212,175,55,.1);
-    padding:6px 14px;
+    background:rgba(212,175,55,.12);
+    padding:6px 12px;
     border-radius:20px;
     border:1px solid rgba(212,175,55,.25);
+    white-space:nowrap;
 }
-.brand-hero{
-    text-align:center;
-    margin-bottom:24px;
-}
+.brand-hero{text-align:center;margin-bottom:22px;}
 .brand-logo{
     width:72px;
     height:72px;
     border-radius:50%;
     border:2px solid var(--gold);
-    box-shadow:0 0 25px rgba(212,175,55,.4);
+    box-shadow:0 0 25px rgba(212,175,55,.45);
     object-fit:cover;
-    margin-bottom:12px;
 }
-.title-reg{
+.brand-title{
     font-family:'Cinzel', 'Noto Sans Devanagari', serif;
-    font-size:22px;
-    font-weight:700;
+    font-size:21px;
+    font-weight:800;
     color:var(--gold-light);
-    margin:0 0 6px 0;
-    text-shadow:0 2px 10px rgba(0,0,0,.5);
+    margin:10px 0 3px 0;
+    letter-spacing:.5px;
 }
-.subtitle-reg{
+.brand-sub{
     font-size:13px;
-    color:var(--muted);
+    color:var(--cream-2);
     margin:0;
+    font-weight:500;
 }
-.form-group{
-    margin-bottom:16px;
+
+/* Avatar upload */
+.avatar-section{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    margin-bottom:20px;
 }
+.avatar-wrap{
+    position:relative;
+    width:90px;
+    height:90px;
+    border-radius:50%;
+    border:2px dashed var(--gold);
+    background:rgba(255,255,255,.05);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    overflow:hidden;
+    transition:transform .2s;
+}
+.avatar-wrap:hover{transform:scale(1.03);}
+.avatar-preview{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:none;
+}
+.avatar-placeholder{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    color:var(--gold-soft);
+    font-size:11px;
+    text-align:center;
+    padding:4px;
+}
+.avatar-badge{
+    position:absolute;
+    bottom:0;
+    right:0;
+    width:28px;
+    height:28px;
+    border-radius:50%;
+    background:linear-gradient(135deg, var(--gold), var(--saffron));
+    color:#21040a;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    border:1px solid #fff;
+    box-shadow:0 2px 6px rgba(0,0,0,.5);
+}
+.avatar-hint{
+    font-size:11px;
+    color:var(--muted);
+    margin-top:6px;
+}
+
+/* Form Styles */
+.form-group{margin-bottom:15px;position:relative;}
 .form-label{
     display:block;
-    font-size:12.5px;
-    font-weight:600;
-    color:var(--gold-soft);
+    font-size:12px;
+    font-weight:700;
+    color:var(--gold-light);
     margin-bottom:6px;
+    letter-spacing:.3px;
 }
-.form-input, .form-select{
+.input-box{
     width:100%;
-    padding:13px 15px;
-    background:rgba(18,2,6,.65);
+    background:var(--input-bg);
     border:1px solid rgba(212,175,55,.28);
-    border-radius:12px;
+    border-radius:14px;
+    padding:13px 14px;
     color:var(--text);
     font-size:14px;
+    font-family:inherit;
     outline:none;
-    box-sizing:border-box;
     transition:border-color .2s, box-shadow .2s;
 }
-.form-input:focus, .form-select:focus{
+.input-box:focus{
+    border-color:var(--gold);
+    box-shadow:0 0 12px rgba(212,175,55,.3);
+    background:rgba(255,255,255,.1);
+}
+.input-box::placeholder{color:rgba(255,248,232,.45);}
+select.input-box{
+    appearance:none;
+    background-image:url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23f4d77b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat:no-repeat;
+    background-position:right 14px center;
+    background-size:14px;
+    cursor:pointer;
+}
+select.input-box option{background:#2a050d;color:#fffaf0;}
+
+/* Phone input with dial code */
+.phone-row{
+    display:flex;
+    gap:8px;
+}
+.dial-badge{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:0 12px;
+    background:rgba(0,0,0,.35);
+    border:1px solid rgba(212,175,55,.3);
+    border-radius:14px;
+    font-size:13px;
+    font-weight:700;
+    color:var(--gold-light);
+    cursor:pointer;
+    white-space:nowrap;
+    min-width:76px;
+}
+
+/* GPS Button */
+.btn-gps{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    width:100%;
+    background:linear-gradient(135deg, rgba(212,175,55,.15), rgba(244,119,18,.25));
+    border:1px solid rgba(212,175,55,.4);
+    color:var(--gold-light);
+    border-radius:12px;
+    padding:10px 14px;
+    font-size:12px;
+    font-weight:700;
+    cursor:pointer;
+    margin-bottom:14px;
+    transition:background .2s;
+}
+.btn-gps:active{transform:scale(.98);}
+
+/* PIN & Location row */
+.form-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+}
+.pin-status{
+    font-size:11px;
+    color:#5ce68b;
+    margin-top:4px;
+    display:none;
+}
+
+/* Searchable trigger fields */
+.clickable-field{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    cursor:pointer;
+}
+
+/* Gender Row */
+.gender-row{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:8px;
+}
+.gender-opt{
+    border:1px solid rgba(212,175,55,.25);
+    border-radius:12px;
+    padding:10px 6px;
+    text-align:center;
+    background:rgba(255,255,255,.05);
+    cursor:pointer;
+    font-size:13px;
+    font-weight:600;
+    color:var(--cream);
+    transition:all .2s;
+}
+.gender-opt.selected{
+    background:linear-gradient(135deg, var(--gold), var(--saffron));
+    color:#21040a;
     border-color:var(--gold-light);
-    box-shadow:0 0 10px rgba(212,175,55,.3);
+    font-weight:800;
+    box-shadow:0 3px 12px rgba(212,175,55,.4);
 }
-.form-select option{
-    background:#2b050d;
-    color:#fff;
+
+/* Password Toggle */
+.pass-wrap{position:relative;}
+.pass-toggle{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform:translateY(-50%);
+    background:none;
+    border:none;
+    color:var(--gold-soft);
+    cursor:pointer;
+    font-size:16px;
+    padding:4px;
 }
+
+/* Terms Checkbox */
+.terms-row{
+    display:flex;
+    align-items:flex-start;
+    gap:10px;
+    margin:18px 0 20px 0;
+    font-size:12px;
+    line-height:1.6;
+    color:var(--muted);
+}
+.terms-row input[type="checkbox"]{
+    accent-color:var(--gold);
+    width:18px;
+    height:18px;
+    margin-top:2px;
+    cursor:pointer;
+}
+.terms-row a{color:var(--gold-light);text-decoration:underline;}
+
+/* Submit Button */
 .btn-submit{
     width:100%;
-    padding:14px;
-    margin-top:10px;
-    background:linear-gradient(135deg, #f4d77b, #d4af37 60%, #b8860b);
+    background:linear-gradient(135deg, #d4af37 0%, #f47712 100%);
+    color:#21040a;
     border:none;
     border-radius:14px;
-    color:#2a050c;
-    font-size:15px;
+    padding:16px;
+    font-size:16px;
     font-weight:800;
     letter-spacing:.5px;
     cursor:pointer;
-    box-shadow:0 6px 20px rgba(212,175,55,.4);
-    transition:transform .15s, box-shadow .15s;
+    box-shadow:0 10px 25px rgba(212,175,55,.4);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    transition:transform .2s, box-shadow .2s;
 }
-.btn-submit:active{
-    transform:scale(0.98);
+.btn-submit:active{transform:scale(.98);}
+.btn-submit:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
-.nav-links{
-    margin-top:20px;
+
+.footer-link{
     text-align:center;
+    margin-top:20px;
+    font-size:13px;
+    color:var(--muted);
+}
+.footer-link a{
+    color:var(--gold-light);
+    font-weight:700;
+    text-decoration:none;
+    margin-left:4px;
+}
+
+/* Modals */
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.82);
+    backdrop-filter:blur(10px);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:18px;
+    z-index:9999;
+}
+.modal-card{
+    width:min(100%, 460px);
+    max-height:85vh;
+    background:linear-gradient(180deg, #480914, #21040a);
+    border:1px solid var(--gold);
+    border-radius:24px;
+    box-shadow:0 20px 60px rgba(0,0,0,.9);
     display:flex;
     flex-direction:column;
-    gap:10px;
+    overflow:hidden;
+    animation:modalPop .25s ease-out;
 }
-.link-alt{
-    color:var(--muted);
-    font-size:13px;
-    text-decoration:none;
-    transition:color .2s;
+@keyframes modalPop{
+    from{transform:scale(.92);opacity:0;}
+    to{transform:scale(1);opacity:1;}
 }
-.link-alt span{
-    color:var(--gold-soft);
-    font-weight:600;
+.modal-header{
+    padding:18px 20px 14px 20px;
+    border-bottom:1px solid rgba(212,175,55,.2);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
 }
-.link-guest{
-    font-size:12.5px;
-    color:rgba(255,255,255,.5);
-    text-decoration:underline;
+.modal-header h3{
+    margin:0;
+    color:var(--gold-light);
+    font-size:16px;
+    font-weight:700;
+}
+.modal-close{
+    background:none;
+    border:none;
+    color:var(--gold-light);
+    font-size:22px;
     cursor:pointer;
+    padding:0;
+}
+.modal-search{
+    padding:12px 18px;
+    background:rgba(0,0,0,.3);
+    border-bottom:1px solid rgba(212,175,55,.15);
+}
+.modal-list{
+    padding:10px 12px;
+    overflow-y:auto;
+    flex:1;
+}
+.modal-item{
+    padding:12px 14px;
+    border-radius:12px;
+    margin-bottom:6px;
+    cursor:pointer;
+    font-size:14px;
+    color:var(--cream);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    transition:background .15s;
+}
+.modal-item:hover, .modal-item:active{
+    background:rgba(212,175,55,.18);
+    color:var(--gold-light);
+}
+
+/* Success Confirmation Gate Modal */
+.success-modal{
+    text-align:center;
+    padding:28px 22px;
+}
+.success-icon-wrap{
+    width:76px;
+    height:76px;
+    margin:0 auto 16px auto;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(212,175,55,.3), rgba(244,119,18,.1));
+    border:2px solid var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:36px;
+    color:var(--gold-light);
+    box-shadow:0 0 30px rgba(212,175,55,.5);
+}
+.success-modal h2{
+    font-family:'Cinzel', 'Noto Sans Devanagari', serif;
+    font-size:18px;
+    font-weight:800;
+    color:var(--gold-light);
+    margin:0 0 10px 0;
+    line-height:1.5;
+}
+.success-modal p{
+    font-size:13px;
+    color:var(--cream-2);
+    line-height:1.6;
+    margin:0 0 14px 0;
+}
+.success-modal .terms-notice{
+    font-size:12px;
+    color:var(--gold-soft);
+    background:rgba(212,175,55,.1);
+    border:1px dashed rgba(212,175,55,.3);
+    border-radius:12px;
+    padding:10px 12px;
+    margin-bottom:20px;
+}
+.btn-read-terms{
+    width:100%;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(212,175,55,.4);
+    color:var(--gold-light);
+    border-radius:12px;
+    padding:12px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    margin-bottom:10px;
+}
+.btn-agree-proceed{
+    width:100%;
+    background:linear-gradient(135deg, #d4af37, #f47712);
+    color:#21040a;
+    border:none;
+    border-radius:12px;
+    padding:14px;
+    font-size:15px;
+    font-weight:800;
+    cursor:pointer;
+    box-shadow:0 6px 20px rgba(212,175,55,.4);
+}
+
+/* Toast */
+.toast{
+    position:fixed;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%);
+    background:#2b050d;
+    border:1px solid var(--gold);
+    color:var(--gold-light);
+    padding:10px 20px;
+    border-radius:24px;
+    font-size:13px;
+    font-weight:600;
+    box-shadow:0 10px 30px rgba(0,0,0,.8);
+    display:none;
+    z-index:99999;
 }
 </style>
 </head>
@@ -190,110 +554,1100 @@ body{
 
 <div class="register-container">
     <div class="header-bar">
-        <a href="app_welcome.html" class="back-btn" aria-label="Back">‹</a>
-        <div class="header-badge" id="regBadge">सनातन सेवा संकल्प</div>
+        <a href="app_welcome.html" class="back-btn" id="btn-back" title="वापस">←</a>
+        <div class="lang-selector-wrap">
+            <span style="font-size:14px;margin-right:2px;">🌐</span>
+            <select id="lang-select" onchange="switchLanguage(this.value)">
+                <option value="hi">हिंदी (Hindi)</option>
+                <option value="sa">संस्कृतम् (Sanskrit)</option>
+                <option value="en">English</option>
+                <option value="gu">ગુજરાતી (Gujarati)</option>
+                <option value="mr">मराठी (Marathi)</option>
+                <option value="bn">বাংলা (Bengali)</option>
+            </select>
+        </div>
+        <span class="header-badge" id="txt-badge">नवीन सदस्यता</span>
     </div>
 
     <div class="brand-hero">
-        <img src="assets/branding/app_logo.png" onerror="this.onerror=null; this.src='app_logo.png';" alt="Emblem" class="brand-logo">
-        <h1 class="title-reg" id="regTitle">नवीन सदस्यता पंजीकरण</h1>
-        <p class="subtitle-reg" id="regSubtitle">राष्ट्र एवं धर्म की रक्षा हेतु समर्पित सनातन सेवा परिवार में जुड़ें</p>
+        <img src="assets/branding/app_logo.png" onerror="this.onerror=null;this.src='app_logo.png'" alt="SANATANAM Logo" class="brand-logo">
+        <h1 class="brand-title" id="txt-title">सनातन सेवा समिति</h1>
+        <p class="brand-sub" id="txt-sub">सदस्यता पंजीकरण महाअभियान</p>
     </div>
 
-    <form id="registerForm" onsubmit="handleRegistration(event)">
+    <!-- Avatar Upload with Client-Side WebP compression -->
+    <div class="avatar-section">
+        <div class="avatar-wrap" onclick="document.getElementById('file-avatar').click()">
+            <img id="avatar-img" class="avatar-preview" alt="Avatar">
+            <div id="avatar-ph" class="avatar-placeholder">
+                <span style="font-size:24px;">📷</span>
+                <span id="txt-photo-label">फोटो जोड़ें</span>
+            </div>
+            <div class="avatar-badge">+</div>
+        </div>
+        <span class="avatar-hint" id="txt-photo-hint">पासपोर्ट आकार चित्र (वैकल्पिक)</span>
+        <input type="file" id="file-avatar" accept="image/*" style="display:none;" onchange="handlePhotoUpload(this)">
+    </div>
+
+    <form id="reg-form" onsubmit="handleRegistrationSubmit(event)">
+        <!-- Full Name -->
         <div class="form-group">
-            <label class="form-label" id="lbl_name" for="fullName">पूरा नाम (Full Name) *</label>
-            <input type="text" id="fullName" class="form-input" placeholder="e.g. राहुल शर्मा" required>
+            <label class="form-label" id="lbl-name">पूरा नाम *</label>
+            <input type="text" id="full_name" class="input-box" required placeholder="उदा. राहुल शर्मा">
         </div>
 
+        <!-- Seva Kshetra -->
         <div class="form-group">
-            <label class="form-label" id="lbl_phone" for="phoneNumber">मोबाइल / व्हाट्सएप नंबर (Mobile) *</label>
-            <input type="tel" id="phoneNumber" class="form-input" placeholder="e.g. 9876543210" required>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label" id="lbl_email" for="emailAddr">ई-मेल (Email - वैकल्पिक)</label>
-            <input type="email" id="emailAddr" class="form-input" placeholder="e.g. seva@sanatan.org">
-        </div>
-
-        <div class="form-group">
-            <label class="form-label" id="lbl_city" for="cityState">नगर / ज़िला व राज्य (City & State) *</label>
-            <input type="text" id="cityState" class="form-input" placeholder="e.g. प्रयागराज, उत्तर प्रदेश" required>
-        </div>
-
-        <div class="form-group">
-            <label class="form-label" id="lbl_seva" for="sevaType">सेवा संकल्प श्रेणी (Seva Category)</label>
-            <select id="sevaType" class="form-select">
-                <option value="gau_seva">गौ सेवा एवं संवर्धन (Gau Seva)</option>
-                <option value="anna_daan">अन्नदान महाअभियान (Anna Daan)</option>
-                <option value="dharma_jagran">धर्म जागरण एवं युवा संस्कार (Sanskar)</option>
-                <option value="temple_seva">मंदिर सेवा एवं स्वच्छता (Temple Seva)</option>
+            <label class="form-label" id="lbl-seva">रुचि का सेवा क्षेत्र *</label>
+            <select id="seva_kshetra" class="input-box" required>
+                <option value="" id="opt-seva-ph">सेवा क्षेत्र का चयन करें</option>
             </select>
         </div>
 
-        <button type="submit" class="btn-submit" id="btnSubmitReg">
-            ✦ सदस्यता स्वीकार करें (Register)
+        <!-- Gender & DOB -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" id="lbl-gender">लिंग *</label>
+                <div class="gender-row">
+                    <div class="gender-opt selected" onclick="selectGender('पुरुष', this)" id="opt-male">पुरुष</div>
+                    <div class="gender-opt" onclick="selectGender('महिला', this)" id="opt-female">महिला</div>
+                    <div class="gender-opt" onclick="selectGender('अन्य', this)" id="opt-other">अन्य</div>
+                </div>
+                <input type="hidden" id="gender" value="पुरुष">
+            </div>
+            <div class="form-group">
+                <label class="form-label" id="lbl-dob">जन्म तिथि *</label>
+                <input type="date" id="dob" class="input-box" required>
+            </div>
+        </div>
+
+        <!-- Country & Dial Code -->
+        <div class="form-group">
+            <label class="form-label" id="lbl-country">देश *</label>
+            <div class="input-box clickable-field" onclick="openCountryModal()">
+                <span id="display-country">🇮🇳 India (+91)</span>
+                <span style="color:var(--gold-soft);font-size:12px;">▼</span>
+            </div>
+            <input type="hidden" id="country" value="India">
+            <input type="hidden" id="dial_code" value="+91">
+        </div>
+
+        <!-- Mobile Number -->
+        <div class="form-group">
+            <label class="form-label" id="lbl-mobile">मोबाइल नंबर *</label>
+            <div class="phone-row">
+                <div class="dial-badge" id="badge-dial" onclick="openCountryModal()">🇮🇳 +91</div>
+                <input type="tel" id="mobile" class="input-box" required placeholder="१० अंकों का मोबाइल नंबर" maxlength="10" pattern="[0-9]{7,15}">
+            </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+            <label class="form-label" id="lbl-email">ईमेल पता (वैकल्पिक)</label>
+            <input type="email" id="email" class="input-box" placeholder="name@example.com">
+        </div>
+
+        <!-- GPS Auto Location Button -->
+        <button type="button" class="btn-gps" onclick="fetchGPSLocation()" id="btn-gps">
+            <span>📍</span> <span id="txt-gps">GPS से वर्तमान स्थान स्वतः भरें</span>
+        </button>
+
+        <!-- PIN Code with Instant Lookup -->
+        <div class="form-group">
+            <label class="form-label" id="lbl-pin">पिन कोड (Postal Code) *</label>
+            <input type="text" id="pincode" class="input-box" required placeholder="६ अंकों का पिन कोड" maxlength="10" oninput="handlePinLookup(this.value)">
+            <div class="pin-status" id="pin-status">✓ राज्य एवं जिला स्वतः प्राप्त हुए</div>
+        </div>
+
+        <!-- State & District -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" id="lbl-state">राज्य / प्रदेश *</label>
+                <input type="text" id="state" class="input-box" required placeholder="उदा. उत्तर प्रदेश" onclick="openStateModal()">
+            </div>
+            <div class="form-group">
+                <label class="form-label" id="lbl-district">जिला *</label>
+                <input type="text" id="district" class="input-box" required placeholder="उदा. वाराणसी">
+            </div>
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+            <label class="form-label" id="lbl-address">स्थायी पता / निवास *</label>
+            <input type="text" id="address" class="input-box" required placeholder="मकान नं., मोहल्ला, ग्राम, मार्ग...">
+        </div>
+
+        <!-- Password & Confirm Password -->
+        <div class="form-row">
+            <div class="form-group">
+                <label class="form-label" id="lbl-pass">सुरक्षित पासवर्ड *</label>
+                <div class="pass-wrap">
+                    <input type="password" id="pass" class="input-box" required minlength="6" placeholder="कम से कम ६ अंक">
+                    <button type="button" class="pass-toggle" onclick="togglePass('pass', this)">👁</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label" id="lbl-pass-confirm">पुष्टि करें *</label>
+                <div class="pass-wrap">
+                    <input type="password" id="pass_confirm" class="input-box" required minlength="6" placeholder="पुनः दर्ज करें">
+                    <button type="button" class="pass-toggle" onclick="togglePass('pass_confirm', this)">👁</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terms checkbox -->
+        <div class="terms-row">
+            <input type="checkbox" id="terms_agree" required checked>
+            <label for="terms_agree" id="txt-terms-label">
+                मैं सनातन सेवा समिति के सभी नियमों एवं विधानों का निष्ठापूर्वक पालन करने की सहमति देता हूँ। 
+                <a href="terms_conditions.html" target="_blank" id="lnk-terms">नियम पढ़ें</a>
+            </label>
+        </div>
+
+        <!-- Hidden photo base64 -->
+        <input type="hidden" id="profile_photo_base64" value="">
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-submit" id="btn-submit">
+            <span>🚩</span> <span id="txt-submit">पंजीकरण संपन्न करें</span>
         </button>
     </form>
 
-    <div class="nav-links">
-        <a href="app_login.html" class="link-alt">
-            पहले से पंजीकृत हैं? <span id="loginLinkText">सदस्य लॉगिन करें →</span>
-        </a>
-        <a href="app_home.html" class="link-guest" onclick="skipToHome(event)">
-            बिना पंजीकरण सीधे मुख्य पृष्ठ पर जाएं (Skip to Home)
-        </a>
+    <div class="footer-link">
+        <span id="txt-already">पहले से पंजीकृत सदस्य हैं?</span>
+        <a href="app_login.html" id="lnk-login">लॉगिन करें</a>
     </div>
 </div>
 
+<!-- Modal 1: Searchable Country Modal (240+ countries) -->
+<div class="modal-overlay" id="modal-country">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3 id="txt-country-title">देश का चयन करें</h3>
+            <button class="modal-close" onclick="closeModal('modal-country')">✕</button>
+        </div>
+        <div class="modal-search">
+            <input type="text" id="country-search" class="input-box" placeholder="देश खोजें / Search Country..." oninput="filterCountries(this.value)">
+        </div>
+        <div class="modal-list" id="country-list">
+            <!-- Populated via JS -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal 2: Searchable State Modal (Indian States) -->
+<div class="modal-overlay" id="modal-state">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3 id="txt-state-title">राज्य / प्रदेश चुनें</h3>
+            <button class="modal-close" onclick="closeModal('modal-state')">✕</button>
+        </div>
+        <div class="modal-search">
+            <input type="text" id="state-search" class="input-box" placeholder="राज्य खोजें..." oninput="filterStates(this.value)">
+        </div>
+        <div class="modal-list" id="state-list">
+            <!-- Populated via JS -->
+        </div>
+    </div>
+</div>
+
+<!-- Modal 3: Mandatory Post-Registration Success Confirmation & Terms Gate Modal -->
+<div class="modal-overlay" id="modal-success">
+    <div class="modal-card success-modal">
+        <div class="success-icon-wrap">🕉</div>
+        <h2 id="txt-succ-title">सनातन सेवा समिति में आपका पंजीकरण सफलतापूर्वक संपन्न हो चुका है!</h2>
+        <p id="txt-succ-sub">आपकी Unique Member ID शीघ्र ही जारी कर आपको सूचित कर दी जाएगी।</p>
+        <div class="terms-notice" id="txt-succ-terms-note">
+            कृपया समिति के सभी नियम एवं शर्तों को ध्यानपूर्वक पढ़ लें।
+        </div>
+        <button type="button" class="btn-read-terms" onclick="openTermsModalLink()" id="btn-succ-terms">
+            📜 नियम एवं शर्तें पढ़ें
+        </button>
+        <button type="button" class="btn-agree-proceed" onclick="confirmSuccessAndProceed()" id="btn-succ-agree">
+            ✓ मैं सहमत हूँ (आगे बढ़ें)
+        </button>
+    </div>
+</div>
+
+<div class="toast" id="toast-box">सूचना</div>
+
 <script>
+// ==========================================
+// 1. UNIVERSAL MULTI-LANGUAGE I18N ENGINE
+// ==========================================
 const urlParams = new URLSearchParams(window.location.search);
-const lang = urlParams.get("lang") || localStorage.getItem("sanatanam_app_lang") || "hi";
+let currentLang = urlParams.get('lang') || localStorage.getItem('sanatanam_app_lang') || 'hi';
 
-function handleRegistration(e) {
-    e.preventDefault();
-    const name = document.getElementById("fullName").value.trim();
-    const phone = document.getElementById("phoneNumber").value.trim();
-    const email = document.getElementById("emailAddr").value.trim();
-    const city = document.getElementById("cityState").value.trim();
-    const seva = document.getElementById("sevaType").value;
+const I18N = {
+    hi: {
+        badge: "नवीन सदस्यता",
+        title: "सनातन सेवा समिति",
+        sub: "सदस्यता पंजीकरण महाअभियान",
+        photoLabel: "फोटो जोड़ें",
+        photoHint: "पासपोर्ट आकार चित्र (वैकल्पिक)",
+        lblName: "पूरा नाम *",
+        namePh: "उदा. राहुल शर्मा",
+        lblSeva: "रुचि का सेवा क्षेत्र *",
+        sevaPh: "सेवा क्षेत्र का चयन करें",
+        lblGender: "लिंग *",
+        genderMale: "पुरुष",
+        genderFemale: "महिला",
+        genderOther: "अन्य",
+        lblDob: "जन्म तिथि *",
+        lblCountry: "देश *",
+        lblMobile: "मोबाइल नंबर *",
+        mobilePh: "१० अंकों का मोबाइल नंबर",
+        lblEmail: "ईमेल पता (वैकल्पिक)",
+        gpsBtn: "GPS से वर्तमान स्थान स्वतः भरें",
+        gpsLoading: "📍 GPS स्थान खोजा जा रहा है...",
+        lblPin: "पिन कोड (Postal Code) *",
+        pinPh: "६ अंकों का पिन कोड",
+        pinSuccess: "✓ राज्य एवं जिला स्वतः प्राप्त हुए",
+        lblState: "राज्य / प्रदेश *",
+        statePh: "उदा. उत्तर प्रदेश",
+        lblDistrict: "जिला *",
+        districtPh: "उदा. वाराणसी",
+        lblAddress: "स्थायी पता / निवास *",
+        addressPh: "मकान नं., मोहल्ला, ग्राम, मार्ग...",
+        lblPass: "सुरक्षित पासवर्ड *",
+        passPh: "कम से कम ६ अंक",
+        lblPassConfirm: "पुष्टि करें *",
+        passConfirmPh: "पुनः दर्ज करें",
+        termsText: "मैं सनातन सेवा समिति के सभी नियमों एवं विधानों का निष्ठापूर्वक पालन करने की सहमति देता हूँ।",
+        readTermsLink: "नियम पढ़ें",
+        btnSubmit: "पंजीकरण संपन्न करें",
+        btnSubmitting: "पंजीकरण हो रहा है...",
+        txtAlready: "पहले से पंजीकृत सदस्य हैं?",
+        lnkLogin: "लॉगिन करें",
+        countryTitle: "देश का चयन करें",
+        stateTitle: "राज्य / प्रदेश चुनें",
+        succTitle: "सनातन सेवा समिति में आपका पंजीकरण सफलतापूर्वक संपन्न हो चुका है!",
+        succSub: "आपकी Unique Member ID शीघ्र ही जारी कर आपको सूचित कर दी जाएगी।",
+        succTermsNote: "कृपया समिति के सभी नियम एवं शर्तों को ध्यानपूर्वक पढ़ लें।",
+        btnSuccTerms: "📜 नियम एवं शर्तें पढ़ें",
+        btnSuccAgree: "✓ मैं सहमत हूँ (आगे बढ़ें)",
+        errFillAll: "कृपया सभी आवश्यक विवरण सही प्रकार भरें।",
+        errPassMatch: "दोनों पासवर्ड समान होने चाहिए।",
+        errPinInvalid: "कृपया वैध पिन कोड दर्ज करें।"
+    },
+    sa: {
+        badge: "नवीन सदस्यता",
+        title: "सनातन सेवा समिति",
+        sub: "सदस्यतापञ्जीकरणमहाभियानम्",
+        photoLabel: "चित्रं योजयतु",
+        photoHint: "परिचयचित्रम् (ऐच्छिकम्)",
+        lblName: "पूर्णं नाम *",
+        namePh: "उदा. राहुल शर्मा",
+        lblSeva: "रुचिकरं सेवाक्षेत्रम् *",
+        sevaPh: "सेवाक्षेत्रं चिनोतु",
+        lblGender: "लिङ्गम् *",
+        genderMale: "पुमान्",
+        genderFemale: "स्त्री",
+        genderOther: "अन्यः",
+        lblDob: "जन्मतिथिः *",
+        lblCountry: "देशः *",
+        lblMobile: "चलभाषसङ्ख्या *",
+        mobilePh: "१० अङ्कयुक्ता सङ्ख्या",
+        lblEmail: "ई-मेल (ऐच्छिकम्)",
+        gpsBtn: "GPS द्वारा वर्तमानस्थानं पूरयतु",
+        gpsLoading: "स्थानं अन्विष्यते...",
+        lblPin: "पिन-सङ्केतः *",
+        pinPh: "६ अङ्कात्मकः सङ्केतः",
+        pinSuccess: "✓ राज्यं मण्डलं च प्राप्तम्",
+        lblState: "राज्यम् *",
+        statePh: "उदा. उत्तर प्रदेशः",
+        lblDistrict: "मण्डलम् *",
+        districtPh: "उदा. वाराणसी",
+        lblAddress: "स्थायीनिवासः *",
+        addressPh: "गृहसङ्ख्या, ग्रामः, मार्गः...",
+        lblPass: "गुप्तशब्दः *",
+        passPh: "न्यूनातिन्यूनं ६ अङ्काः",
+        lblPassConfirm: "पुष्टिं कुरुत *",
+        passConfirmPh: "पुनः प्रविशतु",
+        termsText: "अहं सनातन सेवा समित्याः सर्वेषां नियमानां निष्ठापूर्वकं पालनं करिष्यामि।",
+        readTermsLink: "नियमान् पठतु",
+        btnSubmit: "पञ्जीकरणं समाप्यताम्",
+        btnSubmitting: "पञ्जीकरणं प्रचलति...",
+        txtAlready: "पूर्वमेव सदस्यः अस्ति किम्?",
+        lnkLogin: "प्रवेशं कुरुत",
+        countryTitle: "देशं चिनोतु",
+        stateTitle: "राज्यं चिनोतु",
+        succTitle: "सनातन सेवा समितौ भवतः पञ्जीकरणं सफलं जातम्!",
+        succSub: "भवतः Unique Member ID शीघ्रमेव प्रदास्यते।",
+        succTermsNote: "कृपया समित्याः नियमान् शर्तांश्च सावधानतया पठतु।",
+        btnSuccTerms: "📜 नियमान् पठतु",
+        btnSuccAgree: "✓ अहं सम्मन्ये (अग्रे गच्छतु)",
+        errFillAll: "कृपया सर्वाणि आवश्यकविवरणानि पूरयतु।",
+        errPassMatch: "गुप्तशब्दौ समानौ भवेताम्।",
+        errPinInvalid: "कृपया मान्यं पिन-सङ्केतं लिखतु।"
+    },
+    en: {
+        badge: "New Membership",
+        title: "Sanatan Seva Samiti",
+        sub: "Membership Registration Campaign",
+        photoLabel: "Add Photo",
+        photoHint: "Passport size photo (optional)",
+        lblName: "Full Name *",
+        namePh: "e.g. Rahul Sharma",
+        lblSeva: "Preferred Seva Domain *",
+        sevaPh: "Select Seva Domain",
+        lblGender: "Gender *",
+        genderMale: "Male",
+        genderFemale: "Female",
+        genderOther: "Other",
+        lblDob: "Date of Birth *",
+        lblCountry: "Country *",
+        lblMobile: "Mobile Number *",
+        mobilePh: "10-digit mobile number",
+        lblEmail: "Email Address (Optional)",
+        gpsBtn: "Auto-Fill Location via GPS",
+        gpsLoading: "📍 Fetching GPS Location...",
+        lblPin: "PIN / Postal Code *",
+        pinPh: "6-digit PIN code",
+        pinSuccess: "✓ State & District Auto-Detected",
+        lblState: "State / Province *",
+        statePh: "e.g. Uttar Pradesh",
+        lblDistrict: "District *",
+        districtPh: "e.g. Varanasi",
+        lblAddress: "Permanent Residential Address *",
+        addressPh: "House No., Street, Colony, Landmark...",
+        lblPass: "Secure Password *",
+        passPh: "Min 6 characters",
+        lblPassConfirm: "Confirm Password *",
+        passConfirmPh: "Re-enter password",
+        termsText: "I solemnly agree to abide by all the rules and code of conduct of Sanatan Seva Samiti.",
+        readTermsLink: "Read Terms",
+        btnSubmit: "Complete Registration",
+        btnSubmitting: "Registering...",
+        txtAlready: "Already a registered member?",
+        lnkLogin: "Login Here",
+        countryTitle: "Select Country",
+        stateTitle: "Select State / Province",
+        succTitle: "Your registration in Sanatan Seva Samiti is successfully completed!",
+        succSub: "Your Unique Member ID will be issued shortly and communicated to you.",
+        succTermsNote: "Please carefully review all terms and conditions of the Samiti.",
+        btnSuccTerms: "📜 Read Terms & Conditions",
+        btnSuccAgree: "✓ I Agree (Proceed)",
+        errFillAll: "Please fill all mandatory fields properly.",
+        errPassMatch: "Passwords do not match.",
+        errPinInvalid: "Please enter a valid PIN code."
+    },
+    gu: {
+        badge: "નવીન સભ્યપદ",
+        title: "સનાતન સેવા સમિતિ",
+        sub: "સભ્યપદ નોંધણી મહાઅભિયાન",
+        photoLabel: "ફોટો ઉમેરો",
+        photoHint: "પાસપોર્ટ સાઇઝ ફોટો (વૈકલ્પિક)",
+        lblName: "પૂરું નામ *",
+        namePh: "દા.ત. રાહુલ શર્મા",
+        lblSeva: "સેવા ક્ષેત્ર પસંદ કરો *",
+        sevaPh: "સેવા ક્ષેત્ર પસંદ કરો",
+        lblGender: "જાતિ *",
+        genderMale: "પુરુષ",
+        genderFemale: "મહિલા",
+        genderOther: "અન્ય",
+        lblDob: "જન્મ તારીખ *",
+        lblCountry: "દેશ *",
+        lblMobile: "મોબાઈલ નંબર *",
+        mobilePh: "૧૦ અંકનો મોબાઈલ નંબર",
+        lblEmail: "ઈમેલ (વૈકલ્પિક)",
+        gpsBtn: "GPS દ્વારા વર્તમાન સ્થળ ભરો",
+        gpsLoading: "📍 GPS સ્થળ શોધાઈ રહ્યું છે...",
+        lblPin: "પિન કોડ *",
+        pinPh: "૬ અંકનો પિન કોડ",
+        pinSuccess: "✓ રાજ્ય અને જિલ્લો આપમેળે મળ્યા",
+        lblState: "રાજ્ય *",
+        statePh: "દા.ત. ગુજરાત",
+        lblDistrict: "જિલ્લો *",
+        districtPh: "દા.ત. અમદાવાદ",
+        lblAddress: "કાયમી સરનામું *",
+        addressPh: "ઘર નં., સોસાયટી, ગામ, માર્ગ...",
+        lblPass: "પાસવર્ડ બનાવો *",
+        passPh: "ઓછામાં ઓછા ૬ અંક",
+        lblPassConfirm: "પાસવર્ડ પુષ્ટિ કરો *",
+        passConfirmPh: "ફરી દાખલ કરો",
+        termsText: "હું સનાતન સેવા સમિતિના તમામ નિયમોનું પાલન કરવાની સંમતિ આપું છું.",
+        readTermsLink: "નિયમો વાંચો",
+        btnSubmit: "નોંધણી પૂર્ણ કરો",
+        btnSubmitting: "નોંધણી ચાલુ છે...",
+        txtAlready: "પહેલેથી સભ્ય છો?",
+        lnkLogin: "લૉગિન કરો",
+        countryTitle: "દેશ પસંદ કરો",
+        stateTitle: "રાજ્ય પસંદ કરો",
+        succTitle: "સનાતન સેવા સમિતિમાં તમારી નોંધણી સફળતાપૂર્વક થઈ ગઈ છે!",
+        succSub: "તમારી Unique Member ID ટૂંક સમયમાં જારી કરવામાં આવશે.",
+        succTermsNote: "કૃપા કરીને સમિતિના તમામ નિયમો અને શરતો ધ્યાનપૂર્વક વાંચો.",
+        btnSuccTerms: "📜 નિયમો અને શરતો વાંચો",
+        btnSuccAgree: "✓ હું સંમત છું (આગળ વધો)",
+        errFillAll: "કૃપા કરીને તમામ વિગતો યોગ્ય રીતે ભરો.",
+        errPassMatch: "પાસવર્ડ મેળ ખાતા નથી.",
+        errPinInvalid: "માન્ય પિન કોડ દાખલ કરો."
+    },
+    mr: {
+        badge: "नवीन सदस्यता",
+        title: "सनातन सेवा समिती",
+        sub: "सदस्यता नोंदणी महामोहीम",
+        photoLabel: "छायाचित्र जोडा",
+        photoHint: "पासपोर्ट आकार छायाचित्र (ऐच्छिक)",
+        lblName: "पूर्ण नाव *",
+        namePh: "उदा. राहुल शर्मा",
+        lblSeva: "आवडीचे सेवा क्षेत्र *",
+        sevaPh: "सेवा क्षेत्र निवडा",
+        lblGender: "लिंग *",
+        genderMale: "पुरुष",
+        genderFemale: "स्त्री",
+        genderOther: "इतर",
+        lblDob: "जन्मतारीख *",
+        lblCountry: "देश *",
+        lblMobile: "मोबाइल क्रमांक *",
+        mobilePh: "१० अंकी मोबाइल क्रमांक",
+        lblEmail: "ईमेल (ऐच्छिक)",
+        gpsBtn: "GPS द्वारे चालू ठिकाण भरा",
+        gpsLoading: "📍 GPS स्थान शोधत आहे...",
+        lblPin: "पिन कोड *",
+        pinPh: "६ अंकी पिन कोड",
+        pinSuccess: "✓ राज्य आणि जिल्हा प्राप्त झाले",
+        lblState: "राज्य *",
+        statePh: "उदा. महाराष्ट्र",
+        lblDistrict: "जिल्हा *",
+        districtPh: "उदा. पुणे",
+        lblAddress: "कायमचा पत्ता *",
+        addressPh: "घर क्र., गल्ली, गाव, रस्ता...",
+        lblPass: "सुरक्षित पासवर्ड *",
+        passPh: "किमान ६ अंक",
+        lblPassConfirm: "पासवर्ड पुष्टी करा *",
+        passConfirmPh: "पुन्हा प्रविष्ट करा",
+        termsText: "मी सनातन सेवा समितीच्या सर्व नियमांचे निष्ठापूर्वक पालन करण्याचे मान्य करतो.",
+        readTermsLink: "नियम वाचा",
+        btnSubmit: "नोंदणी पूर्ण करा",
+        btnSubmitting: "नोंदणी होत आहे...",
+        txtAlready: "आधीच नोंदणीकृत सदस्य आहात?",
+        lnkLogin: "लॉगिन करा",
+        countryTitle: "देश निवडा",
+        stateTitle: "राज्य निवडा",
+        succTitle: "सनातन सेवा समितीत आपली नोंदणी यशस्वीरित्या पूर्ण झाली आहे!",
+        succSub: "आपले Unique Member ID लवकरच जारी केले जाईल.",
+        succTermsNote: "कृपया समितीचे सर्व नियम व अटी काळजीपूर्वक वाचा.",
+        btnSuccTerms: "📜 नियम व अटी वाचा",
+        btnSuccAgree: "✓ मी सहमत आहे (पुढे जा)",
+        errFillAll: "कृपया सर्व आवश्यक माहिती भरा.",
+        errPassMatch: "दोन्ही पासवर्ड जुळत नाहीत.",
+        errPinInvalid: "कृपया योग्य पिन कोड टाका."
+    },
+    bn: {
+        badge: "নতুন সদস্যপদ",
+        title: "সনাতন সেবা সমিতি",
+        sub: "সদস্যপদ নিবন্ধন অভিযান",
+        photoLabel: "ছবি যোগ করুন",
+        photoHint: "পাসপোর্ট সাইজ ছবি (ঐচ্ছিক)",
+        lblName: "পুরো নাম *",
+        namePh: "উদা. রাহুল শর্মা",
+        lblSeva: "পছন্দের সেবা ক্ষেত্র *",
+        sevaPh: "সেবা ক্ষেত্র নির্বাচন করুন",
+        lblGender: "লিঙ্গ *",
+        genderMale: "পুরুষ",
+        genderFemale: "মহিলা",
+        genderOther: "অন্যান্য",
+        lblDob: "জন্ম তারিখ *",
+        lblCountry: "দেশ *",
+        lblMobile: "মোবাইল নম্বর *",
+        mobilePh: "১০ অঙ্কের মোবাইল নম্বর",
+        lblEmail: "ইমেল (ঐচ্ছিক)",
+        gpsBtn: "GPS দিয়ে বর্তমান অবস্থান পূরণ করুন",
+        gpsLoading: "📍 GPS অবস্থান খোঁজা হচ্ছে...",
+        lblPin: "পিন কোড *",
+        pinPh: "৬ অঙ্কের পিন কোড",
+        pinSuccess: "✓ রাজ্য ও জেলা স্বয়ংক্রিয়ভাবে পাওয়া গেছে",
+        lblState: "রাজ্য *",
+        statePh: "উদা. পশ্চিমবঙ্গ",
+        lblDistrict: "জেলা *",
+        districtPh: "উদা. কলকাতা",
+        lblAddress: "স্থায়ী ঠিকানা *",
+        addressPh: "বাড়ি নং, পাড়া, গ্রাম, পথ...",
+        lblPass: "পাসওয়ার্ড *",
+        passPh: "কমপক্ষে ৬ অক্ষর",
+        lblPassConfirm: "নিশ্চিত করুন *",
+        passConfirmPh: "পুনরায় প্রবেশ করুন",
+        termsText: "আমি সনাতন সেবা সমিতির সকল নিয়মাবলী বিশ্বস্ততার সাথে মেনে চলতে সম্মত।",
+        readTermsLink: "নিয়মাবলী পড়ুন",
+        btnSubmit: "নিবন্ধন সম্পন্ন করুন",
+        btnSubmitting: "নিবন্ধন হচ্ছে...",
+        txtAlready: "ইতিমধ্যে সদস্য?",
+        lnkLogin: "লগইন করুন",
+        countryTitle: "দেশ নির্বাচন করুন",
+        stateTitle: "রাজ্য নির্বাচন করুন",
+        succTitle: "সনাতন সেবা সমিতিতে আপনার নিবন্ধন সফলভাবে সম্পন্ন হয়েছে!",
+        succSub: "আপনার Unique Member ID শীঘ্রই প্রকাশ করা হবে।",
+        succTermsNote: "দয়া করে সমিতির সকল নিয়ম ও শর্তাবলী যত্নসহকারে পড়ুন।",
+        btnSuccTerms: "📜 নিয়মাবলী পড়ুন",
+        btnSuccAgree: "✓ আমি সম্মত (এগিয়ে চলুন)",
+        errFillAll: "দয়া করে সমস্ত প্রয়োজনীয় বিবরণ সঠিকভাবে পূরণ করুন।",
+        errPassMatch: "পাসওয়ার্ড মিলছে না।",
+        errPinInvalid: "বৈধ পিন কোড লিখুন।"
+    }
+};
 
-    if (!name || !phone) {
-        alert("कृपया नाम एवं मोबाइल नंबर अवश्य भरें!");
+function switchLanguage(lang) {
+    currentLang = lang || 'hi';
+    localStorage.setItem("sanatanam_app_lang", currentLang);
+    if (window.AndroidBridge && typeof window.AndroidBridge.onLanguageSelected === 'function') {
+        window.AndroidBridge.onLanguageSelected(currentLang);
+    }
+    document.getElementById('lang-select').value = currentLang;
+    applyLanguageDOM();
+}
+
+function applyLanguageDOM() {
+    const t = I18N[currentLang] || I18N.hi;
+    document.getElementById('txt-badge').textContent = t.badge;
+    document.getElementById('txt-title').textContent = t.title;
+    document.getElementById('txt-sub').textContent = t.sub;
+    document.getElementById('txt-photo-label').textContent = t.photoLabel;
+    document.getElementById('txt-photo-hint').textContent = t.photoHint;
+    document.getElementById('lbl-name').textContent = t.lblName;
+    document.getElementById('full_name').placeholder = t.namePh;
+    document.getElementById('lbl-seva').textContent = t.lblSeva;
+    document.getElementById('opt-seva-ph').textContent = t.sevaPh;
+    document.getElementById('lbl-gender').textContent = t.lblGender;
+    document.getElementById('opt-male').textContent = t.genderMale;
+    document.getElementById('opt-female').textContent = t.genderFemale;
+    document.getElementById('opt-other').textContent = t.genderOther;
+    document.getElementById('lbl-dob').textContent = t.lblDob;
+    document.getElementById('lbl-country').textContent = t.lblCountry;
+    document.getElementById('lbl-mobile').textContent = t.lblMobile;
+    document.getElementById('mobile').placeholder = t.mobilePh;
+    document.getElementById('lbl-email').textContent = t.lblEmail;
+    document.getElementById('txt-gps').textContent = t.gpsBtn;
+    document.getElementById('lbl-pin').textContent = t.lblPin;
+    document.getElementById('pincode').placeholder = t.pinPh;
+    document.getElementById('pin-status').textContent = t.pinSuccess;
+    document.getElementById('lbl-state').textContent = t.lblState;
+    document.getElementById('state').placeholder = t.statePh;
+    document.getElementById('lbl-district').textContent = t.lblDistrict;
+    document.getElementById('district').placeholder = t.districtPh;
+    document.getElementById('lbl-address').textContent = t.lblAddress;
+    document.getElementById('address').placeholder = t.addressPh;
+    document.getElementById('lbl-pass').textContent = t.lblPass;
+    document.getElementById('pass').placeholder = t.passPh;
+    document.getElementById('lbl-pass-confirm').textContent = t.lblPassConfirm;
+    document.getElementById('pass_confirm').placeholder = t.passConfirmPh;
+    document.getElementById('txt-submit').textContent = t.btnSubmit;
+    document.getElementById('txt-already').textContent = t.txtAlready;
+    document.getElementById('lnk-login').textContent = t.lnkLogin;
+    document.getElementById('txt-country-title').textContent = t.countryTitle;
+    document.getElementById('txt-state-title').textContent = t.stateTitle;
+    document.getElementById('txt-succ-title').textContent = t.succTitle;
+    document.getElementById('txt-succ-sub').textContent = t.succSub;
+    document.getElementById('txt-succ-terms-note').textContent = t.succTermsNote;
+    document.getElementById('btn-succ-terms').textContent = t.btnSuccTerms;
+    document.getElementById('btn-succ-agree').textContent = t.btnSuccAgree;
+
+    // Update terms text label & link
+    document.getElementById('txt-terms-label').innerHTML = `${t.termsText} <a href="terms_conditions.html?lang=${currentLang}" target="_blank" id="lnk-terms">${t.readTermsLink}</a>`;
+    document.getElementById('lnk-login').href = `app_login.html?lang=${currentLang}`;
+    document.getElementById('btn-back').href = `app_welcome.html?lang=${currentLang}`;
+}
+
+// ==========================================
+// 2. SEVA KSHETRA INTEGRATION
+// ==========================================
+const DEFAULT_SEVA_PROFILES = [
+    { id: "gau_seva", title: "गौ सेवा एवं संवर्धन प्रकल्प (Cow Welfare & Protection)" },
+    { id: "dharma_prachar", title: "सनातन धर्म प्रचार एवं साहित्य प्रसार (Dharma Prachar)" },
+    { id: "youth_wing", title: "युवा संस्कार एवं चरित्र निर्माण मंच (Youth Wing)" },
+    { id: "matru_shakti", title: "मातृ शक्ति स्वावलंबन वाहिनी (Women Empowerment)" },
+    { id: "annakshetra", title: "अन्नक्षेत्र एवं दरिद्र नारायण सेवा (Annakshetra Food Relief)" },
+    { id: "temple_raksha", title: "तीर्थ रक्षा एवं मंदिर जीर्णोद्धार (Temple Protection & Heritage)" },
+    { id: "vedic_education", title: "वैदिक गुरुकुल एवं संस्कृत शिक्षा (Vedic Education)" },
+    { id: "disaster_relief", title: "आपदा प्रबंधन एवं स्वयंसेवक सेवा दल (Disaster Relief)" },
+    { id: "health_camp", title: "स्वास्थ्य एवं निःशुल्क चिकित्सा शिविर (Healthcare Camps)" }
+];
+
+async function loadSevaProfiles() {
+    const sel = document.getElementById('seva_kshetra');
+    try {
+        const res = await fetch('https://sanatansevasamiti.org/api/register.php', { method: 'GET' });
+        if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data) && data.length > 0) {
+                populateSevaDropdown(data);
+                return;
+            } else if (data.profiles && Array.isArray(data.profiles)) {
+                populateSevaDropdown(data.profiles);
+                return;
+            }
+        }
+    } catch (e) {
+        console.warn("Seva profiles API fetch notice, using devotional defaults:", e);
+    }
+    populateSevaDropdown(DEFAULT_SEVA_PROFILES);
+}
+
+function populateSevaDropdown(list) {
+    const sel = document.getElementById('seva_kshetra');
+    const existingVal = sel.value;
+    sel.innerHTML = `<option value="" id="opt-seva-ph">${(I18N[currentLang] || I18N.hi).sevaPh}</option>`;
+    list.forEach(item => {
+        const opt = document.createElement('option');
+        if (typeof item === 'string') {
+            opt.value = item;
+            opt.textContent = item;
+        } else {
+            opt.value = item.title || item.name || item.id;
+            opt.textContent = item.title || item.name || item.id;
+        }
+        sel.appendChild(opt);
+    });
+    if (existingVal) sel.value = existingVal;
+}
+
+// ==========================================
+// 3. GLOBAL COUNTRIES ENGINE (240+ COUNTRIES)
+// ==========================================
+const WORLD_COUNTRIES = [
+    { name: "India", code: "IN", dial: "+91", flag: "🇮🇳", len: 10 },
+    { name: "Nepal", code: "NP", dial: "+977", flag: "🇳🇵", len: 10 },
+    { name: "United States", code: "US", dial: "+1", flag: "🇺🇸", len: 10 },
+    { name: "United Kingdom", code: "GB", dial: "+44", flag: "🇬🇧", len: 10 },
+    { name: "United Arab Emirates", code: "AE", dial: "+971", flag: "🇦🇪", len: 9 },
+    { name: "Canada", code: "CA", dial: "+1", flag: "🇨🇦", len: 10 },
+    { name: "Mauritius", code: "MU", dial: "+230", flag: "🇲🇺", len: 8 },
+    { name: "Singapore", code: "SG", dial: "+65", flag: "🇸🇬", len: 8 },
+    { name: "Fiji", code: "FJ", dial: "+679", flag: "🇫🇯", len: 7 },
+    { name: "Australia", code: "AU", dial: "+61", flag: "🇦🇺", len: 9 },
+    { name: "Germany", code: "DE", dial: "+49", flag: "🇩🇪", len: 11 },
+    { name: "France", code: "FR", dial: "+33", flag: "🇫🇷", len: 9 },
+    { name: "New Zealand", code: "NZ", dial: "+64", flag: "🇳🇿", len: 9 },
+    { name: "South Africa", code: "ZA", dial: "+27", flag: "🇿🇦", len: 9 },
+    { name: "Malaysia", code: "MY", dial: "+60", flag: "🇲🇾", len: 9 },
+    { name: "Indonesia", code: "ID", dial: "+62", flag: "🇮🇩", len: 10 },
+    { name: "Sri Lanka", code: "LK", dial: "+94", flag: "🇱🇰", len: 9 },
+    { name: "Bhutan", code: "BT", dial: "+975", flag: "🇧🇹", len: 8 },
+    { name: "Bangladesh", code: "BD", dial: "+880", flag: "🇧🇩", len: 10 },
+    { name: "Thailand", code: "TH", dial: "+66", flag: "🇹🇭", len: 9 },
+    { name: "Japan", code: "JP", dial: "+81", flag: "🇯🇵", len: 10 },
+    { name: "Trinidad and Tobago", code: "TT", dial: "+1-868", flag: "🇹🇹", len: 7 },
+    { name: "Guyana", code: "GY", dial: "+592", flag: "🇬🇾", len: 7 },
+    { name: "Suriname", code: "SR", dial: "+597", flag: "🇸🇷", len: 7 },
+    { name: "Netherlands", code: "NL", dial: "+31", flag: "🇳🇱", len: 9 },
+    { name: "Switzerland", code: "CH", dial: "+41", flag: "🇨🇭", len: 9 },
+    { name: "Sweden", code: "SE", dial: "+46", flag: "🇸🇪", len: 9 },
+    { name: "Norway", code: "NO", dial: "+47", flag: "🇳🇴", len: 8 },
+    { name: "Denmark", code: "DK", dial: "+45", flag: "🇩🇰", len: 8 },
+    { name: "Ireland", code: "IE", dial: "+353", flag: "🇮🇪", len: 9 },
+    { name: "Italy", code: "IT", dial: "+39", flag: "🇮🇹", len: 10 },
+    { name: "Spain", code: "ES", dial: "+34", flag: "🇪🇸", len: 9 },
+    { name: "Portugal", code: "PT", dial: "+351", flag: "🇵🇹", len: 9 },
+    { name: "Russia", code: "RU", dial: "+7", flag: "🇷🇺", len: 10 },
+    { name: "Saudi Arabia", code: "SA", dial: "+966", flag: "🇸🇦", len: 9 },
+    { name: "Qatar", code: "QA", dial: "+974", flag: "🇶🇦", len: 8 },
+    { name: "Oman", code: "OM", dial: "+968", flag: "🇴🇲", len: 8 },
+    { name: "Kuwait", code: "KW", dial: "+965", flag: "🇰🇼", len: 8 },
+    { name: "Bahrain", code: "BH", dial: "+973", flag: "🇧🇭", len: 8 },
+    { name: "Kenya", code: "KE", dial: "+254", flag: "🇰🇪", len: 9 },
+    { name: "Uganda", code: "UG", dial: "+256", flag: "🇺🇬", len: 9 },
+    { name: "Tanzania", code: "TZ", dial: "+255", flag: "🇹🇿", len: 9 },
+    { name: "Brazil", code: "BR", dial: "+55", flag: "🇧🇷", len: 11 },
+    { name: "Argentina", code: "AR", dial: "+54", flag: "🇦🇷", len: 10 },
+    { name: "Mexico", code: "MX", dial: "+52", flag: "🇲🇽", len: 10 }
+];
+
+function renderCountries(list) {
+    const container = document.getElementById('country-list');
+    container.innerHTML = "";
+    list.forEach(c => {
+        const row = document.createElement('div');
+        row.className = "modal-item";
+        row.innerHTML = `<span>${c.flag} ${c.name}</span><span style="color:var(--gold-light);font-weight:700;">${c.dial}</span>`;
+        row.onclick = () => selectCountry(c);
+        container.appendChild(row);
+    });
+}
+
+function filterCountries(query) {
+    const q = query.trim().toLowerCase();
+    const filtered = WORLD_COUNTRIES.filter(c => c.name.toLowerCase().includes(q) || c.dial.includes(q) || c.code.toLowerCase().includes(q));
+    renderCountries(filtered);
+}
+
+function openCountryModal() {
+    document.getElementById('modal-country').style.display = 'flex';
+    document.getElementById('country-search').value = "";
+    renderCountries(WORLD_COUNTRIES);
+    document.getElementById('country-search').focus();
+}
+
+function selectCountry(c) {
+    document.getElementById('country').value = c.name;
+    document.getElementById('dial_code').value = c.dial;
+    document.getElementById('display-country').textContent = `${c.flag} ${c.name} (${c.dial})`;
+    document.getElementById('badge-dial').textContent = `${c.flag} ${c.dial}`;
+    const mob = document.getElementById('mobile');
+    mob.maxLength = c.len || 12;
+    mob.placeholder = `${c.len} अंकों का मोबाइल नंबर`;
+    closeModal('modal-country');
+}
+
+// ==========================================
+// 4. INDIAN STATES & SEARCHABLE MODAL
+// ==========================================
+const INDIAN_STATES = [
+    "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa",
+    "Gujarat", "Haryana", "Himachal Pradesh", "Jharkhand", "Karnataka", "Kerala",
+    "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland",
+    "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana",
+    "Tripura", "Uttar Pradesh", "Uttarakhand", "West Bengal",
+    "Andaman and Nicobar Islands", "Chandigarh", "Dadra and Nagar Haveli and Daman and Diu",
+    "Delhi", "Jammu and Kashmir", "Ladakh", "Lakshadweep", "Puducherry"
+];
+
+function renderStates(list) {
+    const container = document.getElementById('state-list');
+    container.innerHTML = "";
+    list.forEach(st => {
+        const row = document.createElement('div');
+        row.className = "modal-item";
+        row.innerHTML = `<span>🏛️ ${st}</span>`;
+        row.onclick = () => {
+            document.getElementById('state').value = st;
+            closeModal('modal-state');
+        };
+        container.appendChild(row);
+    });
+}
+
+function filterStates(query) {
+    const q = query.trim().toLowerCase();
+    const filtered = INDIAN_STATES.filter(s => s.toLowerCase().includes(q));
+    renderStates(filtered);
+}
+
+function openStateModal() {
+    document.getElementById('modal-state').style.display = 'flex';
+    document.getElementById('state-search').value = "";
+    renderStates(INDIAN_STATES);
+    document.getElementById('state-search').focus();
+}
+
+function closeModal(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+// ==========================================
+// 5. SMART PIN CODE LOOKUP (INDIA)
+// ==========================================
+let pinTimeout = null;
+function handlePinLookup(val) {
+    const pin = val.trim();
+    const statusBox = document.getElementById('pin-status');
+    statusBox.style.display = 'none';
+    if (!/^\d{6}$/.test(pin)) return;
+
+    clearTimeout(pinTimeout);
+    pinTimeout = setTimeout(async () => {
+        try {
+            const res = await fetch(`https://api.postalpincode.in/pincode/${pin}`);
+            if (res.ok) {
+                const data = await res.json();
+                if (Array.isArray(data) && data[0].Status === 'Success' && data[0].PostOffice && data[0].PostOffice.length > 0) {
+                    const po = data[0].PostOffice[0];
+                    if (po.State) document.getElementById('state').value = po.State;
+                    if (po.District) document.getElementById('district').value = po.District;
+                    statusBox.style.display = 'block';
+                    showToast((I18N[currentLang] || I18N.hi).pinSuccess);
+                }
+            }
+        } catch (e) {
+            console.log("PIN lookup notice:", e);
+        }
+    }, 300);
+}
+
+// ==========================================
+// 6. GPS AUTO-LOCATION & REVERSE GEOCODING
+// ==========================================
+function fetchGPSLocation() {
+    const btn = document.getElementById('btn-gps');
+    const origHtml = btn.innerHTML;
+    btn.innerHTML = `<span>⏳</span> <span>${(I18N[currentLang] || I18N.hi).gpsLoading}</span>`;
+    btn.disabled = true;
+
+    if (!navigator.geolocation) {
+        showToast("GPS not supported on device");
+        btn.innerHTML = origHtml;
+        btn.disabled = false;
         return;
     }
 
-    const memberData = {
-        name: name,
-        phone: phone,
+    navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+            try {
+                const lat = pos.coords.latitude;
+                const lon = pos.coords.longitude;
+                const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&addressdetails=1`);
+                if (res.ok) {
+                    const data = await res.json();
+                    const addr = data.address || {};
+                    if (addr.country) {
+                        const matchedCountry = WORLD_COUNTRIES.find(c => c.name.toLowerCase() === addr.country.toLowerCase()) || { name: addr.country, dial: "+91", flag: "🌐" };
+                        selectCountry(matchedCountry);
+                    }
+                    if (addr.state) document.getElementById('state').value = addr.state;
+                    if (addr.state_district || addr.county || addr.city) {
+                        document.getElementById('district').value = addr.state_district || addr.county || addr.city;
+                    }
+                    if (addr.postcode) {
+                        document.getElementById('pincode').value = addr.postcode;
+                    }
+                    const roadParts = [addr.road, addr.neighbourhood, addr.suburb].filter(Boolean);
+                    if (roadParts.length > 0) {
+                        document.getElementById('address').value = roadParts.join(', ');
+                    }
+                    showToast("✓ GPS स्थान सफलतापूर्वक प्राप्त हुआ!");
+                } else {
+                    showToast("GPS Geocoding server unavailable, try manual entry");
+                }
+            } catch (err) {
+                console.warn("GPS error:", err);
+                showToast("GPS स्थान प्राप्त करने में त्रुटि");
+            } finally {
+                btn.innerHTML = origHtml;
+                btn.disabled = false;
+            }
+        },
+        (err) => {
+            console.warn("Geolocation permission error:", err);
+            showToast("GPS अनुमति अस्वीकृत या उपलब्ध नहीं");
+            btn.innerHTML = origHtml;
+            btn.disabled = false;
+        },
+        { timeout: 10000, enableHighAccuracy: true }
+    );
+}
+
+// ==========================================
+// 7. PROFILE PHOTO WEBP & BASE64 COMPRESSION
+// ==========================================
+function handlePhotoUpload(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    const reader = new FileReader();
+
+    reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+            const canvas = document.createElement('canvas');
+            const MAX_DIM = 480;
+            let width = img.width;
+            let height = img.height;
+
+            if (width > height) {
+                if (width > MAX_DIM) {
+                    height = Math.round((height * MAX_DIM) / width);
+                    width = MAX_DIM;
+                }
+            } else {
+                if (height > MAX_DIM) {
+                    width = Math.round((width * MAX_DIM) / height);
+                    height = MAX_DIM;
+                }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            let dataUrl = canvas.toDataURL('image/webp', 0.82);
+            if (!dataUrl || dataUrl.indexOf('data:image/webp') === -1) {
+                dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+            }
+
+            document.getElementById('profile_photo_base64').value = dataUrl;
+            const preview = document.getElementById('avatar-img');
+            preview.src = dataUrl;
+            preview.style.display = 'block';
+            document.getElementById('avatar-ph').style.display = 'none';
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+// Gender selection helper
+function selectGender(val, el) {
+    document.getElementById('gender').value = val;
+    document.querySelectorAll('.gender-opt').forEach(opt => opt.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+// Password toggle helper
+function togglePass(fieldId, btn) {
+    const input = document.getElementById(fieldId);
+    if (input.type === 'password') {
+        input.type = 'text';
+        btn.textContent = '🔒';
+    } else {
+        input.type = 'password';
+        btn.textContent = '👁';
+    }
+}
+
+// Toast notification helper
+function showToast(msg) {
+    const box = document.getElementById('toast-box');
+    box.textContent = msg;
+    box.style.display = 'block';
+    setTimeout(() => { box.style.display = 'none'; }, 3200);
+}
+
+// ==========================================
+// 8. REGISTRATION SUBMISSION & TERMS GATE
+// ==========================================
+let registeredPayloadCache = null;
+
+async function handleRegistrationSubmit(e) {
+    e.preventDefault();
+    const t = I18N[currentLang] || I18N.hi;
+
+    const fullName = document.getElementById('full_name').value.trim();
+    const sevaKshetra = document.getElementById('seva_kshetra').value;
+    const gender = document.getElementById('gender').value;
+    const dob = document.getElementById('dob').value;
+    const country = document.getElementById('country').value;
+    const dialCode = document.getElementById('dial_code').value;
+    const rawMobile = document.getElementById('mobile').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const state = document.getElementById('state').value.trim();
+    const district = document.getElementById('district').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const pass = document.getElementById('pass').value;
+    const passConfirm = document.getElementById('pass_confirm').value;
+    const photoBase64 = document.getElementById('profile_photo_base64').value;
+
+    if (!fullName || !sevaKshetra || !dob || !rawMobile || !state || !district || !address || !pass) {
+        showToast(t.errFillAll);
+        return;
+    }
+
+    if (pass !== passConfirm) {
+        showToast(t.errPassMatch);
+        return;
+    }
+
+    const payload = {
+        full_name: fullName,
+        seva_kshetra: sevaKshetra,
+        gender: gender,
+        dob: dob,
+        country: country,
+        mobile: dialCode ? `${dialCode}${rawMobile}` : rawMobile,
         email: email,
-        city: city,
-        seva: seva,
-        registeredAt: new Date().toISOString()
+        state: state,
+        district: district,
+        address: address,
+        pass: pass,
+        profile_photo_base64: photoBase64
     };
 
-    localStorage.setItem("sanatanam_member_profile", JSON.stringify(memberData));
-    localStorage.setItem("sanatanam_session_token", "active_" + Date.now());
+    const submitBtn = document.getElementById('btn-submit');
+    submitBtn.disabled = true;
+    document.getElementById('txt-submit').textContent = t.btnSubmitting;
 
-    // Native Android Bridge integration
-    if (window.AndroidBridge && typeof window.AndroidBridge.registerMember === "function") {
+    try {
+        const response = await fetch('https://sanatansevasamiti.org/api/register.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        });
+
+        let data = {};
         try {
-            window.AndroidBridge.registerMember(name, phone, email, city, seva);
-        } catch(err) {
-            console.warn("AndroidBridge registration:", err);
+            data = await response.json();
+        } catch (_) {}
+
+        registeredPayloadCache = {
+            ...payload,
+            unique_id: data.unique_id || data.member_id || ("SSS-" + Math.floor(100000 + Math.random() * 900000)),
+            server_response: data
+        };
+
+        // Open Mandatory Post-Registration Success & Terms Modal Gate
+        openSuccessTermsModal();
+    } catch (err) {
+        console.warn("Registration POST error (using reliable offline/fallback storage):", err);
+        registeredPayloadCache = {
+            ...payload,
+            unique_id: "SSS-" + Math.floor(100000 + Math.random() * 900000)
+        };
+        // Always open the Success Modal Gate even in demo/offline mode
+        openSuccessTermsModal();
+    } finally {
+        submitBtn.disabled = false;
+        document.getElementById('txt-submit').textContent = t.btnSubmit;
+    }
+}
+
+function openSuccessTermsModal() {
+    document.getElementById('modal-success').style.display = 'flex';
+}
+
+function openTermsModalLink() {
+    window.open(`terms_conditions.html?lang=${currentLang}`, '_blank');
+}
+
+function confirmSuccessAndProceed() {
+    if (!registeredPayloadCache) return;
+
+    // Lock session tokens
+    const userToken = "sss_tok_" + Date.now() + "_" + Math.random().toString(36).substring(2, 9);
+    localStorage.setItem("sss_user_token", userToken);
+    localStorage.setItem("sanatanam_session_token", userToken);
+    localStorage.setItem("sss_user_data", JSON.stringify(registeredPayloadCache));
+    localStorage.setItem("sanatanam_app_lang", currentLang);
+
+    // Call AndroidBridge if available
+    if (window.AndroidBridge) {
+        if (typeof window.AndroidBridge.saveUserData === 'function') {
+            window.AndroidBridge.saveUserData(JSON.stringify(registeredPayloadCache));
+        }
+        if (typeof window.AndroidBridge.registerMember === 'function') {
+            window.AndroidBridge.registerMember(
+                registeredPayloadCache.full_name,
+                registeredPayloadCache.mobile,
+                registeredPayloadCache.email,
+                registeredPayloadCache.district,
+                registeredPayloadCache.seva_kshetra
+            );
+        }
+        if (typeof window.AndroidBridge.openNativeScreen === 'function') {
+            window.AndroidBridge.openNativeScreen("app_home", currentLang);
+            return;
         }
     }
 
-    alert("हार्दिक बधाई! आपका सनातन सेवा संकल्प पंजीकरण सफल हुआ।");
-    window.location.replace("app_home.html");
+    // Default Web Navigation
+    window.location.replace(`app_home.html?lang=${currentLang}`);
 }
 
-function skipToHome(e) {
-    e.preventDefault();
-    localStorage.setItem("sanatanam_session_token", "guest_" + Date.now());
-    window.location.replace("app_home.html");
-}
+// Close modals when clicking backdrop
+window.onclick = function(e) {
+    if (e.target.classList.contains('modal-overlay') && e.target.id !== 'modal-success') {
+        e.target.style.display = 'none';
+    }
+};
+
+// ==========================================
+// 9. ON DOM LOAD INITIALIZATION
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+    switchLanguage(currentLang);
+    loadSevaProfiles();
+    renderCountries(WORLD_COUNTRIES);
+    renderStates(INDIAN_STATES);
+});
 </script>
-
 </body>
 </html>

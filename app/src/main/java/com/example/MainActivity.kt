@@ -22,6 +22,8 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import com.example.ui.theme.MyApplicationTheme
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
@@ -225,14 +227,40 @@ class MainActivity : ComponentActivity() {
         }
 
         @JavascriptInterface
+        fun openNativeScreen(screen: String) {
+            val lang = getSavedLanguage()
+            openNativeScreen(screen, lang)
+        }
+
+        @JavascriptInterface
         fun openNativeScreen(screen: String, lang: String) {
             webViewProvider()?.post {
                 when (screen.lowercase()) {
                     "app_register", "register" -> webViewProvider()?.loadUrl("file:///android_asset/app_register.html?lang=$lang")
                     "app_login", "login" -> webViewProvider()?.loadUrl("file:///android_asset/app_login.html?lang=$lang")
                     "app_home", "home" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html")
+                    "terms_conditions", "terms" -> webViewProvider()?.loadUrl("file:///android_asset/terms_conditions.html?lang=$lang")
                     else -> webViewProvider()?.loadUrl("file:///android_asset/$screen.html?lang=$lang")
                 }
+            }
+        }
+
+        @JavascriptInterface
+        fun saveUserData(userDataJson: String) {
+            try {
+                context.getSharedPreferences("sss_prefs", Context.MODE_PRIVATE)
+                    .edit()
+                    .putString("sss_user_data", userDataJson)
+                    .apply()
+            } catch (e: Exception) {
+                Log.e("AndroidBridge", "Error saving user data: ${e.message}")
+            }
+        }
+
+        @JavascriptInterface
+        fun showToast(message: String) {
+            webViewProvider()?.post {
+                android.widget.Toast.makeText(context, message, android.widget.Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -285,31 +313,39 @@ class MainActivity : ComponentActivity() {
         val firestore = FirebaseFirestore.getInstance(FirebaseApp.getInstance(), databaseId)
         val auth = FirebaseAuth.getInstance()
 
-        // Subscribe to global announcements topic "all_users" safely
+        // Safely check and retrieve FCM device token; only subscribe to topics when token is valid and Play Services are ready
         try {
-            FirebaseMessaging.getInstance().subscribeToTopic("all_users")
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Log.d("FCM", "Subscribed to all_users topic successfully")
-                    } else {
-                        Log.w("FCM", "Topic subscription postponed: ${task.exception?.message}")
-                    }
-                }
+            FirebaseMessaging.getInstance().isAutoInitEnabled = false
+            val availability = GoogleApiAvailability.getInstance().isGooglePlayServicesAvailable(this)
+            if (availability == ConnectionResult.SUCCESS) {
+                FirebaseMessaging.getInstance().token
+                    .addOnSuccessListener { token ->
+                        if (!token.isNullOrEmpty()) {
+                            getSharedPreferences("sss_prefs", Context.MODE_PRIVATE)
+                                .edit()
+                                .putString("fcm_device_token", token)
+                                .apply()
+                            Log.d("FCM", "Current FCM Token: $token")
 
-            // Retrieve current device token
-            FirebaseMessaging.getInstance().token
-                .addOnSuccessListener { token ->
-                    getSharedPreferences("sss_prefs", Context.MODE_PRIVATE)
-                        .edit()
-                        .putString("fcm_device_token", token)
-                        .apply()
-                    Log.d("FCM", "Current FCM Token: $token")
-                }
-                .addOnFailureListener { e ->
-                    Log.w("FCM", "FCM token not available in current environment: ${e.message}")
-                }
+                            // Subscribe to global announcements topic only when token is valid
+                            FirebaseMessaging.getInstance().subscribeToTopic("all_users")
+                                .addOnCompleteListener { task ->
+                                    if (task.isSuccessful) {
+                                        Log.d("FCM", "Subscribed to all_users topic successfully")
+                                    } else {
+                                        Log.i("FCM", "Topic subscription postponed: ${task.exception?.message}")
+                                    }
+                                }
+                        }
+                    }
+                    .addOnFailureListener { e ->
+                        Log.i("FCM", "FCM token registration skipped in emulator/test environment: ${e.message}")
+                    }
+            } else {
+                Log.i("FCM", "Google Play Services not ready ($availability). FCM registration safely bypassed in current runtime.")
+            }
         } catch (e: Exception) {
-            Log.w("FCM", "FirebaseMessaging init notice: ${e.message}")
+            Log.i("FCM", "FirebaseMessaging init notice: ${e.message}")
         }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
