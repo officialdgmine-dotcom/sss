@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.ViewGroup
@@ -254,6 +255,32 @@ class MainActivity : ComponentActivity() {
                     .apply()
             } catch (e: Exception) {
                 Log.e("AndroidBridge", "Error saving user data: ${e.message}")
+            }
+        }
+
+        @JavascriptInterface
+        fun onAuthSuccess(token: String, userDataJson: String) {
+            try {
+                context.getSharedPreferences("sss_prefs", Context.MODE_PRIVATE)
+                    .edit()
+                    .putString("sss_user_token", token)
+                    .putString("sss_user_data", userDataJson)
+                    .putString("sanatanam_session_token", "active_" + System.currentTimeMillis())
+                    .apply()
+                Log.d("AndroidBridge", "Auth successfully recorded in preferences.")
+            } catch (e: Exception) {
+                Log.e("AndroidBridge", "Error in onAuthSuccess: ${e.message}")
+            }
+        }
+
+        @JavascriptInterface
+        fun openExternalUrl(url: String) {
+            try {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                context.startActivity(intent)
+            } catch (e: Exception) {
+                Log.e("AndroidBridge", "Error opening external URL: ${e.message}")
             }
         }
 
