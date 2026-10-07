@@ -18,6 +18,18 @@
           "format": "email",
           "description": "The user's email address."
         },
+        "phone": {
+          "type": "string",
+          "description": "Member phone / WhatsApp contact number."
+        },
+        "city": {
+          "type": "string",
+          "description": "Member city / state location."
+        },
+        "sevaCategory": {
+          "type": "string",
+          "description": "Selected seva pledge category."
+        },
         "preferredLanguage": {
           "type": "string",
           "description": "The user's selected language code (hi, sa, en, gu, mr, bn)."

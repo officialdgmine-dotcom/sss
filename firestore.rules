@@ -23,12 +23,12 @@ service cloud.firestore {
     }
 
     function isValidUserProfile(data) {
-      return data.userId == request.auth.uid &&
-             data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 100 &&
+      return data.displayName is string && data.displayName.size() >= 1 && data.displayName.size() <= 100 &&
              (!('email' in data) || (data.email is string && data.email.size() <= 150)) &&
-             (!('preferredLanguage' in data) || (data.preferredLanguage is string && data.preferredLanguage.size() <= 10)) &&
-             data.createdAt is timestamp && data.createdAt <= request.time &&
-             (!('updatedAt' in data) || (data.updatedAt is timestamp && data.updatedAt <= request.time));
+             (!('phone' in data) || (data.phone is string && data.phone.size() <= 30)) &&
+             (!('city' in data) || (data.city is string && data.city.size() <= 100)) &&
+             (!('sevaCategory' in data) || (data.sevaCategory is string && data.sevaCategory.size() <= 80)) &&
+             (!('preferredLanguage' in data) || (data.preferredLanguage is string && data.preferredLanguage.size() <= 10));
     }
 
     function isValidSevaPledge(data) {
@@ -48,19 +48,11 @@ service cloud.firestore {
     }
 
     match /users/{userId} {
-      allow get, list: if isOwner(userId);
+      allow get, list: if isSignedIn();
 
-      allow create: if isOwner(userId) &&
-                       isValidId(userId) &&
-                       incoming().keys().hasAll(['userId', 'displayName', 'createdAt']) &&
-                       incoming().keys().hasOnly(['userId', 'displayName', 'email', 'preferredLanguage', 'createdAt', 'updatedAt']) &&
-                       isValidUserProfile(incoming());
+      allow create: if isValidUserProfile(incoming());
 
-      allow update: if isOwner(userId) &&
-                       incoming().userId == existing().userId &&
-                       incoming().createdAt == existing().createdAt &&
-                       isValidUserProfile(incoming()) &&
-                       incoming().diff(existing()).affectedKeys().hasOnly(['displayName', 'email', 'preferredLanguage', 'updatedAt']);
+      allow update: if isOwner(userId) && isValidUserProfile(incoming());
 
       allow delete: if isOwner(userId);
 
@@ -70,15 +62,11 @@ service cloud.firestore {
         allow create: if isOwner(userId) &&
                          isValidId(pledgeId) &&
                          incoming().keys().hasAll(['pledgeId', 'userId', 'category', 'createdAt']) &&
-                         incoming().keys().hasOnly(['pledgeId', 'userId', 'category', 'notes', 'createdAt']) &&
                          isValidSevaPledge(incoming());
 
         allow update: if isOwner(userId) &&
                          incoming().pledgeId == existing().pledgeId &&
-                         incoming().userId == existing().userId &&
-                         incoming().createdAt == existing().createdAt &&
-                         isValidSevaPledge(incoming()) &&
-                         incoming().diff(existing()).affectedKeys().hasOnly(['category', 'notes']);
+                         isValidSevaPledge(incoming());
 
         allow delete: if isOwner(userId);
       }

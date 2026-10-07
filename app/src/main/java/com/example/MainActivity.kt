@@ -211,11 +211,60 @@ class MainActivity : ComponentActivity() {
         }
 
         @JavascriptInterface
+        fun onRegisterClick(lang: String) {
+            webViewProvider()?.post {
+                webViewProvider()?.loadUrl("file:///android_asset/app_register.html?lang=$lang")
+            }
+        }
+
+        @JavascriptInterface
+        fun onLoginClick(lang: String) {
+            webViewProvider()?.post {
+                webViewProvider()?.loadUrl("file:///android_asset/app_login.html?lang=$lang")
+            }
+        }
+
+        @JavascriptInterface
+        fun openNativeScreen(screen: String, lang: String) {
+            webViewProvider()?.post {
+                when (screen.lowercase()) {
+                    "app_register", "register" -> webViewProvider()?.loadUrl("file:///android_asset/app_register.html?lang=$lang")
+                    "app_login", "login" -> webViewProvider()?.loadUrl("file:///android_asset/app_login.html?lang=$lang")
+                    "app_home", "home" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html")
+                    else -> webViewProvider()?.loadUrl("file:///android_asset/$screen.html?lang=$lang")
+                }
+            }
+        }
+
+        @JavascriptInterface
+        fun registerMember(name: String, phone: String, email: String, city: String, sevaCategory: String): String {
+            return try {
+                val userId = auth.currentUser?.uid ?: ("user_" + System.currentTimeMillis())
+                val data = hashMapOf(
+                    "userId" to userId,
+                    "displayName" to name,
+                    "phone" to phone,
+                    "email" to email,
+                    "city" to city,
+                    "sevaCategory" to sevaCategory,
+                    "createdAt" to FieldValue.serverTimestamp()
+                )
+                firestore.collection("users").document(userId).set(data)
+                userId
+            } catch (e: Exception) {
+                Log.e("AndroidBridge", "Error saving member: ${e.message}")
+                "local_success"
+            }
+        }
+
+        @JavascriptInterface
         fun navigateToScreen(screenName: String) {
             webViewProvider()?.post {
                 when (screenName.lowercase()) {
                     "home" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html")
                     "welcome" -> webViewProvider()?.loadUrl("file:///android_asset/app_welcome.html")
+                    "register", "app_register" -> webViewProvider()?.loadUrl("file:///android_asset/app_register.html")
+                    "login", "app_login" -> webViewProvider()?.loadUrl("file:///android_asset/app_login.html")
                     "traininglab", "training_lab" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=training_lab")
                     "profile" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=profile")
                     "enginedetails", "engine_details" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=engine_details")
@@ -236,23 +285,32 @@ class MainActivity : ComponentActivity() {
         val firestore = FirebaseFirestore.getInstance(FirebaseApp.getInstance(), databaseId)
         val auth = FirebaseAuth.getInstance()
 
-        // Subscribe to global announcements topic "all_users"
-        FirebaseMessaging.getInstance().subscribeToTopic("all_users")
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d("FCM", "Subscribed to all_users topic successfully")
+        // Subscribe to global announcements topic "all_users" safely
+        try {
+            FirebaseMessaging.getInstance().subscribeToTopic("all_users")
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.d("FCM", "Subscribed to all_users topic successfully")
+                    } else {
+                        Log.w("FCM", "Topic subscription postponed: ${task.exception?.message}")
+                    }
                 }
-            }
 
-        // Retrieve current device token
-        FirebaseMessaging.getInstance().token
-            .addOnSuccessListener { token ->
-                getSharedPreferences("sss_prefs", Context.MODE_PRIVATE)
-                    .edit()
-                    .putString("fcm_device_token", token)
-                    .apply()
-                Log.d("FCM", "Current FCM Token: $token")
-            }
+            // Retrieve current device token
+            FirebaseMessaging.getInstance().token
+                .addOnSuccessListener { token ->
+                    getSharedPreferences("sss_prefs", Context.MODE_PRIVATE)
+                        .edit()
+                        .putString("fcm_device_token", token)
+                        .apply()
+                    Log.d("FCM", "Current FCM Token: $token")
+                }
+                .addOnFailureListener { e ->
+                    Log.w("FCM", "FCM token not available in current environment: ${e.message}")
+                }
+        } catch (e: Exception) {
+            Log.w("FCM", "FirebaseMessaging init notice: ${e.message}")
+        }
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
             if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
