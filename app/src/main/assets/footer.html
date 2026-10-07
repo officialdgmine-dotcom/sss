@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Sanatani AI Navigation</title>
+
+<style>
+
+/* =========================================================
+   SANATANI AI — PREMIUM BOTTOM NAVIGATION
+   ========================================================= */
+
+:root {
+    --maroon: #6B0F1A;
+    --deep-maroon: #420810;
+    --red: #A71930;
+    --bhagwa: #FF6F00;
+    --gold: #D4AF37;
+    --champagne: #F4D98A;
+    --cream: #FFF4D6;
+    --white: #FFFFFF;
+    --muted: rgba(255, 244, 214, 0.68);
+
+    --nav-height: 76px;
+}
+
+/* RESET */
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family:
+        Inter,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    background: #fffaf2;
+
+    padding-bottom:
+        calc(
+            var(--nav-height)
+            + env(safe-area-inset-bottom)
+            + 10px
+        );
+}
+
+
+/* =========================================================
+   BOTTOM NAVIGATION
+   ========================================================= */
+
+.sanatani-bottom-nav {
+
+    position: fixed;
+
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 9999;
+
+    width: 100%;
+
+    padding:
+        8px 7px
+        calc(8px + env(safe-area-inset-bottom))
+        7px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #3D080F 0%,
+            #520B15 42%,
+            #650E19 100%
+        );
+
+    border-top:
+        1px solid
+        rgba(212, 175, 55, 0.55);
+
+    box-shadow:
+        0 -8px 30px
+        rgba(0, 0, 0, 0.28);
+
+    height:
+        calc(
+            var(--nav-height)
+            + env(safe-area-inset-bottom)
+        );
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+}
+
+
+/* =========================================================
+   EACH NAV ITEM
+   ========================================================= */
+
+.nav-item {
+
+    position: relative;
+
+    width: 20%;
+
+    height: 60px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    text-decoration: none;
+
+    color: var(--muted);
+
+    border: 0;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    padding: 0;
+
+    font-family: inherit;
+
+    transition:
+        transform 0.18s ease,
+        color 0.18s ease;
+}
+
+.nav-item:active {
+    transform: scale(0.92);
+}
+
+.nav-item.active {
+    color: var(--champagne);
+}
+
+
+/* =========================================================
+   NORMAL ICON
+   ========================================================= */
+
+.nav-icon-box {
+
+    width: 34px;
+    height: 34px;
+
+    margin-bottom: 3px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+}
+
+.nav-icon {
+
+    width: 30px;
+    height: 30px;
+
+    object-fit: contain;
+
+    display: block;
+
+    filter:
+        drop-shadow(
+            0 2px 5px
+            rgba(0,0,0,0.35)
+        );
+
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
+
+.nav-item.active .nav-icon {
+
+    transform: scale(1.06);
+
+    filter:
+        drop-shadow(
+            0 0 7px
+            rgba(244,217,138,0.55)
+        );
+}
+
+
+/* =========================================================
+   NAV TEXT
+   ========================================================= */
+
+.nav-label {
+
+    width: 100%;
+
+    min-height: 18px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    white-space: nowrap;
+
+    font-size: 10px;
+
+    line-height: 1.15;
+
+    font-weight: 600;
+
+    letter-spacing: 0.05px;
+
+    color: inherit;
+}
+
+
+/* =========================================================
+   CENTER SANATANI Ð₲ BUTTON
+   ========================================================= */
+
+.nav-center {
+
+    height: 72px;
+
+    justify-content: flex-end;
+
+    z-index: 20;
+}
+
+
+/* Elevated circle/emblem holder */
+
+.center-icon-wrap {
+
+    position: relative;
+
+    width: 62px;
+    height: 62px;
+
+    margin-bottom: 2px;
+
+    margin-top: -26px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        radial-gradient(
+            circle at 50% 38%,
+            #8C1827 0%,
+            #650D18 52%,
+            #430810 100%
+        );
+
+    border:
+        2px solid
+        var(--gold);
+
+    box-shadow:
+
+        0 0 0 3px
+        rgba(107, 15, 26, 0.95),
+
+        0 0 0 5px
+        rgba(212, 175, 55, 0.18),
+
+        0 -5px 22px
+        rgba(212, 175, 55, 0.25),
+
+        0 7px 18px
+        rgba(0,0,0,0.40);
+
+    overflow: hidden;
+}
+
+
+/* subtle divine light */
+
+.center-icon-wrap::before {
+
+    content: "";
+
+    position: absolute;
+
+    width: 70%;
+    height: 70%;
+
+    left: 15%;
+    top: 5%;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(255,220,115,0.22),
+            transparent 68%
+        );
+
+    pointer-events: none;
+}
+
+
+/* DG icon */
+
+.center-icon {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 49px;
+    height: 49px;
+
+    object-fit: contain;
+
+    display: block;
+
+    filter:
+        drop-shadow(
+            0 0 6px
+            rgba(244,217,138,0.48)
+        );
+}
+
+
+/* center label */
+
+.center-label {
+
+    color:
+        var(--champagne);
+
+    font-size: 9.5px;
+
+    line-height: 1.1;
+
+    font-weight: 700;
+
+    letter-spacing: 0.05px;
+
+    margin-top: 1px;
+
+    white-space: nowrap;
+
+    text-shadow:
+        0 1px 3px
+        rgba(0,0,0,0.5);
+}
+
+
+/* =========================================================
+   SANATAN SEVA SAMITI IMAGE
+   ========================================================= */
+
+.samiti-icon {
+
+    width: 31px;
+    height: 31px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        1px solid
+        rgba(212,175,55,0.65);
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.4);
+}
+
+
+/* =========================================================
+   DASHBOARD ICON
+   ========================================================= */
+
+.dashboard-icon {
+
+    width: 31px;
+    height: 31px;
+
+    object-fit: contain;
+
+    display: block;
+
+    filter:
+        drop-shadow(
+            0 2px 5px
+            rgba(0,0,0,0.4)
+        );
+}
+
+
+/* =========================================================
+   ACTIVE INDICATOR
+   ========================================================= */
+
+.nav-item:not(.nav-center).active::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: -1px;
+
+    left: 50%;
+
+    width: 5px;
+    height: 5px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 50%;
+
+    background:
+        var(--gold);
+
+    box-shadow:
+        0 0 8px
+        rgba(212,175,55,0.75);
+}
+
+
+/* =========================================================
+   CENTER ACTIVE STATE
+   ========================================================= */
+
+.nav-center.active .center-icon-wrap {
+
+    border-color:
+        var(--champagne);
+
+    box-shadow:
+
+        0 0 0 3px
+        #650E19,
+
+        0 0 0 5px
+        rgba(212,175,55,0.28),
+
+        0 0 20px
+        rgba(212,175,55,0.38),
+
+        0 7px 20px
+        rgba(0,0,0,0.45);
+}
+
+
+/* =========================================================
+   SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 360px) {
+
+    .nav-label {
+        font-size: 9px;
+    }
+
+    .center-label {
+        font-size: 8.5px;
+    }
+
+    .nav-icon {
+        width: 27px;
+        height: 27px;
+    }
+
+    .samiti-icon,
+    .dashboard-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .center-icon-wrap {
+        width: 58px;
+        height: 58px;
+    }
+
+    .center-icon {
+        width: 45px;
+        height: 45px;
+    }
+}
+
+
+/* =========================================================
+   ANDROID WEBVIEW SAFE AREA
+   ========================================================= */
+
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+
+    .sanatani-bottom-nav {
+        padding-bottom:
+            calc(
+                8px +
+                env(safe-area-inset-bottom)
+            );
+    }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     YOUR PAGE CONTENT
+     ======================================================= -->
+
+<main id="app-content">
+
+    <!--
+        Your actual page content goes here.
+        Example:
+        Home / Feed / Sanatani Ð₲ / Sanatan Seva Samiti / Dashboard
+    -->
+
+</main>
+
+
+
+<!-- =======================================================
+     SANATANI AI — BOTTOM NAVIGATION
+     ======================================================= -->
+
+<nav
+    class="sanatani-bottom-nav"
+    id="sanataniBottomNav"
+    aria-label="मुख्य नेविगेशन"
+>
+
+
+    <!-- ===================================================
+         1. HOME
+         =================================================== -->
+
+    <a
+        href="index.php"
+        class="nav-item"
+        data-page="home"
+        aria-label="Home"
+    >
+
+        <span class="nav-icon-box">
+
+            <img
+                src="assets/branding/footer/home.png"
+                class="nav-icon"
+                alt="Home"
+            >
+
+        </span>
+
+        <span class="nav-label">
+            Home
+        </span>
+
+    </a>
+
+
+
+    <!-- ===================================================
+         2. FEED
+         =================================================== -->
+
+    <a
+        href="feed.php"
+        class="nav-item"
+        data-page="feed"
+        aria-label="Feed"
+    >
+
+        <span class="nav-icon-box">
+
+            <img
+                src="assets/branding/footer/feed.png"
+                class="nav-icon"
+                alt="Feed"
+            >
+
+        </span>
+
+        <span class="nav-label">
+            Feed
+        </span>
+
+    </a>
+
+
+
+    <!-- ===================================================
+         3. SANATANI Ð₲ — CENTER
+         =================================================== -->
+
+    <a
+        href="sanatani-ai.php"
+        class="nav-item nav-center"
+        data-page="sanatani-ai"
+        aria-label="Sanatani Ð₲"
+    >
+
+        <span class="center-icon-wrap">
+
+            <img
+                src="assets/branding/footer/Ð₲.png"
+                class="center-icon"
+                alt="Sanatani Ð₲"
+            >
+
+        </span>
+
+        <span class="center-label">
+            Sanatani Ð₲
+        </span>
+
+    </a>
+
+
+
+    <!-- ===================================================
+         4. SANATAN SEVA SAMITI
+         =================================================== -->
+
+    <a
+        href="sanatan-seva-samiti.php"
+        class="nav-item"
+        data-page="samiti"
+        aria-label="Sanatan Seva Samiti"
+    >
+
+        <span class="nav-icon-box">
+
+            <img
+                src="assets/branding/footer/PRO1781011172_dp.jpg"
+                class="samiti-icon"
+                alt="Sanatan Seva Samiti"
+            >
+
+        </span>
+
+        <span class="nav-label">
+            Sanatan Seva Samiti
+        </span>
+
+    </a>
+
+
+
+    <!-- ===================================================
+         5. DASHBOARD
+         =================================================== -->
+
+    <a
+        href="dashboard.php"
+        class="nav-item"
+        data-page="dashboard"
+        aria-label="Dashboard"
+    >
+
+        <span class="nav-icon-box">
+
+            <img
+                src="assets/branding/footer/accounts.png"
+                class="dashboard-icon"
+                alt="Dashboard"
+            >
+
+        </span>
+
+        <span class="nav-label">
+            Dashboard
+        </span>
+
+    </a>
+
+
+</nav>
+
+
+
+<script>
+
+/* =========================================================
+   SANATANI AI — NAVIGATION SCRIPT
+   ========================================================= */
+
+(function () {
+
+    "use strict";
+
+
+    const nav =
+        document.getElementById(
+            "sanataniBottomNav"
+        );
+
+
+    if (!nav) {
+        return;
+    }
+
+
+    const items =
+        nav.querySelectorAll(
+            ".nav-item"
+        );
+
+
+    /* ---------------------------------------------
+       Detect current page
+       --------------------------------------------- */
+
+    const currentPath =
+        window.location.pathname
+            .split("/")
+            .pop()
+            .toLowerCase();
+
+
+    let currentPage = "home";
+
+
+    if (
+        currentPath === "feed.php" ||
+        currentPath.includes("feed")
+    ) {
+
+        currentPage = "feed";
+
+    }
+
+    else if (
+        currentPath.includes("sanatani-ai") ||
+        currentPath.includes("sanatani")
+    ) {
+
+        currentPage = "sanatani-ai";
+
+    }
+
+    else if (
+        currentPath.includes("sanatan-seva") ||
+        currentPath.includes("samiti")
+    ) {
+
+        currentPage = "samiti";
+
+    }
+
+    else if (
+        currentPath.includes("dashboard")
+    ) {
+
+        currentPage = "dashboard";
+
+    }
+
+
+    /* ---------------------------------------------
+       Set active navigation
+       --------------------------------------------- */
+
+    items.forEach(function (item) {
+
+        const page =
+            item.getAttribute(
+                "data-page"
+            );
+
+        if (page === currentPage) {
+
+            item.classList.add(
+                "active"
+            );
+
+        } else {
+
+            item.classList.remove(
+                "active"
+            );
+
+        }
+
+    });
+
+
+    /* ---------------------------------------------
+       Android WebView bridge
+       --------------------------------------------- */
+
+    items.forEach(function (item) {
+
+        item.addEventListener(
+            "click",
+            function () {
+
+                const page =
+                    this.getAttribute(
+                        "data-page"
+                    );
+
+
+                /*
+                 * If AndroidBridge exists,
+                 * notify the native Android app.
+                 */
+
+                if (
+                    window.AndroidBridge &&
+                    typeof
+                    window.AndroidBridge
+                        .onBottomNavigationSelected
+                    === "function"
+                ) {
+
+                    try {
+
+                        window.AndroidBridge
+                            .onBottomNavigationSelected(
+                                page
+                            );
+
+                    } catch (error) {
+
+                        console.log(
+                            "Android bridge error:",
+                            error
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+    });
+
+})();
+
+</script>
+
+</body>
+</html>
