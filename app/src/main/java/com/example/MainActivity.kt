@@ -26,7 +26,9 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.messaging.FirebaseMessaging
+import org.json.JSONArray
 import org.json.JSONObject
 
 class MainActivity : ComponentActivity() {
@@ -87,6 +89,128 @@ class MainActivity : ComponentActivity() {
         }
 
         @JavascriptInterface
+        fun saveNotificationLog(
+            title: String,
+            body: String,
+            imageUrl: String,
+            targetScreen: String,
+            audience: String,
+            extraData: String
+        ): String {
+            return try {
+                val docRef = firestore.collection("notification_logs").document()
+                val logData = hashMapOf(
+                    "id" to docRef.id,
+                    "title" to title,
+                    "body" to body,
+                    "imageUrl" to imageUrl,
+                    "targetScreen" to targetScreen,
+                    "audience" to audience,
+                    "extraData" to extraData,
+                    "timestamp" to FieldValue.serverTimestamp(),
+                    "status" to "Sent"
+                )
+                docRef.set(logData)
+                docRef.id
+            } catch (e: Exception) {
+                Log.e("AndroidBridge", "Error logging notification to Firestore: ${e.message}", e)
+                "error"
+            }
+        }
+
+        @JavascriptInterface
+        fun triggerLocalNotification(
+            title: String,
+            body: String,
+            imageUrl: String,
+            targetScreen: String,
+            extraData: String
+        ) {
+            try {
+                val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    val channel = android.app.NotificationChannel(
+                        SanatanamFirebaseMessagingService.CHANNEL_ID,
+                        SanatanamFirebaseMessagingService.CHANNEL_NAME,
+                        android.app.NotificationManager.IMPORTANCE_HIGH
+                    ).apply {
+                        description = "Official announcements, darshan updates, and seva alerts"
+                        enableLights(true)
+                        lightColor = Color.parseColor("#D93F01")
+                        enableVibration(true)
+                    }
+                    notificationManager.createNotificationChannel(channel)
+                }
+
+                val formattedTitle = androidx.core.text.HtmlCompat.fromHtml(title, androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY)
+                val formattedBody = androidx.core.text.HtmlCompat.fromHtml(body, androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY)
+
+                val intent = Intent(context, MainActivity::class.java).apply {
+                    flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
+                    putExtra("screen", targetScreen)
+                    putExtra("extra", extraData)
+                    putExtra("title", title)
+                    putExtra("body", body)
+                    putExtra("imageUrl", imageUrl)
+                }
+
+                val pendingIntent = android.app.PendingIntent.getActivity(
+                    context,
+                    System.currentTimeMillis().toInt(),
+                    intent,
+                    android.app.PendingIntent.FLAG_UPDATE_CURRENT or android.app.PendingIntent.FLAG_IMMUTABLE
+                )
+
+                val builder = androidx.core.app.NotificationCompat.Builder(context, SanatanamFirebaseMessagingService.CHANNEL_ID)
+                    .setSmallIcon(R.drawable.app_logo)
+                    .setColor(Color.parseColor("#D93F01"))
+                    .setContentTitle(formattedTitle)
+                    .setContentText(formattedBody)
+                    .setStyle(androidx.core.app.NotificationCompat.BigTextStyle().bigText(formattedBody))
+                    .setAutoCancel(true)
+                    .setPriority(androidx.core.app.NotificationCompat.PRIORITY_HIGH)
+                    .setContentIntent(pendingIntent)
+
+                notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
+            } catch (e: Exception) {
+                Log.e("AndroidBridge", "Error triggering notification: ${e.message}", e)
+            }
+        }
+
+        @JavascriptInterface
+        fun fetchNotificationLogs() {
+            firestore.collection("notification_logs")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .limit(25)
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    val list = JSONArray()
+                    for (doc in snapshot.documents) {
+                        val obj = JSONObject()
+                        obj.put("id", doc.getString("id") ?: doc.id)
+                        obj.put("title", doc.getString("title") ?: "")
+                        obj.put("body", doc.getString("body") ?: "")
+                        obj.put("imageUrl", doc.getString("imageUrl") ?: "")
+                        obj.put("targetScreen", doc.getString("targetScreen") ?: "Home")
+                        obj.put("audience", doc.getString("audience") ?: "all_users")
+                        obj.put("status", doc.getString("status") ?: "Sent")
+                        obj.put("timestamp", doc.getTimestamp("timestamp")?.toDate()?.toString() ?: "")
+                        list.put(obj)
+                    }
+                    val jsonStr = list.toString()
+                    webViewProvider()?.post {
+                        webViewProvider()?.evaluateJavascript(
+                            "if (window.onFirestoreLogsLoaded) { window.onFirestoreLogsLoaded($jsonStr); }",
+                            null
+                        )
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("AndroidBridge", "Error fetching Firestore logs: ${e.message}")
+                }
+        }
+
+        @JavascriptInterface
         fun navigateToScreen(screenName: String) {
             webViewProvider()?.post {
                 when (screenName.lowercase()) {
@@ -129,6 +253,12 @@ class MainActivity : ComponentActivity() {
                     .apply()
                 Log.d("FCM", "Current FCM Token: $token")
             }
+
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 101)
+            }
+        }
 
         handleNotificationIntent(intent)
 

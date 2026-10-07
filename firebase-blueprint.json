@@ -63,6 +63,51 @@
         }
       },
       "required": ["pledgeId", "userId", "category", "createdAt"]
+    },
+    "NotificationLog": {
+      "title": "NotificationLog",
+      "description": "Dispatched push notification history record in Firestore.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique document identifier for the notification log."
+        },
+        "title": {
+          "type": "string",
+          "description": "The notification title (up to 65 chars)."
+        },
+        "body": {
+          "type": "string",
+          "description": "The notification body (HTML/formatted text up to 240 chars)."
+        },
+        "imageUrl": {
+          "type": "string",
+          "description": "Banner image attachment URL or path."
+        },
+        "targetScreen": {
+          "type": "string",
+          "description": "In-app screen destination for deep-linking."
+        },
+        "audience": {
+          "type": "string",
+          "description": "FCM target group or topic."
+        },
+        "extraData": {
+          "type": "string",
+          "description": "Optional route payload or deep link parameters."
+        },
+        "status": {
+          "type": "string",
+          "description": "Status of the dispatch (e.g. Sent)."
+        },
+        "timestamp": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the notification was dispatched."
+        }
+      },
+      "required": ["id", "title", "body", "targetScreen", "status"]
     }
   },
   "firestore": {
@@ -77,6 +122,12 @@
         "$ref": "#/entities/SevaPledge"
       },
       "description": "User seva resolutions and registrations."
+    },
+    "/notification_logs/{logId}": {
+      "schema": {
+        "$ref": "#/entities/NotificationLog"
+      },
+      "description": "Dispatched push notifications history log collection."
     }
   }
 }

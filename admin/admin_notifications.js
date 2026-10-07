@@ -1,4 +1,4 @@
-// Sanatan Seva Samiti (SSS) - Push Notification Admin Dispatcher
+// Sanatan Seva Samiti (SSS) - Push Notification Admin Dispatcher & Firestore Sync Engine
 document.addEventListener("DOMContentLoaded", () => {
     initNotificationAdmin();
 });
@@ -41,26 +41,49 @@ function initNotificationAdmin() {
     const titleInput = document.getElementById("notifTitle");
     const bodyInput = document.getElementById("notifBody");
     const imageInput = document.getElementById("notifImage");
+    const fileInput = document.getElementById("notifImageFile");
     const targetSelect = document.getElementById("targetScreen");
     const extraInput = document.getElementById("extraData");
     const dispatchBtn = document.getElementById("dispatchBtn");
 
     // Live Listeners with strict limit enforcement
-    titleInput.addEventListener("input", handleTitleInput);
-    bodyInput.addEventListener("input", handleBodyInput);
-    imageInput.addEventListener("input", updatePreview);
-    targetSelect.addEventListener("change", updatePreview);
-    extraInput.addEventListener("input", updatePreview);
+    if (titleInput) titleInput.addEventListener("input", handleTitleInput);
+    if (bodyInput) bodyInput.addEventListener("input", handleBodyInput);
+    if (imageInput) imageInput.addEventListener("input", updatePreview);
+    if (targetSelect) targetSelect.addEventListener("change", updatePreview);
+    if (extraInput) extraInput.addEventListener("input", updatePreview);
 
-    dispatchBtn.addEventListener("click", handleDispatch);
+    // File input attachment reader
+    if (fileInput) {
+        fileInput.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    if (imageInput) {
+                        imageInput.value = evt.target.result;
+                        updatePreview();
+                        showToast("बैनर चित्र सफलतापूर्वक लोड हो गया!");
+                    }
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    if (dispatchBtn) dispatchBtn.addEventListener("click", handleDispatch);
 
     // Initial render
     updatePreview();
     renderHistory();
+
+    // Sync from Firestore if connected to Android
+    syncFromFirestore();
 }
 
 // Strip HTML tags to measure raw text length
 function getCleanText(htmlStr) {
+    if (!htmlStr) return "";
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = htmlStr;
     return tempDiv.textContent || tempDiv.innerText || "";
@@ -75,16 +98,16 @@ function handleTitleInput(e) {
     const currentLen = input.value.length;
     const remaining = MAX_TITLE_LEN - currentLen;
     const counterEl = document.getElementById("titleCounter");
-    counterEl.textContent = `${currentLen}/${MAX_TITLE_LEN} (${remaining} शेष)`;
-
-    if (remaining === 0) {
-        counterEl.className = "char-counter limit-reached";
-    } else if (remaining <= 10) {
-        counterEl.className = "char-counter warning";
-    } else {
-        counterEl.className = "char-counter";
+    if (counterEl) {
+        counterEl.textContent = `${currentLen}/${MAX_TITLE_LEN} (${remaining} शेष)`;
+        if (remaining === 0) {
+            counterEl.className = "char-counter limit-reached";
+        } else if (remaining <= 10) {
+            counterEl.className = "char-counter warning";
+        } else {
+            counterEl.className = "char-counter";
+        }
     }
-
     updatePreview();
 }
 
@@ -94,48 +117,55 @@ function handleBodyInput(e) {
     const plainText = getCleanText(input.value);
 
     if (plainText.length > MAX_BODY_LEN) {
-        // Enforce strict ceiling
+        // Enforce strict ceiling and prevent typing beyond 240 chars
         input.value = input.value.slice(0, -1);
     }
 
     const currentPlainLen = getCleanText(input.value).length;
     const remaining = Math.max(0, MAX_BODY_LEN - currentPlainLen);
     const counterEl = document.getElementById("bodyCounter");
-    counterEl.textContent = `${currentPlainLen}/${MAX_BODY_LEN} (${remaining} शेष)`;
-
-    if (remaining === 0) {
-        counterEl.className = "char-counter limit-reached";
-    } else if (remaining <= 20) {
-        counterEl.className = "char-counter warning";
-    } else {
-        counterEl.className = "char-counter";
+    if (counterEl) {
+        counterEl.textContent = `${currentPlainLen}/${MAX_BODY_LEN} (${remaining} शेष)`;
+        if (remaining === 0) {
+            counterEl.className = "char-counter limit-reached";
+        } else if (remaining <= 20) {
+            counterEl.className = "char-counter warning";
+        } else {
+            counterEl.className = "char-counter";
+        }
     }
-
     updatePreview();
 }
 
 // Real-Time Preview Renderer
 function updatePreview() {
-    const titleVal = document.getElementById("notifTitle").value.trim() || "Sanatan Seva Samiti";
-    const bodyVal = document.getElementById("notifBody").value.trim() || "यहाँ आपकी सूचना का लाइव प्रारूप दिखाई देगा...";
-    const imageVal = document.getElementById("notifImage").value.trim();
-    const targetVal = document.getElementById("targetScreen").value;
-    const extraVal = document.getElementById("extraData").value.trim();
+    const titleVal = document.getElementById("notifTitle")?.value.trim() || "Sanatan Seva Samiti";
+    const bodyVal = document.getElementById("notifBody")?.value.trim() || "यहाँ आपकी सूचना का लाइव प्रारूप दिखाई देगा...";
+    const imageVal = document.getElementById("notifImage")?.value.trim() || "";
+    const targetVal = document.getElementById("targetScreen")?.value || "Home";
+    const extraVal = document.getElementById("extraData")?.value.trim() || "";
 
     // Render Preview Card
-    document.getElementById("previewTitle").innerHTML = sanitizeHTML(titleVal);
-    document.getElementById("previewBody").innerHTML = sanitizeHTML(bodyVal);
-
+    const previewTitle = document.getElementById("previewTitle");
+    const previewBody = document.getElementById("previewBody");
     const bannerImg = document.getElementById("previewBanner");
-    if (imageVal) {
-        bannerImg.src = imageVal;
-        bannerImg.style.display = "block";
-    } else {
-        bannerImg.style.display = "none";
+    const routeBadge = document.getElementById("previewRoute");
+
+    if (previewTitle) previewTitle.innerHTML = sanitizeHTML(titleVal);
+    if (previewBody) previewBody.innerHTML = sanitizeHTML(bodyVal);
+
+    if (bannerImg) {
+        if (imageVal) {
+            bannerImg.src = imageVal;
+            bannerImg.style.display = "block";
+        } else {
+            bannerImg.style.display = "none";
+        }
     }
 
-    const routeBadge = document.getElementById("previewRoute");
-    routeBadge.textContent = `🎯 स्क्रीन: ${targetVal}${extraVal ? " (" + extraVal + ")" : ""}`;
+    if (routeBadge) {
+        routeBadge.textContent = `🎯 स्क्रीन: ${targetVal}${extraVal ? " (" + extraVal + ")" : ""}`;
+    }
 
     // Update Live Payload JSON Box
     updatePayloadPreview(titleVal, bodyVal, imageVal, targetVal, extraVal);
@@ -143,17 +173,18 @@ function updatePreview() {
 
 // Sanitize HTML for safe preview
 function sanitizeHTML(str) {
-    // Allows <b>, <i>, <span>, <a>, <mark>
+    if (!str) return "";
     return str
         .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, "")
         .replace(/on\w+="[^"]*"/g, "");
 }
 
-// Live JSON Payload
+// Live JSON Payload Preview
 function updatePayloadPreview(title, body, image, screen, extra) {
+    const audienceVal = document.getElementById("targetAudience")?.value || "all_users";
     const payload = {
         message: {
-            topic: document.getElementById("targetAudience").value,
+            topic: audienceVal,
             notification: {
                 title: title,
                 body: getCleanText(body),
@@ -188,6 +219,7 @@ function updatePayloadPreview(title, body, image, screen, extra) {
 // Rich Text Formatting Actions
 function insertTag(tag, attr = "") {
     const textarea = document.getElementById("notifBody");
+    if (!textarea) return;
     const start = textarea.selectionStart;
     const end = textarea.selectionEnd;
     const selectedText = textarea.value.substring(start, end) || "पाठ";
@@ -210,6 +242,7 @@ function insertLink() {
 
 function clearFormatting() {
     const textarea = document.getElementById("notifBody");
+    if (!textarea) return;
     textarea.value = getCleanText(textarea.value);
     handleBodyInput({ target: textarea });
 }
@@ -225,24 +258,25 @@ function loadPreset(key) {
     const targetSelect = document.getElementById("targetScreen");
     const extraInput = document.getElementById("extraData");
 
-    titleInput.value = p.title;
-    bodyInput.value = p.body;
-    imageInput.value = p.image;
-    targetSelect.value = p.target;
-    extraInput.value = p.extra;
+    if (titleInput) titleInput.value = p.title;
+    if (bodyInput) bodyInput.value = p.body;
+    if (imageInput) imageInput.value = p.image;
+    if (targetSelect) targetSelect.value = p.target;
+    if (extraInput) extraInput.value = p.extra;
 
-    handleTitleInput({ target: titleInput });
-    handleBodyInput({ target: bodyInput });
+    if (titleInput) handleTitleInput({ target: titleInput });
+    if (bodyInput) handleBodyInput({ target: bodyInput });
     showToast(`टैम्प्लेट "${p.title.substring(0, 20)}..." लोड हो गया!`);
 }
 
-// Dispatch Execution
+// Dispatch Execution & Firestore Save
 function handleDispatch() {
-    const title = document.getElementById("notifTitle").value.trim();
-    const body = document.getElementById("notifBody").value.trim();
-    const image = document.getElementById("notifImage").value.trim();
-    const screen = document.getElementById("targetScreen").value;
-    const audience = document.getElementById("targetAudience").value;
+    const title = document.getElementById("notifTitle")?.value.trim() || "";
+    const body = document.getElementById("notifBody")?.value.trim() || "";
+    const image = document.getElementById("notifImage")?.value.trim() || "";
+    const screen = document.getElementById("targetScreen")?.value || "Home";
+    const audience = document.getElementById("targetAudience")?.value || "all_users";
+    const extra = document.getElementById("extraData")?.value.trim() || "";
 
     if (!title) {
         alert("कृपया सूचना का शीर्षक (Title) दर्ज करें!");
@@ -260,23 +294,74 @@ function handleDispatch() {
         imageUrl: image,
         screen: screen,
         audience: audience,
+        extraData: extra,
         timestamp: new Date().toLocaleString("hi-IN"),
         status: "Sent"
     };
 
-    // Save to Local History
+    // 1. Save to Local History Cache
     const history = JSON.parse(localStorage.getItem("sss_notification_history") || "[]");
     history.unshift(dispatchRecord);
     localStorage.setItem("sss_notification_history", JSON.stringify(history.slice(0, 30)));
-
     renderHistory();
-    showToast("🎉 सूचना सफलतापूर्वक प्रेषित कर दी गई (Dispatched Successfully)!");
 
-    // If running inside Android WebView, test trigger native notification
-    if (window.AndroidBridge && window.AndroidBridge.navigateToScreen) {
-        console.log("Device connected via AndroidBridge");
+    // 2. Integration with Firestore & Android Native Notification
+    let firestoreSaved = false;
+    if (window.AndroidBridge) {
+        if (typeof window.AndroidBridge.saveNotificationLog === "function") {
+            try {
+                window.AndroidBridge.saveNotificationLog(title, body, image, screen, audience, extra);
+                firestoreSaved = true;
+            } catch (e) {
+                console.warn("Firestore logging via AndroidBridge:", e);
+            }
+        }
+        if (typeof window.AndroidBridge.triggerLocalNotification === "function") {
+            try {
+                window.AndroidBridge.triggerLocalNotification(title, body, image, screen, extra);
+            } catch (e) {
+                console.warn("Local notification trigger:", e);
+            }
+        }
+    }
+
+    const feedbackMsg = firestoreSaved
+        ? "🎉 अधिसूचना प्रेषित व Firestore डेटाबेस में सहेजी गई!"
+        : "🎉 अधिसूचना सफलतापूर्वक प्रेषित कर दी गई (Dispatched Successfully)!";
+    showToast(feedbackMsg);
+}
+
+// Request logs from Firestore
+function syncFromFirestore() {
+    if (window.AndroidBridge && typeof window.AndroidBridge.fetchNotificationLogs === "function") {
+        try {
+            window.AndroidBridge.fetchNotificationLogs();
+            showToast("Firestore से इतिहास लोड किया जा रहा है...");
+        } catch (e) {
+            console.warn("Error calling fetchNotificationLogs:", e);
+        }
     }
 }
+
+// Callback invoked when Android fetches Firestore logs
+window.onFirestoreLogsLoaded = function(logs) {
+    if (Array.isArray(logs) && logs.length > 0) {
+        const formattedLogs = logs.map(l => ({
+            id: l.id || ("ntf_" + Math.random()),
+            title: l.title || "",
+            body: l.body || "",
+            imageUrl: l.imageUrl || "",
+            screen: l.targetScreen || l.screen || "Home",
+            audience: l.audience || "all_users",
+            timestamp: l.timestamp || new Date().toLocaleString("hi-IN"),
+            status: l.status || "Sent"
+        }));
+
+        localStorage.setItem("sss_notification_history", JSON.stringify(formattedLogs));
+        renderHistory();
+        showToast("Firestore से ताज़ा इतिहास सिंक हो गया!");
+    }
+};
 
 // Render History Table
 function renderHistory() {
@@ -297,11 +382,11 @@ function renderHistory() {
                     ${sanitizeHTML(item.body)}
                 </div>
             </td>
-            <td><span class="notif-route-badge" style="margin: 0;">${item.screen}</span></td>
+            <td><span class="notif-route-badge" style="margin: 0;">${item.screen || item.targetScreen || 'Home'}</span></td>
             <td>${item.audience}</td>
             <td>${item.timestamp}</td>
             <td>
-                <span class="badge-status badge-sent">सफल (Sent)</span>
+                <span class="badge-status badge-sent">सफल (${item.status || 'Sent'})</span>
                 <button class="btn-action-sm" onclick="reapplyNotification('${item.id}')" style="margin-left: 6px;">पुनः भरें</button>
             </td>
         </tr>
@@ -313,13 +398,18 @@ function reapplyNotification(id) {
     const item = history.find(h => h.id === id);
     if (!item) return;
 
-    document.getElementById("notifTitle").value = item.title;
-    document.getElementById("notifBody").value = item.body;
-    document.getElementById("notifImage").value = item.imageUrl || "";
-    document.getElementById("targetScreen").value = item.screen || "Home";
+    const titleInput = document.getElementById("notifTitle");
+    const bodyInput = document.getElementById("notifBody");
+    const imageInput = document.getElementById("notifImage");
+    const targetSelect = document.getElementById("targetScreen");
 
-    handleTitleInput({ target: document.getElementById("notifTitle") });
-    handleBodyInput({ target: document.getElementById("notifBody") });
+    if (titleInput) titleInput.value = item.title;
+    if (bodyInput) bodyInput.value = item.body;
+    if (imageInput) imageInput.value = item.imageUrl || "";
+    if (targetSelect) targetSelect.value = item.screen || item.targetScreen || "Home";
+
+    if (titleInput) handleTitleInput({ target: titleInput });
+    if (bodyInput) handleBodyInput({ target: bodyInput });
     window.scrollTo({ top: 0, behavior: "smooth" });
     showToast("पूर्व सूचना डेटा फ़ॉर्म में पुनः लोड कर दिया गया!");
 }
@@ -335,6 +425,7 @@ function clearAllHistory() {
 // Toast Feedback Notification
 function showToast(msg) {
     const toast = document.getElementById("toastBox");
+    if (!toast) return;
     toast.textContent = msg;
     toast.style.display = "flex";
     setTimeout(() => {

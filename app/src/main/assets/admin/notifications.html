@@ -40,10 +40,10 @@
             <div class="form-group">
                 <label class="form-label">शीघ्र टैम्प्लेट (Quick Presets):</label>
                 <div class="preset-row">
-                    <button class="preset-chip" onclick="loadPreset('devi')">🌸 भगवती दर्शन</button>
-                    <button class="preset-chip" onclick="loadPreset('guru')">🕉️ सद्गुरुदेव संदेश</button>
-                    <button class="preset-chip" onclick="loadPreset('gauseva')">🚩 गौ सेवा महाअभियान</button>
-                    <button class="preset-chip" onclick="loadPreset('panchang')">📅 दैनिक पंचांग</button>
+                    <button type="button" class="preset-chip" onclick="loadPreset('devi')">🌸 भगवती दर्शन</button>
+                    <button type="button" class="preset-chip" onclick="loadPreset('guru')">🕉️ सद्गुरुदेव संदेश</button>
+                    <button type="button" class="preset-chip" onclick="loadPreset('gauseva')">🚩 गौ सेवा महाअभियान</button>
+                    <button type="button" class="preset-chip" onclick="loadPreset('panchang')">📅 दैनिक पंचांग</button>
                 </div>
             </div>
 
@@ -86,11 +86,17 @@
                 <textarea id="notifBody" class="form-textarea" placeholder="HTML टैग्स समर्थित हैं (e.g. <b>माँ जगदम्बा</b> के दर्शन करें एवं <i>कृपा</i> प्राप्त करें...)"></textarea>
             </div>
 
-            <!-- Banner Image Attachment (Big Picture Style) -->
+            <!-- Banner Image Attachment (Big Picture Style with File Upload & URL) -->
             <div class="form-group">
-                <label class="form-label" for="notifImage">बैनर चित्र URL (Big Picture / Banner Image):</label>
-                <input type="text" id="notifImage" class="form-input" placeholder="e.g. assets/branding/devi.png या https://example.com/banner.jpg">
-                <div class="preset-row" style="margin-top: 6px;">
+                <label class="form-label" for="notifImage">बैनर चित्र URL / फ़ाइल अपलोड (Big Picture Image):</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 6px;">
+                    <input type="text" id="notifImage" class="form-input" style="flex: 1;" placeholder="e.g. assets/branding/devi.png या URL">
+                    <label class="preset-chip" style="margin: 0; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; white-space: nowrap; padding: 10px 14px; background: rgba(255, 214, 103, 0.15); border: 1px solid var(--gold3); color: var(--gold3);">
+                        📁 फ़ाइल चुनें
+                        <input type="file" id="notifImageFile" accept="image/*" style="display: none;">
+                    </label>
+                </div>
+                <div class="preset-row">
                     <button type="button" class="preset-chip" onclick="document.getElementById('notifImage').value='assets/branding/devi.png'; updatePreview();">देवी माँ बैनर</button>
                     <button type="button" class="preset-chip" onclick="document.getElementById('notifImage').value='assets/branding/guru.png'; updatePreview();">सद्गुरुदेव बैनर</button>
                     <button type="button" class="preset-chip" onclick="document.getElementById('notifImage').value='assets/branding/sss.png'; updatePreview();">समिति बैनर</button>
@@ -167,9 +173,12 @@
         <div class="history-card">
             <div class="history-header">
                 <h2 class="card-title" style="margin: 0;">
-                    <span>📜</span> प्रेषित अधिसूचना इतिहास (Dispatch History Log)
+                    <span>📜</span> प्रेषित अधिसूचना इतिहास (Dispatch History Log & Firestore Sync)
                 </h2>
-                <button class="btn-action-sm" onclick="clearAllHistory()">इतिहास साफ़ करें</button>
+                <div>
+                    <button class="btn-action-sm" onclick="syncFromFirestore()" style="margin-right: 6px;">🔄 सिंक करें</button>
+                    <button class="btn-action-sm" onclick="clearAllHistory()">इतिहास साफ़ करें</button>
+                </div>
             </div>
 
             <div class="history-table-wrap">

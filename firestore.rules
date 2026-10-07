@@ -39,6 +39,14 @@ service cloud.firestore {
              data.createdAt is timestamp && data.createdAt <= request.time;
     }
 
+    function isValidNotificationLog(data) {
+      return data.id is string && data.id.size() >= 1 && data.id.size() <= 128 &&
+             data.title is string && data.title.size() >= 1 && data.title.size() <= 150 &&
+             data.body is string && data.body.size() >= 1 && data.body.size() <= 2000 &&
+             data.targetScreen is string && data.targetScreen.size() >= 1 && data.targetScreen.size() <= 80 &&
+             data.status is string && data.status.size() >= 1 && data.status.size() <= 50;
+    }
+
     match /users/{userId} {
       allow get, list: if isOwner(userId);
 
@@ -74,6 +82,12 @@ service cloud.firestore {
 
         allow delete: if isOwner(userId);
       }
+    }
+
+    match /notification_logs/{logId} {
+      allow read: if true;
+      allow create: if isValidNotificationLog(incoming());
+      allow update, delete: if isSignedIn();
     }
   }
 }
