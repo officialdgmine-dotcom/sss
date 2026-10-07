@@ -2,9 +2,13 @@
 <html lang="hi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#130C0A">
 <title>SANATANAM • Seva Vault</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
 <style>
 *{
@@ -52,6 +56,7 @@ a{
 
 button{
     border:0;
+    cursor:pointer;
 }
 
 /* =========================================================
@@ -817,6 +822,11 @@ button{
     transform:translate(-50%,0);
 }
 
+/* Dynamic Header/Footer slot styles */
+#headerContainer, #footerContainer {
+    width: 100%;
+}
+
 @media(min-width:600px){
     body{
         padding:20px 0;
@@ -843,6 +853,9 @@ button{
 
 <div class="app">
 
+    <!-- DYNAMIC HEADER INCLUDE SLOT -->
+    <div id="headerContainer"></div>
+
     <!-- =====================================================
          HEADER
     ====================================================== -->
@@ -863,7 +876,7 @@ button{
         <button
             class="sync"
             type="button"
-            onclick="loadWallet(true)">
+            onclick="loadWallet()">
             ↻
         </button>
 
@@ -1036,6 +1049,9 @@ button{
         </div>
 
     </section>
+
+    <!-- DYNAMIC FOOTER INCLUDE SLOT -->
+    <div id="footerContainer"></div>
 
 </div>
 
@@ -1210,15 +1226,27 @@ button{
 <script>
 
 /* =========================================================
-   API & STATE
+   API CONFIG & NOTIFICATION TRACKER
 ========================================================= */
 
-const WALLET_API =
-"https://sanatansevasamiti.org/api/get_wallet_data.php";
+const WALLET_API = "https://sanatansevasamiti.org/api/get_wallet_data.php";
+let previousTxnCount = -1;
 
-let lastTxnCount = -1;
-let currentTxns = [];
+/* =========================================================
+   DYNAMIC INCLUDE: header.html & footer.html
+========================================================= */
 
+async function includePartial(containerId, filePath) {
+    try {
+        const res = await fetch(filePath);
+        if (res.ok) {
+            const html = await res.text();
+            document.getElementById(containerId).innerHTML = html;
+        }
+    } catch (e) {
+        // Fallback gracefully agar file webview me alag path par ho
+    }
+}
 
 /* =========================================================
    UID RESOLVER
@@ -1241,17 +1269,11 @@ function getUserUID(){
     }
 
     const params = new URLSearchParams(window.location.search);
-    return (
-        params.get("uid") ||
-        params.get("unique_id") ||
-        params.get("user_id") ||
-        ""
-    );
+    return params.get("uid") || params.get("unique_id") || params.get("user_id") || "";
 }
 
-
 /* =========================================================
-   MONEY & TEXT
+   HELPERS: MONEY & SAFE TEXT
 ========================================================= */
 
 function money(value){
@@ -1270,9 +1292,34 @@ function safe(value){
         .replace(/'/g,"&#039;");
 }
 
+/* =========================================================
+   RINGTONE & LIVE TOAST NOTIFICATION
+========================================================= */
+
+function playRingtoneAndNotify(txn) {
+    // 1. Play Sacred Tune
+    const audio = document.getElementById("sanatanamRingtone");
+    if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(() => {});
+    }
+
+    // 2. Format Notification Message
+    const isCredit = String(txn.type || "").toUpperCase() === "CREDIT";
+    const msg = isCredit
+        ? `🔔 खाते में ₹${money(txn.amount)} जोड़े गए (${txn.service_name})`
+        : `🔔 सेवा सहयोग: ₹${money(txn.amount)} समर्पित हुए (${txn.service_name})`;
+
+    toast(msg);
+
+    // 3. Android Native Bridge Hook (agar APK me ho)
+    if (window.AndroidBridge && typeof window.AndroidBridge.showToast === "function") {
+        try { window.AndroidBridge.showToast(msg); } catch(e){}
+    }
+}
 
 /* =========================================================
-   TOAST & SOUND ENGINE
+   TOAST
 ========================================================= */
 
 let toastTimer;
@@ -1282,35 +1329,11 @@ function toast(message){
     el.textContent = message;
     el.classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(()=>el.classList.remove("show"), 3500);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 4000);
 }
-
-function playNotificationTune(txn){
-    // 1. Play Tone
-    const audio = document.getElementById("sanatanamRingtone");
-    if(audio){
-        audio.currentTime = 0;
-        audio.play().catch(e => console.log("Audio play allowed on user interaction:", e));
-    }
-
-    // 2. Format Toast
-    const isCredit = String(txn.type || "").toUpperCase() === "CREDIT";
-    const amt = money(txn.amount);
-    const msg = isCredit
-        ? `🔔 खाते में ₹${amt} जमा हुए! (${safe(txn.service_name)})`
-        : `🔔 खाते से ₹${amt} समर्पित हुए! (${safe(txn.service_name)})`;
-
-    toast(msg);
-
-    // 3. Native Android Toast (if APK)
-    if(window.AndroidBridge && typeof window.AndroidBridge.showToast === "function"){
-        try{ window.AndroidBridge.showToast(msg); }catch(e){}
-    }
-}
-
 
 /* =========================================================
-   STATES
+   UI STATES: LOADING / ERROR / EMPTY
 ========================================================= */
 
 function loading(){
@@ -1329,7 +1352,7 @@ function errorState(message){
             <div class="state-icon">⚠</div>
             <div class="state-title">वॉलेट उपलब्ध नहीं है</div>
             <div class="state-text">${safe(message)}</div>
-            <button class="retry" onclick="loadWallet(true)">पुनः प्रयास करें</button>
+            <button class="retry" onclick="loadWallet()">पुनः प्रयास करें</button>
         </div>
     `;
 }
@@ -1343,7 +1366,6 @@ function emptyState(){
         </div>
     `;
 }
-
 
 /* =========================================================
    TRANSACTION RENDER
@@ -1368,12 +1390,14 @@ function renderTransactions(data){
             <div class="tx-marker ${isCredit ? "tx-credit-marker" : "tx-debit-marker"}">
                 ${isCredit ? "↓" : "↑"}
             </div>
+
             <div class="tx-body">
                 <div class="tx-main">
                     <div class="tx-name">${safe(txn.service_name || "वॉलेट सेवा")}</div>
                     <div class="tx-description">${safe(txn.description || "वॉलेट द्वारा लेन-देन")}</div>
                     <div class="tx-date">${safe(txn.date || "---")}</div>
                 </div>
+
                 <div class="tx-money">
                     <div class="tx-amount ${isCredit ? "credit" : "debit"}">
                         ${isCredit ? "+" : "-"}₹${money(txn.amount)}
@@ -1388,23 +1412,23 @@ function renderTransactions(data){
     });
 }
 
-
 /* =========================================================
-   LOAD API
+   LOAD API WITH TARGETED TOPIC SYNC
 ========================================================= */
 
-async function loadWallet(showLoadState = false){
-    if(showLoadState) loading();
+async function loadWallet(isSilent = false){
+    if (!isSilent) loading();
 
     const uid = getUserUID();
 
     if(!uid){
         errorState("सदस्य UID उपलब्ध नहीं है। कृपया पहले SANATANAM में लॉगिन करें।");
+        toast("UID उपलब्ध नहीं है");
         return;
     }
 
-    // Sync FCM Topic with Native Android Bridge if present
-    if(window.AndroidBridge && typeof window.AndroidBridge.syncUserFcmTopic === "function"){
+    // Android background sync for targeted single-user push notifications
+    if (window.AndroidBridge && typeof window.AndroidBridge.syncUserFcmTopic === "function") {
         try { window.AndroidBridge.syncUserFcmTopic(uid); } catch(e){}
     }
 
@@ -1436,23 +1460,21 @@ async function loadWallet(showLoadState = false){
         /* TRANSACTIONS */
         const txns = Array.isArray(data.transactions) ? data.transactions : [];
 
-        // Check for newly incoming transaction to ring sound
-        if(lastTxnCount !== -1 && txns.length > lastTxnCount){
-            playNotificationTune(txns[0]);
+        // Check for new incoming transaction and play tune
+        if (previousTxnCount !== -1 && txns.length > previousTxnCount) {
+            playRingtoneAndNotify(txns[0]);
         }
-        lastTxnCount = txns.length;
-        currentTxns = txns;
+        previousTxnCount = txns.length;
 
         renderTransactions(txns);
 
     }catch(err){
         console.error("Wallet:", err);
-        if(showLoadState || lastTxnCount === -1){
+        if (!isSilent) {
             errorState(err.message || "कुछ समय बाद पुनः प्रयास करें।");
         }
     }
 }
-
 
 /* =========================================================
    RECEIPT
@@ -1467,23 +1489,12 @@ function openReceipt(txn){
     document.getElementById("receiptName").textContent =
         document.getElementById("userName").textContent || "---";
 
-    document.getElementById("receiptService").textContent =
-        txn.service_name || "वॉलेट सेवा";
-
-    document.getElementById("receiptDescription").textContent =
-        txn.description || "वॉलेट द्वारा लेन-देन";
-
-    document.getElementById("receiptTxn").textContent =
-        txn.txn_id || "---";
-
-    document.getElementById("receiptUtr").textContent =
-        txn.utr_no || "---";
-
-    document.getElementById("receiptNo").textContent =
-        txn.receipt_no || "---";
-
-    document.getElementById("receiptDate").textContent =
-        txn.date || "---";
+    document.getElementById("receiptService").textContent = txn.service_name || "वॉलेट सेवा";
+    document.getElementById("receiptDescription").textContent = txn.description || "वॉलेट द्वारा लेन-देन";
+    document.getElementById("receiptTxn").textContent = txn.txn_id || "---";
+    document.getElementById("receiptUtr").textContent = txn.utr_no || "---";
+    document.getElementById("receiptNo").textContent = txn.receipt_no || "---";
+    document.getElementById("receiptDate").textContent = txn.date || "---";
 
     const badge = document.getElementById("receiptBadge");
     if(isCredit){
@@ -1498,26 +1509,40 @@ function openReceipt(txn){
     document.body.style.overflow = "hidden";
 }
 
+/* =========================================================
+   CLOSE RECEIPT
+========================================================= */
+
 function closeReceipt(){
     document.getElementById("receiptLayer").classList.remove("open");
     document.body.style.overflow = "";
 }
 
+/* =========================================================
+   KEYBOARD / ESCAPE
+========================================================= */
+
 document.addEventListener("keydown", function(e){
-    if(e.key === "Escape") closeReceipt();
+    if(e.key === "Escape"){
+        closeReceipt();
+    }
 });
 
-
 /* =========================================================
-   START & AUTO REFRESH
+   STARTUP & AUTO-POLLING
 ========================================================= */
 
 document.addEventListener("DOMContentLoaded", function(){
-    loadWallet(true);
+    // Header & Footer inclusion
+    includePartial("headerContainer", "header.html");
+    includePartial("footerContainer", "footer.html");
 
-    // Auto-poll in background every 15 seconds for realtime updates
+    // First load
+    loadWallet();
+
+    // Polling every 15 seconds for real-time wallet transactions
     setInterval(() => {
-        loadWallet(false);
+        loadWallet(true);
     }, 15000);
 });
 
