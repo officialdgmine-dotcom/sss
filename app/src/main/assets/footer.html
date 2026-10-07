@@ -1,33 +1,75 @@
 <!DOCTYPE html>
 <html lang="hi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-<title>Sanatani AI Navigation</title>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0,
+               maximum-scale=1.0,
+               user-scalable=no,
+               viewport-fit=cover">
+
+<title>Sanatani Ð₲ — Navigation</title>
 
 <style>
 
 /* =========================================================
-   SANATANI AI — PREMIUM BOTTOM NAVIGATION
+   SANATANI Ð₲
+   FLAGSHIP DIAMOND NAVIGATION SYSTEM
+   Version: 2.0
+   ========================================================= */
+
+
+/* =========================================================
+   DESIGN TOKENS
    ========================================================= */
 
 :root {
-    --maroon: #6B0F1A;
-    --deep-maroon: #420810;
-    --red: #A71930;
-    --bhagwa: #FF6F00;
-    --gold: #D4AF37;
-    --champagne: #F4D98A;
-    --cream: #FFF4D6;
-    --white: #FFFFFF;
-    --muted: rgba(255, 244, 214, 0.68);
 
-    --nav-height: 76px;
+    --nav-h: 78px;
+
+    --obsidian: #09070a;
+    --obsidian-2: #110b10;
+    --wine: #250b13;
+
+    --maroon: #5b0d19;
+    --crimson: #8d1627;
+
+    --diamond: #f8fbff;
+    --platinum: #dce5ef;
+    --silver: #aeb9c7;
+
+    --champagne: #f4dfaa;
+    --gold: #cda95a;
+
+    --bhagwa: #f26b19;
+
+    --text: #f8f4eb;
+    --muted: rgba(238,235,229,.56);
+
+    --glass-border:
+        rgba(255,255,255,.105);
+
+    --glass-highlight:
+        rgba(255,255,255,.075);
+
+    --shadow:
+        rgba(0,0,0,.58);
+
+    --diamond-glow:
+        rgba(238,246,255,.34);
+
+    --gold-glow:
+        rgba(221,184,94,.28);
+
 }
 
-/* RESET */
+
+/* =========================================================
+   RESET
+   ========================================================= */
 
 * {
     box-sizing: border-box;
@@ -43,87 +85,219 @@ body {
 }
 
 body {
+
+    background: #fffaf3;
+
     font-family:
         Inter,
         -apple-system,
         BlinkMacSystemFont,
         "Segoe UI",
+        Roboto,
         Arial,
         sans-serif;
 
-    background: #fffaf2;
-
     padding-bottom:
         calc(
-            var(--nav-height)
+            var(--nav-h)
             + env(safe-area-inset-bottom)
-            + 10px
+            + 24px
         );
 }
 
 
 /* =========================================================
-   BOTTOM NAVIGATION
+   PAGE CONTENT
    ========================================================= */
 
-.sanatani-bottom-nav {
+#app-content {
+    width: 100%;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   NAVIGATION STAGE
+   ========================================================= */
+
+.sanatani-navigation-stage {
 
     position: fixed;
 
     left: 0;
     right: 0;
+
     bottom: 0;
 
-    z-index: 9999;
-
-    width: 100%;
-
-    padding:
-        8px 7px
-        calc(8px + env(safe-area-inset-bottom))
-        7px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #3D080F 0%,
-            #520B15 42%,
-            #650E19 100%
-        );
-
-    border-top:
-        1px solid
-        rgba(212, 175, 55, 0.55);
-
-    box-shadow:
-        0 -8px 30px
-        rgba(0, 0, 0, 0.28);
-
-    height:
-        calc(
-            var(--nav-height)
-            + env(safe-area-inset-bottom)
-        );
+    z-index: 99999;
 
     display: flex;
 
+    justify-content: center;
+
     align-items: flex-end;
 
-    justify-content: space-between;
+    pointer-events: none;
+
+    padding:
+
+        0
+
+        10px
+
+        calc(
+            10px +
+            env(safe-area-inset-bottom)
+        )
+
+        10px;
 }
 
 
 /* =========================================================
-   EACH NAV ITEM
+   MAIN FLOATING RAIL
+   ========================================================= */
+
+.sanatani-bottom-nav {
+
+    position: relative;
+
+    width: min(
+        680px,
+        calc(100vw - 20px)
+    );
+
+    height: var(--nav-h);
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1.18fr
+        1fr
+        1fr;
+
+    align-items: center;
+
+    padding:
+        7px 8px 6px;
+
+    border-radius: 25px;
+
+    pointer-events: auto;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(29,22,28,.96),
+            rgba(7,6,9,.985)
+        );
+
+    border:
+        1px solid
+        var(--glass-border);
+
+    box-shadow:
+
+        0 18px 48px
+        rgba(0,0,0,.50),
+
+        0 4px 14px
+        rgba(0,0,0,.30),
+
+        inset 0 1px 0
+        rgba(255,255,255,.09),
+
+        inset 0 -1px 0
+        rgba(255,255,255,.025);
+
+    backdrop-filter:
+        blur(24px)
+        saturate(145%);
+
+    -webkit-backdrop-filter:
+        blur(24px)
+        saturate(145%);
+
+}
+
+
+/* =========================================================
+   TOP CRYSTAL HAIRLINE
+   ========================================================= */
+
+.sanatani-bottom-nav::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 7%;
+    right: 7%;
+
+    top: 0;
+
+    height: 1px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(216,226,238,.18),
+            rgba(244,223,170,.42),
+            rgba(216,226,238,.18),
+            transparent
+        );
+
+    opacity: .9;
+
+}
+
+
+/* =========================================================
+   BOTTOM INNER LIGHT
+   ========================================================= */
+
+.sanatani-bottom-nav::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 18%;
+    right: 18%;
+
+    bottom: 0;
+
+    height: 18px;
+
+    background:
+
+        radial-gradient(
+            ellipse,
+            rgba(255,255,255,.045),
+            transparent 72%
+        );
+
+    pointer-events: none;
+
+}
+
+
+/* =========================================================
+   NAV ITEM
    ========================================================= */
 
 .nav-item {
 
     position: relative;
 
-    width: 20%;
+    height: 66px;
 
-    height: 60px;
+    min-width: 0;
 
     display: flex;
 
@@ -131,183 +305,299 @@ body {
 
     align-items: center;
 
-    justify-content: flex-end;
+    justify-content: center;
+
+    gap: 4px;
+
+    padding: 4px 2px;
+
+    border: 0;
+
+    outline: none;
+
+    background: transparent;
 
     text-decoration: none;
 
     color: var(--muted);
 
-    border: 0;
-
-    background: transparent;
-
     cursor: pointer;
-
-    padding: 0;
 
     font-family: inherit;
 
     transition:
-        transform 0.18s ease,
-        color 0.18s ease;
+
+        transform .22s cubic-bezier(.2,.8,.2,1),
+
+        color .22s ease;
+
 }
+
 
 .nav-item:active {
-    transform: scale(0.92);
-}
 
-.nav-item.active {
-    color: var(--champagne);
+    transform:
+        scale(.91);
+
 }
 
 
 /* =========================================================
-   NORMAL ICON
+   NORMAL ICON HOLDER
    ========================================================= */
 
 .nav-icon-box {
 
-    width: 34px;
-    height: 34px;
+    position: relative;
 
-    margin-bottom: 3px;
+    width: 38px;
+    height: 38px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
-    position: relative;
-}
-
-.nav-icon {
-
-    width: 30px;
-    height: 30px;
-
-    object-fit: contain;
-
-    display: block;
-
-    filter:
-        drop-shadow(
-            0 2px 5px
-            rgba(0,0,0,0.35)
-        );
+    border-radius: 13px;
 
     transition:
-        transform 0.2s ease,
-        filter 0.2s ease;
-}
 
-.nav-item.active .nav-icon {
+        background .25s ease,
+        box-shadow .25s ease,
+        transform .25s ease;
 
-    transform: scale(1.06);
-
-    filter:
-        drop-shadow(
-            0 0 7px
-            rgba(244,217,138,0.55)
-        );
 }
 
 
 /* =========================================================
-   NAV TEXT
+   ICON
+   ========================================================= */
+
+.nav-icon {
+
+    width: 31px;
+    height: 31px;
+
+    display: block;
+
+    object-fit: contain;
+
+    opacity: .70;
+
+    filter:
+
+        drop-shadow(
+            0 2px 4px
+            rgba(0,0,0,.45)
+        );
+
+    transition:
+
+        opacity .25s ease,
+        transform .25s ease,
+        filter .25s ease;
+}
+
+
+/* =========================================================
+   NORMAL LABEL
    ========================================================= */
 
 .nav-label {
 
-    width: 100%;
+    max-width: 100%;
 
-    min-height: 18px;
+    overflow: hidden;
 
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    text-align: center;
+    text-overflow: ellipsis;
 
     white-space: nowrap;
 
-    font-size: 10px;
+    font-size: 9.5px;
 
-    line-height: 1.15;
+    line-height: 1;
 
     font-weight: 600;
 
-    letter-spacing: 0.05px;
+    letter-spacing: .02em;
 
     color: inherit;
+
+    transition:
+        color .25s ease,
+        opacity .25s ease;
 }
 
 
 /* =========================================================
-   CENTER SANATANI Ð₲ BUTTON
+   ACTIVE NORMAL ITEM
+   ========================================================= */
+
+.nav-item.active:not(.nav-center) {
+
+    color:
+        var(--diamond);
+
+}
+
+
+.nav-item.active:not(.nav-center)
+.nav-icon-box {
+
+    background:
+
+        radial-gradient(
+            circle,
+            rgba(255,255,255,.075),
+            transparent 72%
+        );
+
+    box-shadow:
+
+        0 0 22px
+        rgba(215,226,239,.055);
+
+}
+
+
+.nav-item.active:not(.nav-center)
+.nav-icon {
+
+    opacity: 1;
+
+    transform:
+        translateY(-1px)
+        scale(1.07);
+
+    filter:
+
+        drop-shadow(
+            0 0 7px
+            rgba(230,239,248,.30)
+        );
+}
+
+
+/* =========================================================
+   ACTIVE CRYSTAL INDICATOR
+   ========================================================= */
+
+.nav-item.active:not(.nav-center)::after {
+
+    content: "";
+
+    position: absolute;
+
+    bottom: 2px;
+
+    left: 50%;
+
+    width: 18px;
+    height: 2px;
+
+    transform:
+        translateX(-50%);
+
+    border-radius: 20px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            var(--diamond),
+            transparent
+        );
+
+    box-shadow:
+
+        0 0 9px
+        rgba(226,237,249,.62);
+}
+
+
+/* =========================================================
+   CENTER SANATANI Ð₲
    ========================================================= */
 
 .nav-center {
 
-    height: 72px;
+    height: 82px;
+
+    margin-top: -22px;
+
+    z-index: 30;
 
     justify-content: flex-end;
 
-    z-index: 20;
 }
 
 
-/* Elevated circle/emblem holder */
+/* =========================================================
+   DIAMOND CORE
+   ========================================================= */
 
 .center-icon-wrap {
 
     position: relative;
 
-    width: 62px;
-    height: 62px;
-
-    margin-bottom: 2px;
-
-    margin-top: -26px;
-
-    border-radius: 50%;
+    width: 67px;
+    height: 67px;
 
     display: flex;
 
     align-items: center;
     justify-content: center;
 
+    transform:
+        rotate(45deg);
+
+    border-radius: 19px;
+
     background:
-        radial-gradient(
-            circle at 50% 38%,
-            #8C1827 0%,
-            #650D18 52%,
-            #430810 100%
+
+        linear-gradient(
+            145deg,
+            #3a1720 0%,
+            #160b10 44%,
+            #08070a 100%
         );
 
     border:
-        2px solid
-        var(--gold);
+
+        1px solid
+        rgba(225,232,240,.40);
 
     box-shadow:
 
-        0 0 0 3px
-        rgba(107, 15, 26, 0.95),
+        0 16px 30px
+        rgba(0,0,0,.55),
 
-        0 0 0 5px
-        rgba(212, 175, 55, 0.18),
+        0 0 0 1px
+        rgba(205,169,90,.18),
 
-        0 -5px 22px
-        rgba(212, 175, 55, 0.25),
+        0 0 28px
+        rgba(222,232,242,.13),
 
-        0 7px 18px
-        rgba(0,0,0,0.40);
+        inset 0 1px 0
+        rgba(255,255,255,.16),
 
-    overflow: hidden;
+        inset 0 -8px 20px
+        rgba(0,0,0,.30);
+
+    transition:
+
+        transform .28s
+        cubic-bezier(.2,.8,.2,1),
+
+        box-shadow .28s ease;
+
 }
 
 
-/* subtle divine light */
+/* =========================================================
+   DIAMOND INNER FRAME
+   ========================================================= */
 
 .center-icon-wrap::before {
 
@@ -315,32 +605,66 @@ body {
 
     position: absolute;
 
-    width: 70%;
-    height: 70%;
+    inset: 7px;
 
-    left: 15%;
-    top: 5%;
+    border-radius: 13px;
+
+    border:
+        1px solid
+        rgba(244,223,170,.30);
+
+    box-shadow:
+
+        inset 0 0 14px
+        rgba(255,255,255,.035),
+
+        0 0 10px
+        rgba(220,230,240,.08);
+
+}
+
+
+/* =========================================================
+   DIAMOND LIGHT
+   ========================================================= */
+
+.center-icon-wrap::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 42px;
+    height: 42px;
+
+    top: 4px;
+    left: 4px;
 
     border-radius: 50%;
 
     background:
+
         radial-gradient(
             circle,
-            rgba(255,220,115,0.22),
-            transparent 68%
+            rgba(255,244,205,.17),
+            rgba(221,187,103,.07) 32%,
+            transparent 70%
         );
 
-    pointer-events: none;
+    filter: blur(2px);
+
 }
 
 
-/* DG icon */
+/* =========================================================
+   CENTER IMAGE
+   ========================================================= */
 
 .center-icon {
 
     position: relative;
 
-    z-index: 2;
+    z-index: 5;
 
     width: 49px;
     height: 49px;
@@ -349,41 +673,93 @@ body {
 
     display: block;
 
+    transform:
+        rotate(-45deg);
+
     filter:
+
         drop-shadow(
-            0 0 6px
-            rgba(244,217,138,0.48)
+            0 0 7px
+            rgba(245,223,164,.34)
+        )
+
+        drop-shadow(
+            0 4px 8px
+            rgba(0,0,0,.50)
         );
-}
 
-
-/* center label */
-
-.center-label {
-
-    color:
-        var(--champagne);
-
-    font-size: 9.5px;
-
-    line-height: 1.1;
-
-    font-weight: 700;
-
-    letter-spacing: 0.05px;
-
-    margin-top: 1px;
-
-    white-space: nowrap;
-
-    text-shadow:
-        0 1px 3px
-        rgba(0,0,0,0.5);
 }
 
 
 /* =========================================================
-   SANATAN SEVA SAMITI IMAGE
+   CENTER LABEL
+   ========================================================= */
+
+.center-label {
+
+    margin-top: 7px;
+
+    font-size: 9.5px;
+
+    line-height: 1;
+
+    font-weight: 700;
+
+    letter-spacing: .015em;
+
+    white-space: nowrap;
+
+    color:
+        var(--champagne);
+
+    text-shadow:
+
+        0 1px 5px
+        rgba(0,0,0,.55);
+
+}
+
+
+/* =========================================================
+   CENTER HOVER / ACTIVE
+   ========================================================= */
+
+.nav-center.active
+.center-icon-wrap {
+
+    transform:
+        rotate(45deg)
+        translateY(-2px)
+        scale(1.035);
+
+    border-color:
+        rgba(244,223,170,.72);
+
+    box-shadow:
+
+        0 18px 34px
+        rgba(0,0,0,.58),
+
+        0 0 0 1px
+        rgba(244,223,170,.18),
+
+        0 0 32px
+        rgba(228,236,245,.19),
+
+        0 0 42px
+        rgba(213,171,82,.12),
+
+        inset 0 1px 0
+        rgba(255,255,255,.22),
+
+        inset 0 -8px 20px
+        rgba(0,0,0,.30);
+
+}
+
+
+/* =========================================================
+   SAMITI IMAGE
    ========================================================= */
 
 .samiti-icon {
@@ -395,13 +771,41 @@ body {
 
     object-fit: cover;
 
+    display: block;
+
     border:
         1px solid
-        rgba(212,175,55,0.65);
+        rgba(220,228,237,.30);
 
     box-shadow:
-        0 2px 6px
-        rgba(0,0,0,0.4);
+
+        0 3px 8px
+        rgba(0,0,0,.40);
+
+    opacity: .76;
+
+    transition:
+
+        transform .25s ease,
+        opacity .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.nav-item.active .samiti-icon {
+
+    opacity: 1;
+
+    transform:
+        scale(1.07);
+
+    border-color:
+        rgba(244,223,170,.62);
+
+    box-shadow:
+
+        0 0 12px
+        rgba(229,217,184,.22);
 }
 
 
@@ -418,104 +822,236 @@ body {
 
     display: block;
 
+    opacity: .72;
+
     filter:
+
         drop-shadow(
             0 2px 5px
-            rgba(0,0,0,0.4)
+            rgba(0,0,0,.45)
+        );
+
+    transition:
+
+        transform .25s ease,
+        opacity .25s ease,
+        filter .25s ease;
+}
+
+
+.nav-item.active .dashboard-icon {
+
+    opacity: 1;
+
+    transform:
+        scale(1.07);
+
+    filter:
+
+        drop-shadow(
+            0 0 7px
+            rgba(232,239,247,.30)
         );
 }
 
 
 /* =========================================================
-   ACTIVE INDICATOR
+   MICRO CRYSTAL DOT
    ========================================================= */
 
-.nav-item:not(.nav-center).active::after {
+.nav-item:not(.nav-center)::before {
 
     content: "";
 
     position: absolute;
 
-    bottom: -1px;
+    top: 7px;
 
-    left: 50%;
-
-    width: 5px;
-    height: 5px;
-
-    transform:
-        translateX(-50%);
+    width: 2px;
+    height: 2px;
 
     border-radius: 50%;
 
     background:
-        var(--gold);
+        rgba(255,255,255,.20);
 
-    box-shadow:
-        0 0 8px
-        rgba(212,175,55,0.75);
+    opacity: .5;
+
 }
 
 
 /* =========================================================
-   CENTER ACTIVE STATE
+   CENTER SEPARATOR LIGHTS
    ========================================================= */
 
-.nav-center.active .center-icon-wrap {
-
-    border-color:
-        var(--champagne);
+.nav-center + .nav-item::before {
 
     box-shadow:
+        -1px 0 0
+        rgba(244,223,170,.03);
 
-        0 0 0 3px
-        #650E19,
-
-        0 0 0 5px
-        rgba(212,175,55,0.28),
-
-        0 0 20px
-        rgba(212,175,55,0.38),
-
-        0 7px 20px
-        rgba(0,0,0,0.45);
 }
 
 
 /* =========================================================
-   SMALL DEVICES
+   PRESS FEEDBACK
    ========================================================= */
 
-@media (max-width: 360px) {
+.nav-item:active
+.nav-icon-box {
 
-    .nav-label {
-        font-size: 9px;
+    transform:
+        scale(.92);
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL PHONES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    :root {
+        --nav-h: 73px;
     }
 
-    .center-label {
-        font-size: 8.5px;
+    .sanatani-bottom-nav {
+
+        border-radius: 22px;
+
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+
+    .nav-item {
+
+        height: 62px;
+
+    }
+
+    .nav-icon-box {
+
+        width: 34px;
+        height: 34px;
     }
 
     .nav-icon {
+
         width: 27px;
         height: 27px;
     }
 
     .samiti-icon,
     .dashboard-icon {
-        width: 28px;
-        height: 28px;
+
+        width: 27px;
+        height: 27px;
+    }
+
+    .nav-label {
+
+        font-size: 8.5px;
     }
 
     .center-icon-wrap {
-        width: 58px;
-        height: 58px;
+
+        width: 61px;
+        height: 61px;
+
+        border-radius: 17px;
     }
 
     .center-icon {
-        width: 45px;
-        height: 45px;
+
+        width: 44px;
+        height: 44px;
     }
+
+    .center-label {
+
+        font-size: 8.5px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 330px) {
+
+    .sanatani-bottom-nav {
+
+        width:
+            calc(100vw - 12px);
+
+        padding-left: 3px;
+        padding-right: 3px;
+    }
+
+    .nav-label {
+
+        font-size: 8px;
+    }
+
+    .center-label {
+
+        font-size: 8px;
+    }
+
+}
+
+
+/* =========================================================
+   TABLET / LARGE DISPLAY
+   ========================================================= */
+
+@media (min-width: 700px) {
+
+    :root {
+        --nav-h: 82px;
+    }
+
+    .sanatani-bottom-nav {
+
+        border-radius: 28px;
+
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .nav-icon {
+
+        width: 33px;
+        height: 33px;
+    }
+
+    .samiti-icon,
+    .dashboard-icon {
+
+        width: 33px;
+        height: 33px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        transition: none !important;
+
+        animation: none !important;
+    }
+
 }
 
 
@@ -525,14 +1061,63 @@ body {
 
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
 
-    .sanatani-bottom-nav {
+    .sanatani-navigation-stage {
+
         padding-bottom:
             calc(
-                8px +
+                10px +
                 env(safe-area-inset-bottom)
             );
     }
+
 }
+
+
+/* =========================================================
+   LANDSCAPE PHONE
+   ========================================================= */
+
+@media
+    (orientation: landscape)
+    and (max-height: 500px) {
+
+    :root {
+        --nav-h: 68px;
+    }
+
+    .sanatani-bottom-nav {
+
+        width: min(
+            620px,
+            calc(100vw - 30px)
+        );
+
+        border-radius: 22px;
+    }
+
+    .nav-item {
+
+        height: 58px;
+    }
+
+    .center-icon-wrap {
+
+        width: 56px;
+        height: 56px;
+    }
+
+    .center-icon {
+
+        width: 40px;
+        height: 40px;
+    }
+
+}
+
+
+/* =========================================================
+   END OF DESIGN
+   ========================================================= */
 
 </style>
 </head>
@@ -542,15 +1127,13 @@ body {
 
 
 <!-- =======================================================
-     YOUR PAGE CONTENT
+     PAGE CONTENT
      ======================================================= -->
 
 <main id="app-content">
 
     <!--
         Your actual page content goes here.
-        Example:
-        Home / Feed / Sanatani Ð₲ / Sanatan Seva Samiti / Dashboard
     -->
 
 </main>
@@ -558,8 +1141,11 @@ body {
 
 
 <!-- =======================================================
-     SANATANI AI — BOTTOM NAVIGATION
+     SANATANI Ð₲
+     FLAGSHIP FLOATING NAVIGATION
      ======================================================= -->
+
+<div class="sanatani-navigation-stage">
 
 <nav
     class="sanatani-bottom-nav"
@@ -585,6 +1171,7 @@ body {
                 src="branding/footer/home.png"
                 class="nav-icon"
                 alt="Home"
+                loading="eager"
             >
 
         </span>
@@ -614,6 +1201,7 @@ body {
                 src="branding/footer/feed.png"
                 class="nav-icon"
                 alt="Feed"
+                loading="eager"
             >
 
         </span>
@@ -627,7 +1215,8 @@ body {
 
 
     <!-- ===================================================
-         3. SANATANI Ð₲ — CENTER
+         3. SANATANI Ð₲
+         CENTRAL FLAGSHIP BUTTON
          =================================================== -->
 
     <a
@@ -643,6 +1232,7 @@ body {
                 src="branding/footer/Ð₲.png"
                 class="center-icon"
                 alt="Sanatani Ð₲"
+                loading="eager"
             >
 
         </span>
@@ -672,6 +1262,7 @@ body {
                 src="branding/footer/PRO1781011172_dp.jpg"
                 class="samiti-icon"
                 alt="Sanatan Seva Samiti"
+                loading="eager"
             >
 
         </span>
@@ -701,6 +1292,7 @@ body {
                 src="branding/footer/accounts.png"
                 class="dashboard-icon"
                 alt="Dashboard"
+                loading="eager"
             >
 
         </span>
@@ -714,12 +1306,15 @@ body {
 
 </nav>
 
+</div>
+
 
 
 <script>
 
 /* =========================================================
-   SANATANI AI — NAVIGATION SCRIPT
+   SANATANI Ð₲
+   NAVIGATION ENGINE
    ========================================================= */
 
 (function () {
@@ -744,9 +1339,9 @@ body {
         );
 
 
-    /* ---------------------------------------------
-       Detect current page
-       --------------------------------------------- */
+    /* =====================================================
+       CURRENT PAGE DETECTION
+       ===================================================== */
 
     const currentPath =
         window.location.pathname
@@ -755,7 +1350,8 @@ body {
             .toLowerCase();
 
 
-    let currentPage = "home";
+    let currentPage =
+        "home";
 
 
     if (
@@ -763,16 +1359,17 @@ body {
         currentPath.includes("feed")
     ) {
 
-        currentPage = "feed";
+        currentPage =
+            "feed";
 
     }
 
     else if (
-        currentPath.includes("sanatani-ai") ||
-        currentPath.includes("sanatani")
+        currentPath.includes("sanatani-ai")
     ) {
 
-        currentPage = "sanatani-ai";
+        currentPage =
+            "sanatani-ai";
 
     }
 
@@ -781,7 +1378,8 @@ body {
         currentPath.includes("samiti")
     ) {
 
-        currentPage = "samiti";
+        currentPage =
+            "samiti";
 
     }
 
@@ -789,14 +1387,24 @@ body {
         currentPath.includes("dashboard")
     ) {
 
-        currentPage = "dashboard";
+        currentPage =
+            "dashboard";
+
+    }
+
+    else if (
+        currentPath.includes("app_home")
+    ) {
+
+        currentPage =
+            "home";
 
     }
 
 
-    /* ---------------------------------------------
-       Set active navigation
-       --------------------------------------------- */
+    /* =====================================================
+       APPLY ACTIVE STATE
+       ===================================================== */
 
     items.forEach(function (item) {
 
@@ -805,13 +1413,18 @@ body {
                 "data-page"
             );
 
-        if (page === currentPage) {
+
+        if (
+            page === currentPage
+        ) {
 
             item.classList.add(
                 "active"
             );
 
-        } else {
+        }
+
+        else {
 
             item.classList.remove(
                 "active"
@@ -822,9 +1435,9 @@ body {
     });
 
 
-    /* ---------------------------------------------
-       Android WebView bridge
-       --------------------------------------------- */
+    /* =====================================================
+       ANDROID WEBVIEW BRIDGE
+       ===================================================== */
 
     items.forEach(function (item) {
 
@@ -837,11 +1450,6 @@ body {
                         "data-page"
                     );
 
-
-                /*
-                 * If AndroidBridge exists,
-                 * notify the native Android app.
-                 */
 
                 if (
                     window.AndroidBridge &&
@@ -858,10 +1466,12 @@ body {
                                 page
                             );
 
-                    } catch (error) {
+                    }
+
+                    catch (error) {
 
                         console.log(
-                            "Android bridge error:",
+                            "Android navigation bridge error:",
                             error
                         );
 
@@ -874,9 +1484,45 @@ body {
 
     });
 
+
+    /* =====================================================
+       PREVENT DOUBLE-TAP ZOOM BEHAVIOUR
+       ===================================================== */
+
+    let lastTouchEnd = 0;
+
+
+    document.addEventListener(
+        "touchend",
+        function (event) {
+
+            const now =
+                Date.now();
+
+
+            if (
+                now - lastTouchEnd <= 280
+            ) {
+
+                event.preventDefault();
+
+            }
+
+
+            lastTouchEnd =
+                now;
+
+        },
+        {
+            passive: false
+        }
+    );
+
+
 })();
 
 </script>
+
 
 </body>
 </html>
