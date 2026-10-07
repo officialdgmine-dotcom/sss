@@ -1,309 +1,217 @@
-<!DOCTYPE html>
-<html lang="hi">
-<head>
-<meta charset="UTF-8">
-
-<meta name="viewport"
-      content="width=device-width,
-      initial-scale=1.0,
-      maximum-scale=1.0,
-      user-scalable=no,
-      viewport-fit=cover">
-
-<title>Sanatani Ð₲ Navigation</title>
-
 <style>
 
 /* =========================================================
-   SANATANI Ð₲
-   ROYAL JEWEL NAVIGATION
-   ORIGINAL FLAGSHIP FOOTER
+   SANATANAM — ULTRA PREMIUM ROYAL FOOTER
+   BASE DESIGN PRESERVED
    ========================================================= */
 
-:root {
+:root{
+    --sss-red:#8B0015;
+    --sss-red-dark:#56000B;
+    --sss-red-deep:#380006;
 
-    --royal-1: #7D1220;
-    --royal-2: #650C18;
-    --royal-3: #4A0710;
-    --royal-4: #32050B;
+    --sss-bhagwa:#FF4A00;
+    --sss-bhagwa-light:#FF7A18;
 
-    --bhagwa: #F26A05;
-    --bhagwa-soft: #FF8A19;
+    --sss-gold:#D4AF37;
+    --sss-gold-light:#FFE08A;
+    --sss-gold-bright:#FFF0B0;
 
-    --gold: #C79A32;
-    --gold-light: #F2D477;
-    --gold-bright: #FFE9A6;
-
-    --cream: #FFF4D4;
-    --cream-soft: rgba(255,244,212,.68);
-
-    --shadow: rgba(35,2,7,.60);
-
-    --footer-height: 88px;
+    --sss-cream:#FFF4D2;
 }
 
 
 /* =========================================================
-   RESET
+   BODY
    ========================================================= */
 
-* {
-    box-sizing: border-box;
-    -webkit-tap-highlight-color: transparent;
-}
-
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100%;
-}
-
-body {
-
-    font-family:
-        Inter,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Arial,
-        sans-serif;
-
-    background: #FFF9EF;
-
-    padding-bottom:
-        calc(
-            var(--footer-height)
-            + env(safe-area-inset-bottom)
-            + 18px
-        );
+body{
+    padding-bottom:90px !important;
 }
 
 
 /* =========================================================
-   PAGE
+   FOOTER NAV
    ========================================================= */
 
-#app-content {
-    min-height: 100vh;
-}
+#sss-nav{
 
+    position:fixed;
 
-/* =========================================================
-   FOOTER STAGE
-   ========================================================= */
+    bottom:0;
+    left:0;
+    right:0;
 
-.sanatani-footer-stage {
+    height:78px;
 
-    position: fixed;
+    display:flex;
 
-    left: 0;
-    right: 0;
-    bottom: 0;
+    justify-content:space-evenly;
 
-    z-index: 99999;
-
-    height:
-        calc(
-            var(--footer-height)
-            + env(safe-area-inset-bottom)
-        );
-
-    padding:
-        0
-        8px
-        env(safe-area-inset-bottom)
-        8px;
-
-    display: flex;
-
-    align-items: flex-end;
-
-    justify-content: center;
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   ROYAL FOOTER BODY
-   ========================================================= */
-
-.sanatani-bottom-nav {
-
-    position: relative;
-
-    width: 100%;
-    max-width: 760px;
-
-    height: var(--footer-height);
-
-    display: grid;
-
-    grid-template-columns:
-        1fr
-        1fr
-        1.22fr
-        1fr
-        1fr;
-
-    align-items: end;
-
-    padding:
-        10px
-        5px
-        7px;
-
-    pointer-events: auto;
+    align-items:center;
 
     background:
 
+        /* Bhagwa royal glow */
+
         radial-gradient(
-            ellipse 80% 100% at 50% 0%,
-            rgba(242,106,5,.15),
-            transparent 62%
+            ellipse 45% 80%
+            at 50% 0%,
+            rgba(255,122,24,.42),
+            transparent 70%
         ),
+
+        /* Main red */
 
         linear-gradient(
             180deg,
-            var(--royal-1) 0%,
-            var(--royal-2) 35%,
-            var(--royal-3) 76%,
-            var(--royal-4) 100%
+            #A51023 0%,
+            #8B0015 38%,
+            #68000E 72%,
+            #4A0008 100%
         );
 
+    border-top:
+        4px solid
+        var(--sss-gold);
+
     border-radius:
-        27px
-        27px
+        22px
+        22px
         0
         0;
 
-    border:
-        1px solid
-        rgba(242,212,119,.42);
-
-    border-bottom: 0;
+    z-index:999999;
 
     box-shadow:
 
-        0 -8px 35px
-        rgba(75,7,15,.25),
+        0 -7px 28px
+        rgba(52,0,7,.42),
 
         0 -1px 0
-        rgba(255,240,184,.18),
+        rgba(255,240,169,.65),
 
         inset 0 1px 0
-        rgba(255,255,255,.10);
+        rgba(255,255,255,.12),
+
+        inset 0 7px 18px
+        rgba(255,83,0,.08);
+
+    overflow:visible;
 }
 
 
 /* =========================================================
-   ORNAMENTAL TOP ARCH
+   ROYAL GOLD + BHAGWA TOP LINES
    ========================================================= */
 
-.sanatani-bottom-nav::before {
+#sss-nav::before{
 
-    content: "";
+    content:"";
 
-    position: absolute;
+    position:absolute;
 
-    left: 8%;
-    right: 8%;
+    left:13px;
+    right:13px;
 
-    top: -1px;
+    top:-7px;
 
-    height: 18px;
+    height:16px;
 
     border-top:
-        1px solid
-        rgba(242,212,119,.72);
+        2px solid
+        var(--sss-gold-light);
 
     border-radius:
-        50% 50% 0 0;
-
-    box-shadow:
-
-        0 -2px 8px
-        rgba(242,212,119,.16);
-
-    pointer-events: none;
-}
-
-
-/* =========================================================
-   CENTRAL ARCH CUT / EMBLEM AREA
-   ========================================================= */
-
-.sanatani-bottom-nav::after {
-
-    content: "";
-
-    position: absolute;
-
-    width: 118px;
-    height: 42px;
-
-    left: 50%;
-    top: -18px;
-
-    transform:
-        translateX(-50%);
-
-    background:
-        #4A0710;
-
-    border-radius:
-        60px
-        60px
+        30px
+        30px
         0
         0;
 
-    border-top:
-        1px solid
-        rgba(242,212,119,.45);
+    box-shadow:
 
-    pointer-events: none;
+        0 3px 0
+        var(--sss-bhagwa),
 
-    z-index: 0;
+        0 6px 0
+        var(--sss-gold),
+
+        0 8px 0
+        rgba(91,0,10,.95);
+
+    pointer-events:none;
 }
 
 
 /* =========================================================
-   NAV ITEM
+   INNER ROYAL HIGHLIGHT
    ========================================================= */
 
-.nav-item {
+#sss-nav::after{
 
-    position: relative;
+    content:"";
 
-    width: 100%;
-    height: 66px;
+    position:absolute;
 
-    display: flex;
+    left:32px;
+    right:32px;
 
-    flex-direction: column;
+    top:7px;
 
-    align-items: center;
+    height:1px;
 
-    justify-content: flex-end;
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(255,232,151,.75),
+            transparent
+        );
 
-    gap: 4px;
+    box-shadow:
+        0 0 7px
+        rgba(255,215,100,.28);
+
+    pointer-events:none;
+}
+
+
+/* =========================================================
+   NORMAL ITEMS
+   ========================================================= */
+
+.sss-item{
+
+    position:relative;
+
+    flex:1;
+
+    height:68px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:flex-end;
+
+    gap:3px;
+
+    text-align:center;
+
+    text-decoration:none;
 
     color:
-        var(--cream-soft);
+        rgba(255,244,210,.84);
 
-    text-decoration: none;
+    font-size:10px;
 
-    border: 0;
+    font-weight:800;
 
-    background: transparent;
+    line-height:1;
 
-    font-family: inherit;
-
-    cursor: pointer;
-
-    padding: 0 2px;
+    padding-bottom:4px;
 
     transition:
         transform .22s ease,
@@ -311,330 +219,297 @@ body {
 }
 
 
-.nav-item:active {
-
-    transform:
-        scale(.91);
-}
-
-
-/* =========================================================
-   ICON FRAME
-   ========================================================= */
-
-.nav-icon-box {
-
-    position: relative;
-
-    width: 43px;
-    height: 39px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 13px;
-
-    transition:
-        transform .25s ease,
-        background .25s ease,
-        box-shadow .25s ease;
-}
-
-
 /* =========================================================
    ICON
    ========================================================= */
 
-.nav-icon {
+.sss-item img{
 
-    width: 31px;
-    height: 31px;
+    width:28px;
+    height:28px;
 
-    object-fit: contain;
+    display:block;
 
-    display: block;
+    margin:auto;
 
-    opacity: .82;
+    object-fit:contain;
 
     filter:
         drop-shadow(
             0 2px 3px
-            rgba(0,0,0,.35)
+            rgba(0,0,0,.42)
         );
 
     transition:
-        transform .25s ease,
-        opacity .25s ease,
-        filter .25s ease;
+        transform .22s ease,
+        filter .22s ease,
+        opacity .22s ease;
 }
 
 
 /* =========================================================
-   LABEL
+   ACTIVE PAGE
    ========================================================= */
 
-.nav-label {
-
-    max-width: 100%;
-
-    overflow: hidden;
-
-    white-space: nowrap;
-
-    text-overflow: ellipsis;
-
-    font-size: 9.5px;
-
-    line-height: 1.1;
-
-    font-weight: 600;
-
-    letter-spacing: .05px;
-
-    color: inherit;
-}
-
-
-/* =========================================================
-   ACTIVE NORMAL ITEM
-   ========================================================= */
-
-.nav-item.active:not(.nav-center) {
+.sss-item.sss-active{
 
     color:
-        var(--gold-bright);
+        var(--sss-gold-bright);
 }
 
 
-.nav-item.active:not(.nav-center)
-.nav-icon-box {
+/* =========================================================
+   ACTIVE ICON ROYAL MARK
+   ========================================================= */
+
+.sss-item.sss-active:not(.sss-dash-wrap)::before{
+
+    content:"";
+
+    position:absolute;
+
+    top:2px;
+
+    width:42px;
+    height:38px;
+
+    border-radius:13px;
 
     background:
-
         linear-gradient(
             145deg,
-            rgba(255,230,158,.12),
-            rgba(255,159,30,.035)
+            rgba(255,224,138,.18),
+            rgba(255,106,0,.06)
         );
+
+    border:
+        1px solid
+        rgba(255,224,138,.72);
 
     box-shadow:
 
-        inset 0 1px 0
-        rgba(255,235,170,.13),
+        0 0 0 1px
+        rgba(73,0,9,.75),
 
-        0 0 20px
-        rgba(242,197,91,.08);
+        inset 0 1px 0
+        rgba(255,244,181,.30),
+
+        0 3px 12px
+        rgba(255,205,78,.12);
+
+    z-index:0;
 }
 
 
-.nav-item.active:not(.nav-center)
-.nav-icon {
-
-    opacity: 1;
+.sss-item.sss-active:not(.sss-dash-wrap) img{
 
     transform:
-        translateY(-2px)
         scale(1.08);
 
     filter:
-
         drop-shadow(
             0 0 7px
-            rgba(255,224,133,.52)
+            rgba(255,224,138,.65)
         );
 }
 
 
+.sss-item.sss-active span{
+
+    color:
+        var(--sss-gold-bright);
+
+    text-shadow:
+        0 1px 5px
+        rgba(0,0,0,.6);
+}
+
+
 /* =========================================================
-   ACTIVE JEWEL
+   SMALL ACTIVE GOLD MARK
    ========================================================= */
 
-.nav-item.active:not(.nav-center)::after {
+.sss-item.sss-active:not(.sss-dash-wrap)::after{
 
-    content: "";
+    content:"";
 
-    position: absolute;
+    position:absolute;
 
-    bottom: 0;
+    bottom:-1px;
 
-    width: 7px;
-    height: 7px;
+    width:7px;
+    height:7px;
 
     transform:
         rotate(45deg);
 
     background:
-        var(--gold-light);
+        var(--sss-gold-light);
+
+    border:
+        1px solid
+        #FFF0B0;
 
     box-shadow:
-
-        0 0 4px
-        rgba(255,228,137,.9),
-
-        0 0 11px
-        rgba(255,196,67,.55);
+        0 0 8px
+        rgba(255,216,91,.72);
 }
 
 
 /* =========================================================
-   CENTER SANATANI Ð₲
+   CENTER ITEM
    ========================================================= */
 
-.nav-center {
+.sss-dash-wrap{
 
-    height: 88px;
+    margin-top:-31px;
 
-    z-index: 10;
+    height:92px;
 
-    justify-content: flex-end;
+    z-index:20;
 
-    padding-bottom: 0;
+    justify-content:flex-end;
+
+    padding-bottom:3px;
 }
 
 
 /* =========================================================
-   CENTER ROYAL MEDALLION
+   CENTER ROYAL GOLD CIRCLE
    ========================================================= */
 
-.center-icon-wrap {
+.sss-gold-circle{
 
-    position: relative;
+    position:relative;
 
-    width: 70px;
-    height: 70px;
-
-    margin-top: -37px;
-
-    display: flex;
-
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
+    width:64px;
+    height:64px;
 
     background:
 
         radial-gradient(
-            circle at 50% 27%,
-            #9B2031 0%,
-            #76101E 37%,
-            #520914 72%,
-            #35050B 100%
+            circle at 50% 25%,
+            #B72A38 0%,
+            #941324 35%,
+            #6D000F 68%,
+            #450007 100%
         );
 
+    border-radius:50%;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
     border:
-        1px solid
-        var(--gold-light);
+        3px solid
+        var(--sss-gold-light);
 
     box-shadow:
 
         0 0 0 3px
-        #4A0710,
+        #65000D,
 
-        0 0 0 4px
-        rgba(242,212,119,.48),
+        0 0 0 5px
+        rgba(212,175,55,.88),
 
         0 0 0 7px
-        rgba(74,7,16,.78),
+        rgba(74,0,8,.82),
 
-        0 0 28px
-        rgba(242,212,119,.27),
+        0 0 22px
+        rgba(255,210,91,.34),
 
-        0 11px 23px
-        rgba(30,2,5,.50),
+        0 9px 22px
+        rgba(40,0,6,.55),
 
         inset 0 2px 0
-        rgba(255,242,187,.22);
+        rgba(255,245,185,.32);
 
-    overflow: hidden;
+    overflow:hidden;
 
     transition:
-        transform .3s ease,
-        box-shadow .3s ease;
+        transform .25s ease,
+        box-shadow .25s ease;
 }
 
 
 /* =========================================================
-   MEDALLION INNER ORNAMENT
+   CENTER INNER RING
    ========================================================= */
 
-.center-icon-wrap::before {
+.sss-gold-circle::before{
 
-    content: "";
+    content:"";
 
-    position: absolute;
+    position:absolute;
 
-    inset: 7px;
+    inset:6px;
 
-    border-radius: 50%;
+    border-radius:50%;
 
     border:
         1px solid
-        rgba(242,212,119,.30);
+        rgba(255,226,135,.58);
 
     box-shadow:
-
         inset 0 0 12px
-        rgba(255,211,91,.08);
+        rgba(255,210,79,.14);
 }
 
 
 /* =========================================================
-   MEDALLION LIGHT
+   CENTER LIGHT
    ========================================================= */
 
-.center-icon-wrap::after {
+.sss-gold-circle::after{
 
-    content: "";
+    content:"";
 
-    position: absolute;
+    position:absolute;
 
-    width: 80%;
-    height: 55%;
+    width:65%;
+    height:35%;
 
-    left: 10%;
-    top: 0;
+    left:18%;
+    top:3px;
 
-    border-radius: 50%;
+    border-radius:50%;
 
     background:
-
         radial-gradient(
             ellipse,
-            rgba(255,225,137,.22),
-            transparent 68%
+            rgba(255,244,184,.24),
+            transparent 70%
         );
 
-    pointer-events: none;
+    pointer-events:none;
 }
 
 
 /* =========================================================
-   CENTER IMAGE
+   CENTER LOGO
    ========================================================= */
 
-.center-icon {
+.sss-gold-circle img{
 
-    position: relative;
+    position:relative;
 
-    z-index: 5;
+    z-index:3;
 
-    width: 51px;
-    height: 51px;
+    width:35px;
+    height:35px;
 
-    object-fit: contain;
+    object-fit:contain;
 
     filter:
-
         drop-shadow(
-            0 0 8px
-            rgba(255,222,133,.52)
+            0 0 7px
+            rgba(255,230,145,.58)
         );
 
-    transition:
-        transform .25s ease;
+    margin:0;
 }
 
 
@@ -642,39 +517,32 @@ body {
    CENTER ACTIVE
    ========================================================= */
 
-.nav-center.active
-.center-icon-wrap {
+.sss-dash-wrap.sss-active
+.sss-gold-circle{
 
     transform:
-        translateY(-3px)
-        scale(1.035);
+        translateY(-2px)
+        scale(1.04);
 
     box-shadow:
 
         0 0 0 3px
-        #4A0710,
+        #65000D,
 
-        0 0 0 4px
-        var(--gold-light),
+        0 0 0 5px
+        var(--sss-gold-light),
 
         0 0 0 7px
-        rgba(74,7,16,.85),
+        rgba(74,0,8,.9),
 
-        0 0 34px
-        rgba(242,212,119,.43),
+        0 0 29px
+        rgba(255,213,95,.48),
 
-        0 13px 26px
-        rgba(30,2,5,.55),
+        0 10px 23px
+        rgba(40,0,6,.58),
 
         inset 0 2px 0
-        rgba(255,248,202,.28);
-}
-
-
-.nav-center.active .center-icon {
-
-    transform:
-        scale(1.06);
+        rgba(255,245,185,.38);
 }
 
 
@@ -682,22 +550,20 @@ body {
    CENTER LABEL
    ========================================================= */
 
-.center-label {
+.sss-dash-wrap span{
 
     color:
-        var(--gold-bright);
+        var(--sss-gold-bright);
 
-    font-size: 9.5px;
+    font-size:9px;
 
-    font-weight: 700;
+    font-weight:800;
 
-    line-height: 1;
-
-    white-space: nowrap;
+    white-space:nowrap;
 
     text-shadow:
-        0 1px 4px
-        rgba(0,0,0,.55);
+        0 1px 5px
+        rgba(0,0,0,.65);
 }
 
 
@@ -705,515 +571,319 @@ body {
    SAMITI IMAGE
    ========================================================= */
 
-.samiti-icon {
+.sss-item:nth-child(4) img{
 
-    width: 32px;
-    height: 32px;
-
-    border-radius: 50%;
-
-    object-fit: cover;
+    border-radius:50%;
 
     border:
         1px solid
-        rgba(242,212,119,.70);
-
-    box-shadow:
-
-        0 2px 7px
-        rgba(0,0,0,.35);
-
-    transition:
-        transform .25s ease,
-        box-shadow .25s ease;
+        rgba(255,224,138,.68);
 }
 
 
-.nav-item.active .samiti-icon {
+/* =========================================================
+   PRESS EFFECT
+   ========================================================= */
+
+.sss-item:active{
 
     transform:
-        scale(1.08);
-
-    box-shadow:
-
-        0 0 11px
-        rgba(242,212,119,.42);
+        scale(.94);
 }
 
 
 /* =========================================================
-   DASHBOARD
+   MOBILE
    ========================================================= */
 
-.dashboard-icon {
+@media(max-width:380px){
 
-    width: 32px;
-    height: 32px;
-
-    object-fit: contain;
-
-    display: block;
-
-    opacity: .83;
-
-    filter:
-        drop-shadow(
-            0 2px 4px
-            rgba(0,0,0,.35)
-        );
-
-    transition:
-        transform .25s ease,
-        opacity .25s ease,
-        filter .25s ease;
-}
-
-
-.nav-item.active .dashboard-icon {
-
-    opacity: 1;
-
-    transform:
-        scale(1.07);
-
-    filter:
-        drop-shadow(
-            0 0 8px
-            rgba(255,222,133,.50)
-        );
-}
-
-
-/* =========================================================
-   SIDE ORNAMENTAL POINTS
-   ========================================================= */
-
-.nav-item:first-child::before,
-.nav-item:nth-child(2)::before,
-.nav-item:nth-child(4)::before,
-.nav-item:last-child::before {
-
-    content: "";
-
-    position: absolute;
-
-    top: 3px;
-
-    width: 3px;
-    height: 3px;
-
-    border-radius: 50%;
-
-    background:
-        rgba(242,212,119,.30);
-}
-
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 380px) {
-
-    :root {
-        --footer-height: 84px;
+    body{
+        padding-bottom:86px !important;
     }
 
-    .sanatani-bottom-nav {
-
-        padding-left: 3px;
-        padding-right: 3px;
-
-        border-radius:
-            23px
-            23px
-            0
-            0;
+    #sss-nav{
+        height:75px;
     }
 
-    .nav-item {
-        height: 62px;
+    .sss-item{
+
+        height:64px;
+
+        font-size:8.5px;
     }
 
-    .nav-icon {
-        width: 28px;
-        height: 28px;
+    .sss-item img{
+
+        width:27px;
+        height:27px;
     }
 
-    .samiti-icon,
-    .dashboard-icon {
-        width: 28px;
-        height: 28px;
+    .sss-dash-wrap{
+
+        height:87px;
+
+        margin-top:-27px;
     }
 
-    .nav-label {
-        font-size: 8.4px;
+    .sss-gold-circle{
+
+        width:59px;
+        height:59px;
     }
 
-    .center-icon-wrap {
-        width: 62px;
-        height: 62px;
-        margin-top: -31px;
+    .sss-gold-circle img{
+
+        width:33px;
+        height:33px;
     }
 
-    .center-icon {
-        width: 45px;
-        height: 45px;
-    }
+    .sss-dash-wrap span{
 
-    .center-label {
-        font-size: 8.4px;
+        font-size:8px;
     }
 }
 
 
 /* =========================================================
-   VERY SMALL DEVICES
+   VERY SMALL SCREEN
    ========================================================= */
 
-@media (max-width: 330px) {
+@media(max-width:330px){
 
-    .nav-label {
-        font-size: 7.8px;
+    .sss-item{
+
+        font-size:7.7px;
     }
 
-    .center-label {
-        font-size: 7.8px;
+    .sss-item img{
+
+        width:25px;
+        height:25px;
     }
 
-    .center-icon-wrap {
-        width: 58px;
-        height: 58px;
+    .sss-gold-circle{
+
+        width:56px;
+        height:56px;
     }
 
-    .center-icon {
-        width: 42px;
-        height: 42px;
-    }
-}
+    .sss-gold-circle img{
 
-
-/* =========================================================
-   SAFE AREA
-   ========================================================= */
-
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-
-    .sanatani-footer-stage {
-
-        padding-bottom:
-            env(safe-area-inset-bottom);
-    }
-}
-
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-
-        animation: none !important;
-
-        transition: none !important;
+        width:31px;
+        height:31px;
     }
 }
 
 </style>
-</head>
 
 
-<body>
+<!-- =========================================================
+     SANATANAM ROYAL FOOTER
+     ========================================================= -->
+
+<div id="sss-nav">
 
 
-<main id="app-content"></main>
-
-
-<!-- =======================================================
-     SANATANI Ð₲
-     ROYAL JEWEL FOOTER
-     ======================================================= -->
-
-<div class="sanatani-footer-stage">
-
-<nav
-    class="sanatani-bottom-nav"
-    id="sanataniBottomNav"
-    aria-label="मुख्य नेविगेशन"
->
-
-
-    <!-- ===================================================
-         HOME
-         =================================================== -->
+    <!-- HOME -->
 
     <a
         href="app_home.php"
-        class="nav-item"
-        data-page="home"
-        aria-label="Home"
-    >
+        class="sss-item"
+        data-page="home">
 
-        <span class="nav-icon-box">
+        <img
+            src="branding/footer/home.png"
+            alt="Home">
 
-            <img
-                src="branding/footer/home.png"
-                class="nav-icon"
-                alt="Home"
-            >
-
-        </span>
-
-        <span class="nav-label">
+        <span>
             Home
         </span>
 
     </a>
 
 
-
-    <!-- ===================================================
-         FEED
-         =================================================== -->
+    <!-- FEED -->
 
     <a
         href="feed.php"
-        class="nav-item"
-        data-page="feed"
-        aria-label="Feed"
-    >
+        class="sss-item"
+        data-page="feed">
 
-        <span class="nav-icon-box">
+        <img
+            src="branding/footer/feed.png"
+            alt="Feed">
 
-            <img
-                src="branding/footer/feed.png"
-                class="nav-icon"
-                alt="Feed"
-            >
-
-        </span>
-
-        <span class="nav-label">
+        <span>
             Feed
         </span>
 
     </a>
 
 
-
-    <!-- ===================================================
-         SANATANI Ð₲
-         =================================================== -->
+    <!-- SANATANI Ð₲ -->
 
     <a
         href="sanatani-ai.php"
-        class="nav-item nav-center"
-        data-page="sanatani-ai"
-        aria-label="Sanatani Ð₲"
-    >
+        class="sss-item sss-dash-wrap"
+        data-page="sanatani-ai">
 
-        <span class="center-icon-wrap">
+        <div class="sss-gold-circle">
 
             <img
                 src="branding/footer/Ð₲.png"
-                class="center-icon"
-                alt="Sanatani Ð₲"
-            >
+                alt="Sanatani Ð₲">
 
-        </span>
+        </div>
 
-        <span class="center-label">
+        <span>
             Sanatani Ð₲
         </span>
 
     </a>
 
 
-
-    <!-- ===================================================
-         SANATAN SEVA SAMITI
-         =================================================== -->
+    <!-- SANATAN SEVA SAMITI -->
 
     <a
         href="sanatan-seva-samiti.php"
-        class="nav-item"
-        data-page="samiti"
-        aria-label="Sanatan Seva Samiti"
-    >
+        class="sss-item"
+        data-page="samiti">
 
-        <span class="nav-icon-box">
+        <img
+            src="branding/footer/PRO1781011172_dp.jpg"
+            alt="Sanatan Seva Samiti">
 
-            <img
-                src="branding/footer/PRO1781011172_dp.jpg"
-                class="samiti-icon"
-                alt="Sanatan Seva Samiti"
-            >
-
-        </span>
-
-        <span class="nav-label">
+        <span>
             Sanatan Seva Samiti
         </span>
 
     </a>
 
 
-
-    <!-- ===================================================
-         DASHBOARD
-         =================================================== -->
+    <!-- DASHBOARD -->
 
     <a
         href="dashboard.php"
-        class="nav-item"
-        data-page="dashboard"
-        aria-label="Dashboard"
-    >
+        class="sss-item"
+        data-page="dashboard">
 
-        <span class="nav-icon-box">
+        <img
+            src="branding/footer/accounts.png"
+            alt="Dashboard">
 
-            <img
-                src="branding/footer/accounts.png"
-                class="dashboard-icon"
-                alt="Dashboard"
-            >
-
-        </span>
-
-        <span class="nav-label">
+        <span>
             Dashboard
         </span>
 
     </a>
 
-
-</nav>
-
 </div>
-
 
 
 <script>
 
 /* =========================================================
-   SANATANI Ð₲ NAVIGATION ENGINE
+   ACTIVE PAGE DETECTION
    ========================================================= */
 
-(function () {
+(function(){
 
     "use strict";
 
 
     const nav =
-        document.getElementById(
-            "sanataniBottomNav"
-        );
+        document.getElementById("sss-nav");
 
 
-    if (!nav) {
-        return;
-    }
+    if(!nav) return;
 
 
     const items =
-        nav.querySelectorAll(
-            ".nav-item"
-        );
+        nav.querySelectorAll(".sss-item");
 
-
-    /* =====================================================
-       PAGE DETECTION
-       ===================================================== */
 
     const currentPath =
         window.location.pathname
-            .split("/")
-            .pop()
-            .toLowerCase();
+        .split("/")
+        .pop()
+        .toLowerCase();
 
 
-    let currentPage =
-        "home";
+    let currentPage = "home";
 
 
-    if (
+    /* HOME */
+
+    if(
+        currentPath === "" ||
+        currentPath === "index.php" ||
+        currentPath === "app_home.php"
+    ){
+
+        currentPage = "home";
+
+    }
+
+
+    /* FEED */
+
+    else if(
         currentPath === "feed.php" ||
         currentPath.includes("feed")
-    ) {
+    ){
 
-        currentPage =
-            "feed";
+        currentPage = "feed";
 
     }
 
-    else if (
+
+    /* SANATANI AI */
+
+    else if(
         currentPath.includes("sanatani-ai")
-    ) {
+    ){
 
-        currentPage =
-            "sanatani-ai";
+        currentPage = "sanatani-ai";
 
     }
 
-    else if (
+
+    /* SANATAN SEVA SAMITI */
+
+    else if(
         currentPath.includes("sanatan-seva") ||
         currentPath.includes("samiti")
-    ) {
+    ){
 
-        currentPage =
-            "samiti";
+        currentPage = "samiti";
 
     }
 
-    else if (
+
+    /* DASHBOARD */
+
+    else if(
         currentPath.includes("dashboard")
-    ) {
+    ){
 
-        currentPage =
-            "dashboard";
-
-    }
-
-    else if (
-        currentPath.includes("app_home")
-    ) {
-
-        currentPage =
-            "home";
+        currentPage = "dashboard";
 
     }
 
 
     /* =====================================================
-       ACTIVE ITEM
+       APPLY ACTIVE MARK
        ===================================================== */
 
-    items.forEach(function (item) {
+    items.forEach(function(item){
 
-        const page =
-            item.getAttribute(
-                "data-page"
-            );
-
-
-        if (
-            page === currentPage
-        ) {
+        if(
+            item.dataset.page === currentPage
+        ){
 
             item.classList.add(
-                "active"
-            );
-
-        }
-
-        else {
-
-            item.classList.remove(
-                "active"
+                "sss-active"
             );
 
         }
@@ -1225,27 +895,25 @@ body {
        ANDROID BRIDGE
        ===================================================== */
 
-    items.forEach(function (item) {
+    items.forEach(function(item){
 
         item.addEventListener(
             "click",
-            function () {
+            function(){
 
                 const page =
-                    this.getAttribute(
-                        "data-page"
-                    );
+                    this.dataset.page;
 
 
-                if (
+                if(
                     window.AndroidBridge &&
                     typeof
                     window.AndroidBridge
-                        .onBottomNavigationSelected
+                    .onBottomNavigationSelected
                     === "function"
-                ) {
+                ){
 
-                    try {
+                    try{
 
                         window.AndroidBridge
                             .onBottomNavigationSelected(
@@ -1253,8 +921,7 @@ body {
                             );
 
                     }
-
-                    catch (error) {
+                    catch(error){
 
                         console.log(
                             "Android navigation error:",
@@ -1270,10 +937,29 @@ body {
 
     });
 
+
 })();
 
+
+/* =========================================================
+   OLD TOGGLE FUNCTION — PRESERVED
+   ========================================================= */
+
+function toggleSSS(){
+
+    const sheet =
+        document.getElementById(
+            "sss-sheet"
+        );
+
+    if(sheet){
+
+        sheet.classList.toggle(
+            "active"
+        );
+
+    }
+
+}
+
 </script>
-
-
-</body>
-</html>
