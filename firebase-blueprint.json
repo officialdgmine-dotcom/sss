@@ -1,0 +1,82 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "User profile information for Sanatan Seva Samiti members.",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "The unique Firebase Auth UID of the user."
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The user's display name."
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "The user's email address."
+        },
+        "preferredLanguage": {
+          "type": "string",
+          "description": "The user's selected language code (hi, sa, en, gu, mr, bn)."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the profile was created."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the profile was last updated."
+        }
+      },
+      "required": ["userId", "displayName", "createdAt"]
+    },
+    "SevaPledge": {
+      "title": "SevaPledge",
+      "description": "User seva resolution and activity registration.",
+      "type": "object",
+      "properties": {
+        "pledgeId": {
+          "type": "string",
+          "description": "Unique identifier for the seva pledge."
+        },
+        "userId": {
+          "type": "string",
+          "description": "The user UID who took the pledge."
+        },
+        "category": {
+          "type": "string",
+          "description": "Category of seva (e.g. Gau Seva, Anna Daan, Sanskar Shala)."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Optional notes or resolution details."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Timestamp when the pledge was recorded."
+        }
+      },
+      "required": ["pledgeId", "userId", "category", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": {
+        "$ref": "#/entities/UserProfile"
+      },
+      "description": "Stores user profiles with access restricted to the authenticated owner."
+    },
+    "/users/{userId}/pledges/{pledgeId}": {
+      "schema": {
+        "$ref": "#/entities/SevaPledge"
+      },
+      "description": "User seva resolutions and registrations."
+    }
+  }
+}

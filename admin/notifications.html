@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#170105">
+    <title>अधिसूचना प्रबंधन केंद्र - SANATANAM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin_style.css">
+</head>
+<body>
+    <!-- Top Admin Header -->
+    <header class="admin-header">
+        <div class="brand-section">
+            <img src="../assets/branding/app_logo.png" onerror="this.onerror=null; this.src='../app_logo.png';" alt="Emblem" class="admin-logo">
+            <div class="brand-text">
+                <h1>सनातन सेवा समिति • व्यवस्थापक कक्ष</h1>
+                <p>PUSH NOTIFICATION ARCHITECTURE & DISPATCH ENGINE</p>
+            </div>
+        </div>
+        <div class="nav-actions">
+            <a href="../app_home.html" class="btn-back">
+                <span>◀</span> मुख्य ऐप पर लौटें
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container Layout -->
+    <main class="admin-container">
+        <!-- Left Column: Notification Creator Form -->
+        <section class="admin-card">
+            <h2 class="card-title">
+                <span>📢</span> नई पुश अधिसूचना तैयार करें
+            </h2>
+            <p class="card-subtitle">सभी सनातनी बंधुओं को वास्तविक समय में सूचना, दर्शन एवं सेवा संदेश प्रेषित करें।</p>
+
+            <!-- Quick Template Presets -->
+            <div class="form-group">
+                <label class="form-label">शीघ्र टैम्प्लेट (Quick Presets):</label>
+                <div class="preset-row">
+                    <button class="preset-chip" onclick="loadPreset('devi')">🌸 भगवती दर्शन</button>
+                    <button class="preset-chip" onclick="loadPreset('guru')">🕉️ सद्गुरुदेव संदेश</button>
+                    <button class="preset-chip" onclick="loadPreset('gauseva')">🚩 गौ सेवा महाअभियान</button>
+                    <button class="preset-chip" onclick="loadPreset('panchang')">📅 दैनिक पंचांग</button>
+                </div>
+            </div>
+
+            <!-- Target Audience Selector -->
+            <div class="form-group">
+                <label class="form-label" for="targetAudience">लक्षित समूह (Target Audience):</label>
+                <select id="targetAudience" class="form-select">
+                    <option value="all_users">समस्त सनातनी बंधु (Topic: all_users)</option>
+                    <option value="volunteers">सक्रिय सेवादार (Topic: volunteers)</option>
+                    <option value="youth_wing">युवा प्रकोष्ठ (Topic: youth_wing)</option>
+                    <option value="specific_token">परीक्षण डिवाइस (Specific Device Token)</option>
+                </select>
+            </div>
+
+            <!-- Title with 65-char strict counter -->
+            <div class="form-group">
+                <div class="form-label-row">
+                    <label class="form-label" for="notifTitle">अधिसूचना शीर्षक (Title):</label>
+                    <span id="titleCounter" class="char-counter">0/65 (65 शेष)</span>
+                </div>
+                <input type="text" id="notifTitle" class="form-input" placeholder="e.g. ॥ जय माँ भवानी ॥ आज का पावन दर्शन" maxlength="65">
+            </div>
+
+            <!-- Rich Text Toolbar & Body with 240-char strict counter -->
+            <div class="form-group">
+                <div class="form-label-row">
+                    <label class="form-label" for="notifBody">अधिसूचना विवरण (Body with HTML Support):</label>
+                    <span id="bodyCounter" class="char-counter">0/240 (240 शेष)</span>
+                </div>
+                
+                <!-- HTML Formatting Tools -->
+                <div class="toolbar">
+                    <button type="button" class="tool-btn" onclick="insertTag('b')"><b>B</b> बोल्ड</button>
+                    <button type="button" class="tool-btn" onclick="insertTag('i')"><i>I</i> इटैलिक</button>
+                    <button type="button" class="tool-btn" onclick="insertTag('span', 'style=\'color:#ffd866;\'')">✦ स्वर्ण रंग</button>
+                    <button type="button" class="tool-btn" onclick="insertLink()">🔗 लिंक</button>
+                    <button type="button" class="tool-btn" onclick="clearFormatting()">⟲ साफ़ करें</button>
+                </div>
+
+                <textarea id="notifBody" class="form-textarea" placeholder="HTML टैग्स समर्थित हैं (e.g. <b>माँ जगदम्बा</b> के दर्शन करें एवं <i>कृपा</i> प्राप्त करें...)"></textarea>
+            </div>
+
+            <!-- Banner Image Attachment (Big Picture Style) -->
+            <div class="form-group">
+                <label class="form-label" for="notifImage">बैनर चित्र URL (Big Picture / Banner Image):</label>
+                <input type="text" id="notifImage" class="form-input" placeholder="e.g. assets/branding/devi.png या https://example.com/banner.jpg">
+                <div class="preset-row" style="margin-top: 6px;">
+                    <button type="button" class="preset-chip" onclick="document.getElementById('notifImage').value='assets/branding/devi.png'; updatePreview();">देवी माँ बैनर</button>
+                    <button type="button" class="preset-chip" onclick="document.getElementById('notifImage').value='assets/branding/guru.png'; updatePreview();">सद्गुरुदेव बैनर</button>
+                    <button type="button" class="preset-chip" onclick="document.getElementById('notifImage').value='assets/branding/sss.png'; updatePreview();">समिति बैनर</button>
+                    <button type="button" class="preset-chip" onclick="document.getElementById('notifImage').value=''; updatePreview();">हटाएं</button>
+                </div>
+            </div>
+
+            <!-- In-App Screen Deep-Linking Target -->
+            <div class="form-group">
+                <label class="form-label" for="targetScreen">टैप करने पर गंतव्य स्क्रीन (Deep-Linking Target):</label>
+                <select id="targetScreen" class="form-select">
+                    <option value="Home">Home (मुख्य डैशबोर्ड पृष्ठ)</option>
+                    <option value="TrainingLab">TrainingLab (संस्कार एवं प्रशिक्षण केंद्र)</option>
+                    <option value="Profile">Profile (सदस्य विवरण एवं पंचांग)</option>
+                    <option value="EngineDetails">EngineDetails (सेवा प्रकल्प एवं गौशाला विवरण)</option>
+                    <option value="Welcome">Welcome (पुनः परिचय एवं भाषा चयन)</option>
+                </select>
+            </div>
+
+            <!-- Extra Routing Payload -->
+            <div class="form-group">
+                <label class="form-label" for="extraData">अतिरिक्त पैरामीटर (Extra Route Data):</label>
+                <input type="text" id="extraData" class="form-input" placeholder="e.g. darshan_today, camp_registration_id">
+            </div>
+
+            <!-- Primary Dispatch Button -->
+            <button id="dispatchBtn" class="btn-dispatch">
+                <span>🚀</span> अधिसूचना प्रेषित करें (Dispatch Push Notification)
+            </button>
+        </section>
+
+        <!-- Right Column: Real-Time Mobile Preview Pane -->
+        <section class="preview-pane">
+            <div class="mock-phone">
+                <div class="mock-notch"></div>
+                <div class="status-bar-mock">
+                    <span>09:41</span>
+                    <span>5G • 100%</span>
+                </div>
+
+                <!-- Android Status Bar / Notification Card -->
+                <div class="notif-card-mock">
+                    <div class="notif-header-mock">
+                        <div class="notif-app-info">
+                            <img src="../assets/branding/app_logo.png" onerror="this.onerror=null; this.src='../app_logo.png';" alt="App" class="notif-icon-mock">
+                            <span class="notif-app-name">SANATANAM</span>
+                        </div>
+                        <span class="notif-time">अभी • Now</span>
+                    </div>
+
+                    <div id="previewTitle" class="notif-title-mock">॥ जय माँ भवानी ॥ विशेष दर्शन</div>
+                    <div id="previewBody" class="notif-body-mock">यहाँ आपकी सूचना का लाइव प्रारूप दिखाई देगा...</div>
+
+                    <img id="previewBanner" src="" alt="Banner" class="notif-banner-mock">
+
+                    <div>
+                        <span id="previewRoute" class="notif-route-badge">🎯 स्क्रीन: Home</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technical FCM HTTP v1 JSON Payload Inspector -->
+            <div class="admin-card" style="width: 100%; margin-top: 20px;">
+                <h3 class="card-title" style="font-size: 14px;">
+                    <span>⚡</span> FCM Payload Inspector (HTTP v1)
+                </h3>
+                <pre id="fcmPayloadPreview" style="font-family: monospace; font-size: 10.5px; color: var(--gold3); background: rgba(0,0,0,0.5); padding: 12px; border-radius: 10px; overflow-x: auto; max-height: 160px; line-height: 1.4; border: 1px solid rgba(255,214,103,0.15);"></pre>
+            </div>
+        </section>
+    </main>
+
+    <!-- Dispatched History Section -->
+    <section class="history-section">
+        <div class="history-card">
+            <div class="history-header">
+                <h2 class="card-title" style="margin: 0;">
+                    <span>📜</span> प्रेषित अधिसूचना इतिहास (Dispatch History Log)
+                </h2>
+                <button class="btn-action-sm" onclick="clearAllHistory()">इतिहास साफ़ करें</button>
+            </div>
+
+            <div class="history-table-wrap">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>शीर्षक व विवरण</th>
+                            <th>गंतव्य स्क्रीन</th>
+                            <th>लक्षित समूह</th>
+                            <th>समय</th>
+                            <th>स्थिति / क्रिया</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyList">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Floating Feedback Toast -->
+    <div id="toastBox" class="toast-box"></div>
+
+    <script src="admin_notifications.js"></script>
+</body>
+</html>

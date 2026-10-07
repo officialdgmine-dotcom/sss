@@ -141,6 +141,13 @@ body {
             </div>
         </section>
 
+        <!-- Admin Notification Control Room Button -->
+        <a href="admin/notifications.html" style="text-decoration: none;">
+            <button class="logout-btn" style="border-color: var(--gold2); background: rgba(220,167,47,0.15); color: var(--gold2); font-weight: 800;">
+                📢 व्यवस्थापक कक्ष (Admin Push Notification Center)
+            </button>
+        </a>
+
         <!-- Re-onboard Button -->
         <button class="logout-btn" onclick="resetSession()">भाषा बदलें / पुनः परिचय देखें (Onboarding)</button>
     </main>
@@ -158,6 +165,18 @@ body {
             localStorage.removeItem("sanatanam_session_token");
             window.location.replace("app_welcome.html");
         }
+
+        window.onNotificationDeepLink = function(payload) {
+            console.log("Deep link received in app:", payload);
+            if (payload && payload.screen) {
+                const target = payload.screen.toLowerCase();
+                if (target === "admin") {
+                    window.location.href = "admin/notifications.html";
+                } else if (target === "welcome") {
+                    window.location.href = "app_welcome.html";
+                }
+            }
+        };
     </script>
 </body>
 </html>

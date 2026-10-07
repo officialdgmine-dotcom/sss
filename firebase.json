@@ -1,0 +1,8 @@
+{
+  "firestore": [
+    {
+      "database": "ai-studio-android-sanatans-9ac6cfb0-bbce-4b6f-845a-ba5eec409957",
+      "rules": "firestore.rules"
+    }
+  ]
+}
