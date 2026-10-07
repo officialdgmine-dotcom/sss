@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#210207">
+    <title>स्वागतम् - SANATANAM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&family=Poppins:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root {
+    --deep: #170105; --maroon: #39040b; --royal: #650711; --bhagwa: #a92808;
+    --gold: #dca72f; --gold2: #ffd866; --gold3: #fff0a8; --white: #ffffff;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; user-select: none; }
+html, body { width: 100%; height: 100%; overflow: hidden; }
+body {
+    position: relative; width: 100vw; height: 100vh; display: flex; flex-direction: column;
+    background: radial-gradient(ellipse at 50% 38%, #b3360a 0%, #820b13 20%, #55060d 43%, #2c0208 70%, #130104 100%);
+    color: var(--white); font-family: 'Poppins', 'Noto Sans Devanagari', sans-serif;
+}
+.background-core { position: absolute; inset: 0; background: radial-gradient(circle at 50% 43%, rgba(255, 185, 47, .18) 0%, rgba(216, 65, 9, .10) 24%, transparent 55%); pointer-events: none; }
+.ambient-glow { position: absolute; width: 90vw; height: 90vw; max-width: 700px; max-height: 700px; left: 50%; top: 43%; transform: translate(-50%, -50%); border-radius: 50%; background: radial-gradient(circle, rgba(255, 192, 55, .12) 0%, rgba(255, 104, 10, .07) 25%, transparent 68%); filter: blur(10px); pointer-events: none; }
+
+/* Top Bar */
+.top-bar {
+    position: relative; z-index: 40; width: 100%; display: flex; align-items: center; justify-content: space-between;
+    padding: max(16px, env(safe-area-inset-top)) 20px 12px 20px;
+    background: linear-gradient(180deg, rgba(23,1,5,0.85) 0%, transparent 100%);
+}
+.top-brand { display: flex; align-items: center; gap: 10px; }
+.top-logo { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid var(--gold2); object-fit: cover; box-shadow: 0 0 12px rgba(255,216,102,0.4); }
+.top-title { font-size: 15px; font-weight: 800; color: var(--gold3); font-family: 'Noto Sans Devanagari', sans-serif; }
+.skip-btn {
+    background: rgba(255,214,103,0.12); border: 1px solid rgba(255,214,103,0.3); border-radius: 999px;
+    padding: 5px 14px; font-size: 11px; font-weight: 700; color: var(--gold2); cursor: pointer;
+    font-family: 'Noto Sans Devanagari', sans-serif; transition: all 0.25s ease;
+}
+.skip-btn:active { background: rgba(255,214,103,0.25); transform: scale(0.96); }
+
+/* Main Carousel Container */
+.carousel-wrap {
+    position: relative; z-index: 20; flex: 1; width: 100%; overflow: hidden; display: flex; align-items: center; justify-content: center;
+}
+.steps-container {
+    display: flex; width: 500%; height: 100%; transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.step-slide {
+    width: 20%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 10px 24px 20px 24px; text-align: center;
+}
+
+/* Image Frames */
+.hero-visual-frame {
+    position: relative; width: 200px; height: 200px; max-width: 55vw; max-height: 55vw;
+    margin: 0 auto 18px auto; border-radius: 50%; padding: 4px;
+    background: conic-gradient(from 20deg, #8d5a0e, #ffe48a, #bd801a, #fff0a9, #9c650e, #ffd85c, #8d5a0e);
+    box-shadow: 0 0 30px rgba(255,205,75,0.35), 0 0 60px rgba(255,125,10,0.15);
+    display: flex; align-items: center; justify-content: center;
+}
+.hero-visual-frame.rounded-rect {
+    border-radius: 24px;
+}
+.hero-visual-img {
+    width: 100%; height: 100%; border-radius: 50%; object-fit: cover; background: #ffffff;
+    box-shadow: inset 0 0 15px rgba(0,0,0,0.25);
+}
+.hero-visual-frame.rounded-rect .hero-visual-img {
+    border-radius: 20px;
+}
+
+/* Slide Typography */
+.slide-badge {
+    display: inline-flex; align-items: center; gap: 8px; padding: 4px 16px; margin-bottom: 12px;
+    border-radius: 999px; background: linear-gradient(135deg, rgba(112,9,17,.88), rgba(34,2,7,.94));
+    border: 1px solid rgba(255,214,103,.35); color: var(--gold3); font-size: 12px; font-weight: 800;
+}
+.slide-title {
+    font-size: clamp(22px, 5.5vw, 28px); font-weight: 900; line-height: 1.25; color: #ffffff;
+    font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif; margin-bottom: 8px;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.4);
+}
+.slide-subtitle {
+    font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.78); line-height: 1.5;
+    max-width: 320px; margin: 0 auto; font-family: 'Noto Sans Devanagari', 'Poppins', sans-serif;
+}
+
+/* Language Selection Grid (Step 4) */
+.lang-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; max-width: 330px;
+    margin: 16px auto 0 auto;
+}
+.lang-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 12px 8px; border-radius: 16px; cursor: pointer;
+    background: rgba(35, 4, 9, 0.7); border: 1.5px solid rgba(255,214,103,0.25);
+    color: #ffffff; transition: all 0.25s ease;
+}
+.lang-btn.active {
+    background: linear-gradient(135deg, rgba(169,40,8,0.9), rgba(101,7,17,0.95));
+    border-color: var(--gold2); box-shadow: 0 0 16px rgba(255,216,102,0.4);
+    transform: scale(1.02);
+}
+.lang-btn-native { font-size: 16px; font-weight: 800; color: var(--gold2); font-family: 'Noto Sans Devanagari', sans-serif; }
+.lang-btn-sub { font-size: 10px; font-weight: 600; color: rgba(255,255,255,0.65); margin-top: 3px; }
+
+/* Bottom Action Bar */
+.bottom-bar {
+    position: relative; z-index: 40; width: 100%; padding: 12px 24px max(24px, env(safe-area-inset-bottom)) 24px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+}
+.dots-indicator { display: flex; align-items: center; gap: 8px; }
+.dot {
+    width: 8px; height: 8px; border-radius: 999px; background: rgba(255,214,103,0.3);
+    transition: all 0.3s ease;
+}
+.dot.active { width: 24px; background: var(--gold2); box-shadow: 0 0 8px rgba(255,216,102,0.8); }
+
+.action-row { display: flex; width: 100%; max-width: 360px; gap: 12px; }
+.btn-nav-prev {
+    flex: 1; padding: 14px; border-radius: 16px; background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,214,103,0.2); color: rgba(255,255,255,0.8); font-size: 14px;
+    font-weight: 700; cursor: pointer; font-family: 'Noto Sans Devanagari', sans-serif;
+    transition: all 0.2s ease;
+}
+.btn-nav-next {
+    flex: 2; padding: 14px; border-radius: 16px;
+    background: linear-gradient(135deg, #dca72f 0%, #ffd866 50%, #c18816 100%);
+    border: none; color: #35040a; font-size: 15px; font-weight: 900; cursor: pointer;
+    box-shadow: 0 4px 18px rgba(220,167,47,0.45); font-family: 'Noto Sans Devanagari', sans-serif;
+    transition: all 0.2s ease;
+}
+.btn-nav-next:active { transform: scale(0.97); }
+.btn-nav-prev:active { transform: scale(0.97); }
+</style>
+</head>
+<body>
+    <div class="background-core"></div>
+    <div class="ambient-glow"></div>
+
+    <!-- Top Bar -->
+    <header class="top-bar">
+        <div class="top-brand">
+            <img src="assets/branding/app_logo.png" onerror="this.onerror=null; this.src='app_logo.png';" alt="Logo" class="top-logo">
+            <span class="top-title">सनातन सेवा समिति</span>
+        </div>
+        <button class="skip-btn" onclick="finishOnboarding()" id="skipBtnText">छोड़ें</button>
+    </header>
+
+    <!-- Carousel Steps -->
+    <main class="carousel-wrap">
+        <div class="steps-container" id="stepsTrack">
+            <!-- Step 1: Official Sanatanam Hero -->
+            <section class="step-slide">
+                <div class="hero-visual-frame">
+                    <img src="assets/branding/app_logo.png" onerror="this.onerror=null; this.src='app_logo.png';" alt="Sanatanam" class="hero-visual-img">
+                </div>
+                <div class="slide-badge">✦ जय भवानी ✦</div>
+                <h1 class="slide-title" id="t1_title">सनातन सेवा समिति में स्वागतम्</h1>
+                <p class="slide-subtitle" id="t1_desc">सनातन धर्म की रक्षा, संस्कार, संस्कृति और सेवा को समर्पित राष्ट्रीय संगठन।</p>
+            </section>
+
+            <!-- Step 2: Divine Blessings (Devi Maa) -->
+            <section class="step-slide">
+                <div class="hero-visual-frame rounded-rect">
+                    <img src="assets/branding/devi.png" alt="Divine Blessings" class="hero-visual-img">
+                </div>
+                <div class="slide-badge">॥ शक्ति स्वरूपा ॥</div>
+                <h2 class="slide-title" id="t2_title">माँ भगवती की कृपा</h2>
+                <p class="slide-subtitle" id="t2_desc">समस्त सनातनियों पर जगज्जननी माँ जगदम्बा की असीम कृपा और आशीर्वाद सदैव बना रहे।</p>
+            </section>
+
+            <!-- Step 3: Sadgurudev Maharaj Ji -->
+            <section class="step-slide">
+                <div class="hero-visual-frame">
+                    <img src="assets/branding/guru.png" alt="Sadgurudev Maharaj" class="hero-visual-img">
+                </div>
+                <div class="slide-badge">॥ गुरु कृपा ही केवलम् ॥</div>
+                <h2 class="slide-title" id="t3_title">सद्गुरुदेव जी महाराज</h2>
+                <p class="slide-subtitle" id="t3_desc">पूज्य सद्गुरुदेव के पावन सानिध्य और मार्गदर्शन में धर्म एवं सेवा का अविरल प्रवाह।</p>
+            </section>
+
+            <!-- Step 4: Multi-Language Lock Engine (i18n) -->
+            <section class="step-slide">
+                <div class="slide-badge">✦ भाषा चयन / LANGUAGE ✦</div>
+                <h2 class="slide-title" id="t4_title">अपनी भाषा चुनें</h2>
+                <p class="slide-subtitle" id="t4_desc">यह भाषा आपके पूरे ऐप अनुभव के लिए स्थायी रूप से सुरक्षित रहेगी।</p>
+                <div class="lang-grid">
+                    <div class="lang-btn active" data-lang="hi" onclick="selectLang('hi')">
+                        <span class="lang-btn-native">हिंदी</span>
+                        <span class="lang-btn-sub">Hindi</span>
+                    </div>
+                    <div class="lang-btn" data-lang="sa" onclick="selectLang('sa')">
+                        <span class="lang-btn-native">संस्कृतम्</span>
+                        <span class="lang-btn-sub">Sanskrit</span>
+                    </div>
+                    <div class="lang-btn" data-lang="en" onclick="selectLang('en')">
+                        <span class="lang-btn-native">English</span>
+                        <span class="lang-btn-sub">International</span>
+                    </div>
+                    <div class="lang-btn" data-lang="gu" onclick="selectLang('gu')">
+                        <span class="lang-btn-native">ગુજરાતી</span>
+                        <span class="lang-btn-sub">Gujarati</span>
+                    </div>
+                    <div class="lang-btn" data-lang="mr" onclick="selectLang('mr')">
+                        <span class="lang-btn-native">मराठी</span>
+                        <span class="lang-btn-sub">Marathi</span>
+                    </div>
+                    <div class="lang-btn" data-lang="bn" onclick="selectLang('bn')">
+                        <span class="lang-btn-native">বাংলা</span>
+                        <span class="lang-btn-sub">Bengali</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Step 5: Samiti Emblem & Commitment -->
+            <section class="step-slide">
+                <div class="hero-visual-frame rounded-rect">
+                    <img src="assets/branding/sss.png" alt="Samiti Emblem" class="hero-visual-img">
+                </div>
+                <div class="slide-badge">॥ सेवा ही परमो धर्मः ॥</div>
+                <h2 class="slide-title" id="t5_title">सनातन सेवा संकल्प</h2>
+                <p class="slide-subtitle" id="t5_desc">आइए, राष्ट्र एवं सनातन धर्म के पुनरुत्थान में अपनी भागीदारी सुनिश्चित करें।</p>
+            </section>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation -->
+    <footer class="bottom-bar">
+        <div class="dots-indicator">
+            <span class="dot active"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+            <span class="dot"></span>
+        </div>
+        <div class="action-row">
+            <button class="btn-nav-prev" id="prevBtn" onclick="prevStep()" style="display: none;">पीछे</button>
+            <button class="btn-nav-next" id="nextBtn" onclick="nextStep()">आगे बढ़ें</button>
+        </div>
+    </footer>
+
+    <script>
+        let currentStep = 0;
+        const totalSteps = 5;
+
+        const i18n = {
+            hi: {
+                skip: "छोड़ें", prev: "पीछे", next: "आगे बढ़ें", finish: "आरंभ करें",
+                t1_title: "सनातन सेवा समिति में स्वागतम्", t1_desc: "सनातन धर्म की रक्षा, संस्कार, संस्कृति और सेवा को समर्पित राष्ट्रीय संगठन।",
+                t2_title: "माँ भगवती की कृपा", t2_desc: "समस्त सनातनियों पर जगज्जननी माँ जगदम्बा की असीम कृपा और आशीर्वाद सदैव बना रहे।",
+                t3_title: "सद्गुरुदेव जी महाराज", t3_desc: "पूज्य सद्गुरुदेव के पावन सानिध्य और मार्गदर्शन में धर्म एवं सेवा का अविरल प्रवाह।",
+                t4_title: "अपनी भाषा चुनें", t4_desc: "यह भाषा आपके पूरे ऐप अनुभव के लिए स्थायी रूप से सुरक्षित रहेगी।",
+                t5_title: "सनातन सेवा संकल्प", t5_desc: "आइए, राष्ट्र एवं सनातन धर्म के पुनरुत्थान में अपनी भागीदारी सुनिश्चित करें।"
+            },
+            sa: {
+                skip: "त्यजतु", prev: "पृष्ठतः", next: "अग्रे सरतु", finish: "प्रारभताम्",
+                t1_title: "सनातन सेवा समितौ स्वागतम्", t1_desc: "सनातनधर्मस्य संरक्षणाय संस्कृतीनां च संवर्धनाय समर्पितं संगठनम्।",
+                t2_title: "भगवत्याः अनुग्रहः", t2_desc: "सर्वेषु सनातनिषु जगज्जनन्याः भगवत्याः अनुकम्पा सदा विराजताम्।",
+                t3_title: "सद्गुरुदेवस्य पावनसानिध्यम्", t3_desc: "सद्गुरुदेवस्य मार्गदर्शनेन धर्मस्य सेवायाश्च सततं प्रवाहः।",
+                t4_title: "स्वभाषां चिनोतु", t4_desc: "इयं भाषा भवतः अनुप्रयोगानुभवे स्थायिरूपेण सुरक्षिता भविष्यति।",
+                t5_title: "सनातन सेवा सङ्कल्पः", t5_desc: "आगच्छन्तु, राष्ट्रस्य सनातनधर्मस्य च पुनरुत्थाने सहभागिनः भवाम।"
+            },
+            en: {
+                skip: "Skip", prev: "Back", next: "Next", finish: "Get Started",
+                t1_title: "Welcome to Sanatan Seva Samiti", t1_desc: "Dedicated to preserving Sanatan culture, heritage, and community empowerment.",
+                t2_title: "Divine Mother's Blessings", t2_desc: "May the divine grace of Goddess Jagadamba protect and empower all devotees.",
+                t3_title: "Sadgurudev Maharaj Ji", t3_desc: "Guided by the divine vision and spiritual leadership of revered Gurudev.",
+                t4_title: "Select Your Language", t4_desc: "Your chosen language is permanently locked for all future sessions.",
+                t5_title: "Sanatan Seva Pledge", t5_desc: "Join us in the noble mission of nation building and spiritual revival."
+            },
+            gu: {
+                skip: "છોડો", prev: "પાછળ", next: "આગળ વધો", finish: "શરૂ કરો",
+                t1_title: "સનાતન સેવા સમિતિમાં સ્વાગત છે", t1_desc: "સનાતન ધર્મનું રક્ષણ, સંસ્કૃતિ અને સેવાનું પવિત્ર કાર્ય.",
+                t2_title: "માતાજીના આશીર્વાદ", t2_desc: "સમસ્ત સનાતનીઓ પર જગદંબા માતાજીની અસીમ કૃપા સદાય રહે.",
+                t3_title: "સદ્ગુરુદેવ મહારાજ", t3_desc: "પૂજ્ય સદ્ગુરુદેવના પાવન માર્ગદર્શન હેઠળ સેવાનો પ્રવાહ.",
+                t4_title: "તમારી ભાષા પસંદ કરો", t4_desc: "આ ભાષા તમારી એપ માટે કાયમ માટે સુરક્ષિત રહેશે.",
+                t5_title: "સનાતન સેવા સંકલ્પ", t5_desc: "આવો, રાષ્ટ્ર અને ધર્મના ઉત્થાનમાં સહભાગી બનીએ."
+            },
+            mr: {
+                skip: "सोडा", prev: "मागे", next: "पुढे जा", finish: "सुरु करा",
+                t1_title: "सनातन सेवा समितीत आपले स्वागत आहे", t1_desc: "सनातन संस्कृती, धर्म आणि समाजसेवेसाठी समर्पित संघटन.",
+                t2_title: "आई भवानीचे आशीर्वाद", t2_desc: "सर्व सनातन्यांवर जगदंबेची असीम कृपा सदैव राहो.",
+                t3_title: "सद्गुरुदेव महाराज", t3_desc: "सद्गुरुंच्या मार्गदर्शनाखाली धर्म आणि सेवेचे कार्य निरंतर सुरू.",
+                t4_title: "आपली भाषा निवडा", t4_desc: "ही भाषा आपल्या संपूर्ण ॲपसाठी कायमस्वरूपी लॉक राहील.",
+                t5_title: "सनातन सेवा संकल्प", t5_desc: "चला, राष्ट्र आणि सनातन धर्माच्या सेवेसाठी एकत्र येऊया."
+            },
+            bn: {
+                skip: "এড়িয়ে যান", prev: "পেছনে", next: "পরবর্তী", finish: "শুরু করুন",
+                t1_title: "সনাতন সেবা সমিতিতে স্বাগতম", t1_desc: "সনাতন ধর্ম ও সংস্কৃতির সংরক্ষণ এবং মানবসেবায় নিবেদিত।",
+                t2_title: "মা ভগবতীর আশীর্বাদ", t2_desc: "জগজ্জননী দেবী ভগবতীর অসীম কৃপা সর্বদাই বজায় থাকুক।",
+                t3_title: "সদ্গুরুদেব মহারাজ", t3_desc: "পূজ্য সদ্গুরুদেবের মার্গদর্শনে ধর্ম ও সেবার চিরন্তন প্রবাহ।",
+                t4_title: "ভাষা নির্বাচন করুন", t4_desc: "এই ভাষাটি অ্যাপের জন্য স্থায়ীভাবে সংরক্ষিত থাকবে।",
+                t5_title: "সনাতন সেবা সংকল্প", t5_desc: "আসুন, ধর্ম ও জাতির পুনরুত্থানে অংশগ্রহণ করি।"
+            }
+        };
+
+        function selectLang(code) {
+            // Permanent Multi-Language Lock Engine (i18n)
+            localStorage.setItem("sanatanam_app_lang", code);
+            sessionStorage.setItem("sanatanam_app_lang", code);
+            if (window.AndroidBridge && window.AndroidBridge.onLanguageSelected) {
+                try {
+                    window.AndroidBridge.onLanguageSelected(code);
+                } catch(e) {
+                    console.log("Bridge notification:", e);
+                }
+            }
+
+            // Update UI buttons
+            document.querySelectorAll(".lang-btn").forEach(btn => {
+                if (btn.getAttribute("data-lang") === code) {
+                    btn.classList.add("active");
+                } else {
+                    btn.classList.remove("active");
+                }
+            });
+
+            applyTranslations(code);
+        }
+
+        function applyTranslations(code) {
+            const data = i18n[code] || i18n.hi;
+            document.getElementById("skipBtnText").textContent = data.skip;
+            document.getElementById("prevBtn").textContent = data.prev;
+            if (currentStep === totalSteps - 1) {
+                document.getElementById("nextBtn").textContent = data.finish;
+            } else {
+                document.getElementById("nextBtn").textContent = data.next;
+            }
+
+            document.getElementById("t1_title").textContent = data.t1_title;
+            document.getElementById("t1_desc").textContent = data.t1_desc;
+            document.getElementById("t2_title").textContent = data.t2_title;
+            document.getElementById("t2_desc").textContent = data.t2_desc;
+            document.getElementById("t3_title").textContent = data.t3_title;
+            document.getElementById("t3_desc").textContent = data.t3_desc;
+            document.getElementById("t4_title").textContent = data.t4_title;
+            document.getElementById("t4_desc").textContent = data.t4_desc;
+            document.getElementById("t5_title").textContent = data.t5_title;
+            document.getElementById("t5_desc").textContent = data.t5_desc;
+        }
+
+        function updateSlide() {
+            document.getElementById("stepsTrack").style.transform = `translateX(-${currentStep * 20}%)`;
+            const dots = document.querySelectorAll(".dot");
+            dots.forEach((dot, idx) => {
+                if (idx === currentStep) dot.classList.add("active");
+                else dot.classList.remove("active");
+            });
+
+            document.getElementById("prevBtn").style.display = currentStep > 0 ? "block" : "none";
+            const lang = localStorage.getItem("sanatanam_app_lang") || "hi";
+            const data = i18n[lang] || i18n.hi;
+            if (currentStep === totalSteps - 1) {
+                document.getElementById("nextBtn").textContent = data.finish;
+            } else {
+                document.getElementById("nextBtn").textContent = data.next;
+            }
+        }
+
+        function nextStep() {
+            if (currentStep < totalSteps - 1) {
+                currentStep++;
+                updateSlide();
+            } else {
+                finishOnboarding();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 0) {
+                currentStep--;
+                updateSlide();
+            }
+        }
+
+        function finishOnboarding() {
+            // Save active session token
+            localStorage.setItem("sanatanam_session_token", "active_" + Date.now());
+            window.location.replace("app_home.html");
+        }
+
+        // Initialize saved language
+        const savedLang = localStorage.getItem("sanatanam_app_lang") || "hi";
+        selectLang(savedLang);
+    </script>
+</body>
+</html>
