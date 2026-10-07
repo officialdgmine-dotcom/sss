@@ -2,5 +2,7 @@
   "name": "Sanatan Seva Samiti",
   "description": "Official application for Sanatan Seva Samiti (SSS) featuring official Sanatanam branding, sacred activities, and community seva.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
