@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="theme-color" content="#130C0A">
+<title>SANATANAM • Seva Vault</title>
+
+<style>
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    -webkit-tap-highlight-color:transparent;
+}
+
+:root{
+    --ink:#17110E;
+    --soft:#756A64;
+    --paper:#FBF8F3;
+    --white:#FFFFFF;
+    --wine:#69101C;
+    --wine2:#8B1826;
+    --saffron:#F36A16;
+    --gold:#C99D35;
+    --gold-light:#EED68E;
+    --green:#167847;
+    --red:#B92A32;
+    --border:#EAE1D7;
+}
+
+html,
+body{
+    min-height:100%;
+}
+
+body{
+    background:#17110E;
+    color:var(--ink);
+    font-family:
+        "Noto Sans Devanagari",
+        "Noto Sans",
+        "Segoe UI",
+        Arial,
+        sans-serif;
+}
+
+button,
+a{
+    font:inherit;
+}
+
+button{
+    border:0;
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+    width:100%;
+    max-width:500px;
+    min-height:100vh;
+    margin:auto;
+    background:
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(201,157,53,.13),
+            transparent 32%
+        ),
+        linear-gradient(
+            180deg,
+            #FBF8F3 0%,
+            #F7F1EA 58%,
+            #F4EEE7 100%
+        );
+    overflow:hidden;
+    position:relative;
+}
+
+/* =========================================================
+   TOP HEADER
+========================================================= */
+
+.top{
+    padding:17px 18px 10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.identity{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.seal{
+    width:39px;
+    height:39px;
+    border-radius:13px;
+    background:#15100E;
+    border:1px solid rgba(201,157,53,.7);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--gold-light);
+    font-size:21px;
+    box-shadow:
+        0 8px 20px rgba(0,0,0,.14),
+        inset 0 0 0 1px rgba(255,255,255,.05);
+}
+
+.identity-text strong{
+    display:block;
+    color:#271B16;
+    font-size:14px;
+    letter-spacing:1.1px;
+}
+
+.identity-text span{
+    display:block;
+    color:#9A8D84;
+    font-size:8px;
+    letter-spacing:.9px;
+    margin-top:2px;
+}
+
+.sync{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:rgba(255,255,255,.8);
+    border:1px solid var(--border);
+    color:var(--wine);
+    font-size:19px;
+    box-shadow:0 5px 18px rgba(60,30,10,.05);
+}
+
+.sync:active{
+    transform:scale(.92);
+}
+
+/* =========================================================
+   HERO — NEW CONCEPT
+========================================================= */
+
+.hero-wrap{
+    padding:5px 15px 0;
+}
+
+.hero{
+    position:relative;
+    min-height:285px;
+    border-radius:34px;
+    overflow:hidden;
+    color:#fff;
+    background:
+        radial-gradient(
+            circle at 85% 15%,
+            rgba(238,214,142,.20),
+            transparent 24%
+        ),
+        radial-gradient(
+            circle at 15% 105%,
+            rgba(243,106,22,.24),
+            transparent 32%
+        ),
+        linear-gradient(
+            145deg,
+            #120C0A 0%,
+            #321012 45%,
+            #69101C 100%
+        );
+    box-shadow:
+        0 25px 55px rgba(52,13,13,.28);
+}
+
+/* Decorative rings */
+
+.hero-ring{
+    position:absolute;
+    width:290px;
+    height:290px;
+    border-radius:50%;
+    border:1px solid rgba(238,214,142,.12);
+    right:-105px;
+    top:-90px;
+}
+
+.hero-ring:before{
+    content:"";
+    position:absolute;
+    inset:25px;
+    border-radius:50%;
+    border:1px solid rgba(238,214,142,.08);
+}
+
+.hero-ring:after{
+    content:"";
+    position:absolute;
+    inset:50px;
+    border-radius:50%;
+    border:1px solid rgba(238,214,142,.06);
+}
+
+/* Header inside hero */
+
+.hero-head{
+    position:relative;
+    z-index:3;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    padding:21px 21px 0;
+}
+
+.vault-label{
+    font-size:8px;
+    letter-spacing:2px;
+    color:#EED68E;
+    font-weight:800;
+}
+
+.vault-title{
+    margin-top:4px;
+    font-size:18px;
+    font-weight:900;
+}
+
+.live{
+    display:flex;
+    align-items:center;
+    gap:5px;
+    border:1px solid rgba(238,214,142,.22);
+    background:rgba(255,255,255,.06);
+    padding:6px 9px;
+    border-radius:20px;
+    font-size:8px;
+    color:#EED68E;
+}
+
+.live-dot{
+    width:5px;
+    height:5px;
+    border-radius:50%;
+    background:#73D49A;
+    box-shadow:0 0 0 4px rgba(115,212,154,.08);
+}
+
+/* Main balance */
+
+.balance-zone{
+    position:relative;
+    z-index:3;
+    text-align:center;
+    padding-top:27px;
+}
+
+.balance-caption{
+    color:rgba(255,255,255,.52);
+    font-size:9px;
+    letter-spacing:.8px;
+}
+
+.balance{
+    margin-top:5px;
+    font-size:45px;
+    line-height:1;
+    font-weight:950;
+    letter-spacing:-1.8px;
+}
+
+.rupee{
+    color:#EED68E;
+    font-size:24px;
+    vertical-align:13px;
+    margin-right:3px;
+}
+
+.balance-under{
+    margin-top:9px;
+    color:rgba(255,255,255,.56);
+    font-size:8px;
+}
+
+.balance-under b{
+    color:#F4DFA7;
+    font-weight:700;
+}
+
+/* Bottom hero */
+
+.hero-bottom{
+    position:absolute;
+    left:21px;
+    right:21px;
+    bottom:19px;
+    z-index:3;
+    padding-top:13px;
+    border-top:1px solid rgba(255,255,255,.11);
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+}
+
+.person{
+    min-width:0;
+}
+
+.person small,
+.member small{
+    display:block;
+    color:rgba(255,255,255,.42);
+    font-size:7px;
+    letter-spacing:.5px;
+}
+
+.person strong{
+    display:block;
+    margin-top:3px;
+    max-width:180px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    font-size:11px;
+}
+
+.member{
+    text-align:right;
+}
+
+.member b{
+    display:block;
+    color:#EED68E;
+    font-size:9px;
+    margin-top:3px;
+}
+
+/* =========================================================
+   QUICK COMMAND BAR
+========================================================= */
+
+.commands{
+    padding:15px 15px 0;
+}
+
+.command-box{
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:23px;
+    padding:9px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    box-shadow:
+        0 10px 30px rgba(60,30,10,.055);
+}
+
+.command{
+    min-height:70px;
+    text-decoration:none;
+    color:var(--ink);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    border-radius:17px;
+    gap:7px;
+}
+
+.command:active{
+    background:#FAF2E6;
+    transform:scale(.96);
+}
+
+.command-icon{
+    width:34px;
+    height:34px;
+    border-radius:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#FBF4E8;
+    border:1px solid #EEDDBD;
+    font-size:16px;
+}
+
+.command span:last-child{
+    font-size:8px;
+    font-weight:800;
+    color:#655953;
+    text-align:center;
+}
+
+/* =========================================================
+   ACTIVITY HEADER
+========================================================= */
+
+.activity{
+    padding:25px 15px 100px;
+}
+
+.activity-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:12px;
+}
+
+.activity-title{
+    font-size:18px;
+    font-weight:950;
+    color:#271B16;
+}
+
+.activity-sub{
+    color:#9A8E87;
+    font-size:8px;
+}
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline{
+    position:relative;
+}
+
+.timeline:before{
+    content:"";
+    position:absolute;
+    left:20px;
+    top:16px;
+    bottom:16px;
+    width:1px;
+    background:#E2D6CB;
+}
+
+.tx{
+    position:relative;
+    display:flex;
+    gap:11px;
+    margin-bottom:10px;
+    cursor:pointer;
+}
+
+.tx:last-child{
+    margin-bottom:0;
+}
+
+.tx-marker{
+    width:41px;
+    height:41px;
+    flex:0 0 41px;
+    border-radius:50%;
+    z-index:2;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border:4px solid #F7F1EA;
+    font-size:15px;
+    font-weight:900;
+}
+
+.tx-credit-marker{
+    background:#E4F3EA;
+    color:var(--green);
+}
+
+.tx-debit-marker{
+    background:#FBE7E8;
+    color:var(--red);
+}
+
+.tx-body{
+    flex:1;
+    min-width:0;
+    background:rgba(255,255,255,.86);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:11px 12px;
+    box-shadow:0 5px 18px rgba(60,30,10,.035);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+}
+
+.tx-main{
+    min-width:0;
+}
+
+.tx-name{
+    color:#2A201C;
+    font-size:11px;
+    font-weight:900;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.tx-description{
+    margin-top:2px;
+    color:#8A7D76;
+    font-size:8px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+.tx-date{
+    margin-top:4px;
+    color:#B0A49C;
+    font-size:7px;
+}
+
+.tx-money{
+    text-align:right;
+    flex:0 0 auto;
+}
+
+.tx-amount{
+    font-size:12px;
+    font-weight:950;
+    white-space:nowrap;
+}
+
+.credit{
+    color:var(--green);
+}
+
+.debit{
+    color:var(--red);
+}
+
+.receipt-link{
+    margin-top:4px;
+    color:var(--wine);
+    font-size:7px;
+    font-weight:900;
+}
+
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
+.state{
+    padding:40px 22px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:22px;
+    text-align:center;
+}
+
+.state-icon{
+    width:52px;
+    height:52px;
+    margin:0 auto 12px;
+    border-radius:18px;
+    background:#F8EFE1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.state-title{
+    font-size:13px;
+    color:var(--wine);
+    font-weight:900;
+}
+
+.state-text{
+    margin-top:5px;
+    color:#8A7D76;
+    font-size:9px;
+    line-height:1.6;
+}
+
+.loader{
+    width:28px;
+    height:28px;
+    margin:0 auto 13px;
+    border-radius:50%;
+    border:3px solid #EDE2D7;
+    border-top-color:var(--wine);
+    animation:rotate .7s linear infinite;
+}
+
+@keyframes rotate{
+    to{transform:rotate(360deg)}
+}
+
+.retry{
+    margin-top:14px;
+    padding:9px 17px;
+    border-radius:11px;
+    background:var(--wine);
+    color:#fff;
+    font-size:10px;
+    font-weight:800;
+}
+
+/* =========================================================
+   RECEIPT — NEW FULL SHEET
+========================================================= */
+
+.receipt-layer{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    display:none;
+    background:#120D0B;
+}
+
+.receipt-layer.open{
+    display:block;
+}
+
+.receipt-page{
+    width:100%;
+    max-width:500px;
+    height:100%;
+    margin:auto;
+    background:
+        radial-gradient(
+            circle at 100% 0%,
+            rgba(201,157,53,.12),
+            transparent 27%
+        ),
+        #FAF7F2;
+    overflow-y:auto;
+}
+
+.receipt-nav{
+    padding:16px 17px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.back{
+    width:39px;
+    height:39px;
+    border-radius:50%;
+    background:#fff;
+    border:1px solid var(--border);
+    color:var(--wine);
+    font-size:20px;
+}
+
+.receipt-nav-title{
+    text-align:center;
+}
+
+.receipt-nav-title strong{
+    display:block;
+    font-size:12px;
+}
+
+.receipt-nav-title span{
+    display:block;
+    color:#998D85;
+    font-size:7px;
+    margin-top:2px;
+}
+
+.receipt-nav-space{
+    width:39px;
+}
+
+/* receipt hero */
+
+.receipt-hero{
+    margin:4px 15px 0;
+    padding:25px 20px 24px;
+    border-radius:28px;
+    color:#fff;
+    text-align:center;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(238,214,142,.20),
+            transparent 34%
+        ),
+        linear-gradient(
+            145deg,
+            #160D0B,
+            #6B101C
+        );
+    box-shadow:0 20px 40px rgba(56,12,15,.22);
+}
+
+.receipt-seal{
+    width:48px;
+    height:48px;
+    margin:0 auto;
+    border-radius:16px;
+    border:1px solid rgba(238,214,142,.55);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#EED68E;
+    font-size:25px;
+}
+
+.receipt-success{
+    margin-top:11px;
+    color:#B7E6C8;
+    font-size:9px;
+    font-weight:900;
+}
+
+.receipt-money{
+    margin-top:7px;
+    font-size:38px;
+    font-weight:950;
+    letter-spacing:-1px;
+}
+
+.receipt-type{
+    display:inline-block;
+    margin-top:8px;
+    padding:5px 11px;
+    border-radius:20px;
+    font-size:8px;
+    font-weight:900;
+}
+
+.receipt-credit{
+    background:rgba(70,180,110,.16);
+    color:#B9F0CB;
+}
+
+.receipt-debit{
+    background:rgba(255,100,100,.13);
+    color:#FFC0C0;
+}
+
+/* details */
+
+.receipt-details{
+    margin:17px 15px 0;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:23px;
+    padding:5px 15px;
+}
+
+.rrow{
+    min-height:46px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    border-bottom:1px solid #F0EAE4;
+}
+
+.rrow:last-child{
+    border-bottom:0;
+}
+
+.rlabel{
+    color:#91857D;
+    font-size:8px;
+}
+
+.rvalue{
+    color:#2B211D;
+    font-size:9px;
+    font-weight:900;
+    max-width:230px;
+    text-align:right;
+    word-break:break-word;
+}
+
+/* bottom close */
+
+.receipt-close{
+    margin:15px;
+    width:calc(100% - 30px);
+    padding:13px;
+    border-radius:15px;
+    background:#191311;
+    color:#fff;
+    font-size:11px;
+    font-weight:900;
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:20px;
+    z-index:15000;
+    width:calc(100% - 40px);
+    max-width:400px;
+    padding:12px 15px;
+    border-radius:14px;
+    background:#211816;
+    color:#fff;
+    text-align:center;
+    font-size:10px;
+    font-weight:700;
+    opacity:0;
+    transform:translate(-50%,20px);
+    pointer-events:none;
+    transition:.25s;
+}
+
+.toast.show{
+    opacity:1;
+    transform:translate(-50%,0);
+}
+
+@media(min-width:600px){
+    body{
+        padding:20px 0;
+    }
+
+    .app{
+        border-radius:30px;
+        box-shadow:0 20px 80px rgba(0,0,0,.28);
+    }
+
+    .receipt-page{
+        margin:0 auto;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- RINGTONE AUDIO -->
+<audio id="sanatanamRingtone" preload="auto">
+  <source src="tune/sanatanam_ringtone.mp3" type="audio/mpeg">
+</audio>
+
+<div class="app">
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="top">
+
+        <div class="identity">
+
+            <div class="seal">ॐ</div>
+
+            <div class="identity-text">
+                <strong>SANATANAM</strong>
+                <span>SEVA DIGITAL VAULT</span>
+            </div>
+
+        </div>
+
+        <button
+            class="sync"
+            type="button"
+            onclick="loadWallet(true)">
+            ↻
+        </button>
+
+    </header>
+
+
+    <!-- =====================================================
+         MAIN WALLET VAULT
+    ====================================================== -->
+
+    <section class="hero-wrap">
+
+        <div class="hero">
+
+            <div class="hero-ring"></div>
+
+            <div class="hero-head">
+
+                <div>
+                    <div class="vault-label">
+                        SANATANAM • MEMBER WALLET
+                    </div>
+
+                    <div class="vault-title">
+                        सेवा निधि
+                    </div>
+                </div>
+
+                <div class="live">
+                    <span class="live-dot"></span>
+                    LIVE
+                </div>
+
+            </div>
+
+
+            <div class="balance-zone">
+
+                <div class="balance-caption">
+                    वर्तमान उपलब्ध राशि
+                </div>
+
+                <div class="balance">
+                    <span class="rupee">₹</span><span id="walletBalance">0.00</span>
+                </div>
+
+                <div class="balance-under">
+                    आपका वॉलेट • <b>सुरक्षित सेवा खाता</b>
+                </div>
+
+            </div>
+
+
+            <div class="hero-bottom">
+
+                <div class="person">
+                    <small>MEMBER</small>
+                    <strong id="userName">
+                        लोड हो रहा है...
+                    </strong>
+                </div>
+
+                <div class="member">
+                    <small>MEMBER ID</small>
+                    <b id="memberId">---</b>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         SERVICE COMMANDS
+    ====================================================== -->
+
+    <section class="commands">
+
+        <div class="command-box">
+
+            <a
+                class="command"
+                href="pay.php?service=दान / सहयोग">
+
+                <div class="command-icon">🚩</div>
+                <span>सेवा सहयोग</span>
+
+            </a>
+
+
+            <a
+                class="command"
+                href="pay.php?service=धार्मिक पुस्तक">
+
+                <div class="command-icon">📖</div>
+                <span>पुस्तक</span>
+
+            </a>
+
+
+            <a
+                class="command"
+                href="pay.php?service=सदस्यता अपग्रेड">
+
+                <div class="command-icon">✦</div>
+                <span>सदस्यता</span>
+
+            </a>
+
+
+            <a
+                class="command"
+                href="pay.php?service=कृषि व धान सहयोग">
+
+                <div class="command-icon">🌾</div>
+                <span>कृषि सेवा</span>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         ACTIVITY
+    ====================================================== -->
+
+    <section class="activity">
+
+        <div class="activity-head">
+
+            <div>
+                <div class="activity-title">
+                    सेवा गतिविधि
+                </div>
+
+                <div class="activity-sub">
+                    आपका पूरा लेन-देन अभिलेख
+                </div>
+            </div>
+
+            <div class="activity-sub">
+                TAP TO VIEW
+            </div>
+
+        </div>
+
+
+        <div
+            class="timeline"
+            id="transactionList">
+
+            <div class="state">
+
+                <div class="loader"></div>
+
+                <div class="state-title">
+                    अभिलेख प्राप्त हो रहे हैं
+                </div>
+
+                <div class="state-text">
+                    आपका वास्तविक वॉलेट डेटा सुरक्षित सर्वर से प्राप्त किया जा रहा है।
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+<!-- =========================================================
+     RECEIPT FULL SCREEN
+========================================================= -->
+
+<div
+    class="receipt-layer"
+    id="receiptLayer">
+
+    <div class="receipt-page">
+
+        <div class="receipt-nav">
+
+            <button
+                class="back"
+                type="button"
+                onclick="closeReceipt()">
+                ‹
+            </button>
+
+            <div class="receipt-nav-title">
+                <strong>लेन-देन विवरण</strong>
+                <span>DIGITAL RECEIPT</span>
+            </div>
+
+            <div class="receipt-nav-space"></div>
+
+        </div>
+
+
+        <div class="receipt-hero">
+
+            <div class="receipt-seal">
+                ॐ
+            </div>
+
+            <div class="receipt-success">
+                ✓ TRANSACTION RECORDED
+            </div>
+
+            <div
+                class="receipt-money"
+                id="receiptAmount">
+                ₹0.00
+            </div>
+
+            <div
+                class="receipt-type receipt-debit"
+                id="receiptBadge">
+                DEBITED
+            </div>
+
+        </div>
+
+
+        <div class="receipt-details">
+
+            <div class="rrow">
+                <span class="rlabel">
+                    सहयोगकर्ता
+                </span>
+
+                <span
+                    class="rvalue"
+                    id="receiptName">
+                    ---
+                </span>
+            </div>
+
+
+            <div class="rrow">
+                <span class="rlabel">
+                    सेवा
+                </span>
+
+                <span
+                    class="rvalue"
+                    id="receiptService">
+                    ---
+                </span>
+            </div>
+
+
+            <div class="rrow">
+                <span class="rlabel">
+                    विवरण
+                </span>
+
+                <span
+                    class="rvalue"
+                    id="receiptDescription">
+                    ---
+                </span>
+            </div>
+
+
+            <div class="rrow">
+                <span class="rlabel">
+                    Transaction ID
+                </span>
+
+                <span
+                    class="rvalue"
+                    id="receiptTxn">
+                    ---
+                </span>
+            </div>
+
+
+            <div class="rrow">
+                <span class="rlabel">
+                    UTR / Reference
+                </span>
+
+                <span
+                    class="rvalue"
+                    id="receiptUtr">
+                    ---
+                </span>
+            </div>
+
+
+            <div class="rrow">
+                <span class="rlabel">
+                    रसीद संख्या
+                </span>
+
+                <span
+                    class="rvalue"
+                    id="receiptNo">
+                    ---
+                </span>
+            </div>
+
+
+            <div class="rrow">
+                <span class="rlabel">
+                    दिनांक एवं समय
+                </span>
+
+                <span
+                    class="rvalue"
+                    id="receiptDate">
+                    ---
+                </span>
+            </div>
+
+        </div>
+
+
+        <button
+            class="receipt-close"
+            type="button"
+            onclick="closeReceipt()">
+            रसीद बंद करें
+        </button>
+
+    </div>
+
+</div>
+
+
+<div
+    class="toast"
+    id="toast">
+</div>
+
+
+<script>
+
+/* =========================================================
+   API & STATE
+========================================================= */
+
+const WALLET_API =
+"https://sanatansevasamiti.org/api/get_wallet_data.php";
+
+let lastTxnCount = -1;
+let currentTxns = [];
+
+
+/* =========================================================
+   UID RESOLVER
+========================================================= */
+
+function getUserUID(){
+    const storedUser = localStorage.getItem("sss_user_data");
+    if(storedUser){
+        try{
+            const user = JSON.parse(storedUser);
+            const uid = user.unique_id || user.uid || user.user_id || user.id;
+            if(uid) return String(uid);
+        }catch(e){}
+    }
+
+    const directKeys = ["unique_id", "uid", "user_id"];
+    for(const key of directKeys){
+        const value = localStorage.getItem(key);
+        if(value && value.trim()) return value.trim();
+    }
+
+    const params = new URLSearchParams(window.location.search);
+    return (
+        params.get("uid") ||
+        params.get("unique_id") ||
+        params.get("user_id") ||
+        ""
+    );
+}
+
+
+/* =========================================================
+   MONEY & TEXT
+========================================================= */
+
+function money(value){
+    return Number(value || 0).toLocaleString("en-IN", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+    });
+}
+
+function safe(value){
+    return String(value ?? "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+
+/* =========================================================
+   TOAST & SOUND ENGINE
+========================================================= */
+
+let toastTimer;
+
+function toast(message){
+    const el = document.getElementById("toast");
+    el.textContent = message;
+    el.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(()=>el.classList.remove("show"), 3500);
+}
+
+function playNotificationTune(txn){
+    // 1. Play Tone
+    const audio = document.getElementById("sanatanamRingtone");
+    if(audio){
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log("Audio play allowed on user interaction:", e));
+    }
+
+    // 2. Format Toast
+    const isCredit = String(txn.type || "").toUpperCase() === "CREDIT";
+    const amt = money(txn.amount);
+    const msg = isCredit
+        ? `🔔 खाते में ₹${amt} जमा हुए! (${safe(txn.service_name)})`
+        : `🔔 खाते से ₹${amt} समर्पित हुए! (${safe(txn.service_name)})`;
+
+    toast(msg);
+
+    // 3. Native Android Toast (if APK)
+    if(window.AndroidBridge && typeof window.AndroidBridge.showToast === "function"){
+        try{ window.AndroidBridge.showToast(msg); }catch(e){}
+    }
+}
+
+
+/* =========================================================
+   STATES
+========================================================= */
+
+function loading(){
+    document.getElementById("transactionList").innerHTML = `
+        <div class="state">
+            <div class="loader"></div>
+            <div class="state-title">अभिलेख प्राप्त हो रहे हैं</div>
+            <div class="state-text">आपका वास्तविक वॉलेट डेटा प्राप्त किया जा रहा है।</div>
+        </div>
+    `;
+}
+
+function errorState(message){
+    document.getElementById("transactionList").innerHTML = `
+        <div class="state">
+            <div class="state-icon">⚠</div>
+            <div class="state-title">वॉलेट उपलब्ध नहीं है</div>
+            <div class="state-text">${safe(message)}</div>
+            <button class="retry" onclick="loadWallet(true)">पुनः प्रयास करें</button>
+        </div>
+    `;
+}
+
+function emptyState(){
+    document.getElementById("transactionList").innerHTML = `
+        <div class="state">
+            <div class="state-icon">ॐ</div>
+            <div class="state-title">अभी कोई गतिविधि नहीं</div>
+            <div class="state-text">आपके वॉलेट का पहला लेन-देन यहाँ दिखाई देगा।</div>
+        </div>
+    `;
+}
+
+
+/* =========================================================
+   TRANSACTION RENDER
+========================================================= */
+
+function renderTransactions(data){
+    const list = document.getElementById("transactionList");
+
+    if(!Array.isArray(data) || data.length === 0){
+        emptyState();
+        return;
+    }
+
+    list.innerHTML = "";
+
+    data.forEach(txn => {
+        const isCredit = String(txn.type || "").toUpperCase() === "CREDIT";
+        const item = document.createElement("div");
+        item.className = "tx";
+
+        item.innerHTML = `
+            <div class="tx-marker ${isCredit ? "tx-credit-marker" : "tx-debit-marker"}">
+                ${isCredit ? "↓" : "↑"}
+            </div>
+            <div class="tx-body">
+                <div class="tx-main">
+                    <div class="tx-name">${safe(txn.service_name || "वॉलेट सेवा")}</div>
+                    <div class="tx-description">${safe(txn.description || "वॉलेट द्वारा लेन-देन")}</div>
+                    <div class="tx-date">${safe(txn.date || "---")}</div>
+                </div>
+                <div class="tx-money">
+                    <div class="tx-amount ${isCredit ? "credit" : "debit"}">
+                        ${isCredit ? "+" : "-"}₹${money(txn.amount)}
+                    </div>
+                    <div class="receipt-link">रसीद ›</div>
+                </div>
+            </div>
+        `;
+
+        item.addEventListener("click", () => openReceipt(txn));
+        list.appendChild(item);
+    });
+}
+
+
+/* =========================================================
+   LOAD API
+========================================================= */
+
+async function loadWallet(showLoadState = false){
+    if(showLoadState) loading();
+
+    const uid = getUserUID();
+
+    if(!uid){
+        errorState("सदस्य UID उपलब्ध नहीं है। कृपया पहले SANATANAM में लॉगिन करें।");
+        return;
+    }
+
+    // Sync FCM Topic with Native Android Bridge if present
+    if(window.AndroidBridge && typeof window.AndroidBridge.syncUserFcmTopic === "function"){
+        try { window.AndroidBridge.syncUserFcmTopic(uid); } catch(e){}
+    }
+
+    try{
+        const response = await fetch(
+            WALLET_API + "?uid=" + encodeURIComponent(uid),
+            {
+                method: "GET",
+                cache: "no-store",
+                headers: { "Accept": "application/json" }
+            }
+        );
+
+        if(!response.ok) throw new Error("सर्वर से डेटा प्राप्त नहीं हुआ।");
+
+        const data = await response.json();
+
+        if(!data || data.status !== true){
+            throw new Error(data?.message || "यूज़र वॉलेट डेटा उपलब्ध नहीं है।");
+        }
+
+        /* USER */
+        document.getElementById("userName").textContent = data.full_name || "SANATANAM सदस्य";
+        document.getElementById("memberId").textContent = data.unique_id || uid;
+
+        /* BALANCE */
+        document.getElementById("walletBalance").textContent = money(data.wallet_balance);
+
+        /* TRANSACTIONS */
+        const txns = Array.isArray(data.transactions) ? data.transactions : [];
+
+        // Check for newly incoming transaction to ring sound
+        if(lastTxnCount !== -1 && txns.length > lastTxnCount){
+            playNotificationTune(txns[0]);
+        }
+        lastTxnCount = txns.length;
+        currentTxns = txns;
+
+        renderTransactions(txns);
+
+    }catch(err){
+        console.error("Wallet:", err);
+        if(showLoadState || lastTxnCount === -1){
+            errorState(err.message || "कुछ समय बाद पुनः प्रयास करें।");
+        }
+    }
+}
+
+
+/* =========================================================
+   RECEIPT
+========================================================= */
+
+function openReceipt(txn){
+    const isCredit = String(txn.type || "").toUpperCase() === "CREDIT";
+
+    document.getElementById("receiptAmount").textContent =
+        (isCredit ? "+" : "-") + "₹" + money(txn.amount);
+
+    document.getElementById("receiptName").textContent =
+        document.getElementById("userName").textContent || "---";
+
+    document.getElementById("receiptService").textContent =
+        txn.service_name || "वॉलेट सेवा";
+
+    document.getElementById("receiptDescription").textContent =
+        txn.description || "वॉलेट द्वारा लेन-देन";
+
+    document.getElementById("receiptTxn").textContent =
+        txn.txn_id || "---";
+
+    document.getElementById("receiptUtr").textContent =
+        txn.utr_no || "---";
+
+    document.getElementById("receiptNo").textContent =
+        txn.receipt_no || "---";
+
+    document.getElementById("receiptDate").textContent =
+        txn.date || "---";
+
+    const badge = document.getElementById("receiptBadge");
+    if(isCredit){
+        badge.className = "receipt-type receipt-credit";
+        badge.textContent = "↑ CREDITED ✓";
+    }else{
+        badge.className = "receipt-type receipt-debit";
+        badge.textContent = "↓ DEBITED ✓";
+    }
+
+    document.getElementById("receiptLayer").classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function closeReceipt(){
+    document.getElementById("receiptLayer").classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", function(e){
+    if(e.key === "Escape") closeReceipt();
+});
+
+
+/* =========================================================
+   START & AUTO REFRESH
+========================================================= */
+
+document.addEventListener("DOMContentLoaded", function(){
+    loadWallet(true);
+
+    // Auto-poll in background every 15 seconds for realtime updates
+    setInterval(() => {
+        loadWallet(false);
+    }, 15000);
+});
+
+</script>
+
+</body>
+</html>
