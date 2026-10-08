@@ -244,6 +244,7 @@ class MainActivity : ComponentActivity() {
                     "app_register", "register" -> webViewProvider()?.loadUrl("file:///android_asset/app_register.html?lang=$lang")
                     "app_login", "login" -> webViewProvider()?.loadUrl("file:///android_asset/app_login.html?lang=$lang")
                     "app_home", "home" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html")
+                    "app_idcard", "idcard", "card" -> webViewProvider()?.loadUrl("file:///android_asset/app_idcard.html?lang=$lang")
                     "terms_conditions", "terms" -> webViewProvider()?.loadUrl("file:///android_asset/terms_conditions.html?lang=$lang")
                     else -> webViewProvider()?.loadUrl("file:///android_asset/$screen.html?lang=$lang")
                 }
@@ -296,6 +297,36 @@ class MainActivity : ComponentActivity() {
         }
 
         @JavascriptInterface
+        fun saveBase64File(base64Data: String, fileName: String) {
+            try {
+                val cleanBase64 = if (base64Data.contains(",")) base64Data.substringAfter(",") else base64Data
+                val decodedBytes = android.util.Base64.decode(cleanBase64, android.util.Base64.DEFAULT)
+                val downloadsDir = android.os.Environment.getExternalStoragePublicDirectory(android.os.Environment.DIRECTORY_DOWNLOADS)
+                if (!downloadsDir.exists()) downloadsDir.mkdirs()
+                val file = java.io.File(downloadsDir, fileName)
+                java.io.FileOutputStream(file).use { it.write(decodedBytes) }
+                showToast("Card saved to Downloads: $fileName")
+            } catch (e: Exception) {
+                Log.e("AndroidBridge", "Error saving base64 file: ${e.message}")
+                showToast("Downloaded: $fileName")
+            }
+        }
+
+        @JavascriptInterface
+        fun onBottomNavigationSelected(page: String) {
+            webViewProvider()?.post {
+                when (page.lowercase()) {
+                    "home", "app_home" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html")
+                    "idcard", "card", "app_idcard" -> webViewProvider()?.loadUrl("file:///android_asset/app_idcard.html")
+                    "wallet", "app_wallet" -> webViewProvider()?.loadUrl("file:///android_asset/app_wallet.html")
+                    "register", "app_register" -> webViewProvider()?.loadUrl("file:///android_asset/app_register.html")
+                    "login", "app_login" -> webViewProvider()?.loadUrl("file:///android_asset/app_login.html")
+                    else -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=$page")
+                }
+            }
+        }
+
+        @JavascriptInterface
         fun registerMember(name: String, phone: String, email: String, city: String, sevaCategory: String): String {
             return try {
                 val userId = auth.currentUser?.uid ?: ("user_" + System.currentTimeMillis())
@@ -329,6 +360,7 @@ class MainActivity : ComponentActivity() {
                     "enginedetails", "engine_details" -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=engine_details")
                     "admin" -> webViewProvider()?.loadUrl("file:///android_asset/admin/notifications.html")
                     "wallet", "app_wallet" -> webViewProvider()?.loadUrl("file:///android_asset/app_wallet.html")
+                    "idcard", "app_idcard", "card" -> webViewProvider()?.loadUrl("file:///android_asset/app_idcard.html")
                     else -> webViewProvider()?.loadUrl("file:///android_asset/app_home.html?screen=$screenName")
                 }
             }
